@@ -80,6 +80,7 @@ const LoginModal = () => {
 				errors={errors}
 				required
 			/>
+			<div className="w-full relative h-[68px]"></div>
 		</div>
 	);
 
@@ -144,7 +145,6 @@ const LoginModal = () => {
 			onSubmit={handleSubmit(onSubmit)}
 			body={bodyContent}
 			footer={footerContent}
-			minHeight={742}
 		/>
 	);
 };
