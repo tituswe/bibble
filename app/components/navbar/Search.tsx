@@ -35,6 +35,7 @@ const Search = () => {
 					className="
               p-2
               bg-sky-500
+              hover:bg-sky-800
               rounded-full
               text-white
         "
