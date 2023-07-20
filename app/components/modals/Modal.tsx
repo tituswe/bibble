@@ -15,6 +15,7 @@ interface ModalProps {
 	disabled?: boolean;
 	secondaryAction?: () => void;
 	secondaryActionLabel?: string;
+	minHeight?: number;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -28,6 +29,7 @@ const Modal: React.FC<ModalProps> = ({
 	disabled,
 	secondaryAction,
 	secondaryActionLabel,
+	minHeight,
 }) => {
 	const [showModal, setShowModal] = useState(isOpen);
 
@@ -84,7 +86,7 @@ const Modal: React.FC<ModalProps> = ({
         "
 			>
 				<div
-					className="
+					className={`
             relative
             w-full
             md:w-4/6
@@ -95,7 +97,9 @@ const Modal: React.FC<ModalProps> = ({
             h-full
             lg:h-auto
             md:h-auto
-          "
+						lg:min-h-[${minHeight || 0}px]
+						md:min-h-[${minHeight || 0}px]
+					`}
 				>
 					{/* CONTENT */}
 					<div
@@ -108,11 +112,13 @@ const Modal: React.FC<ModalProps> = ({
             `}
 					>
 						<div
-							className="
+							className={`
                 translate
                 h-full
                 lg:h-auto
                 md:h-auto
+								lg:min-h-[${minHeight || 0}px]
+								md:min-h-[${minHeight || 0}px]
                 border-0
                 rounded-lg
                 shadow-lg
@@ -123,7 +129,7 @@ const Modal: React.FC<ModalProps> = ({
                 bg-white
                 outline-none
                 focus:outline-none
-              "
+							`}
 						>
 							{/* HEADER */}
 							<div

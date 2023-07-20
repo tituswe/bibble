@@ -1,22 +1,29 @@
 'use client';
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+
+import useLoginModal from '@/app/hooks/useLoginModal';
+import { SafeUser } from '@/app/types';
+import { signOut } from 'next-auth/react';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 
-const UserMenu = () => {
-	const registerModal = useRegisterModal();
+interface UserMenuProps {
+	currentUser?: SafeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+	const loginModal = useLoginModal();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleOpen = useCallback(() => {
-		if (!false) {
-			registerModal.onOpen();
+		if (!currentUser) {
+			loginModal.onOpen();
+		} else {
+			setIsOpen((value) => !value);
 		}
-
-		setIsOpen((value) => !value);
-	}, []);
+	}, [loginModal, currentUser]);
 
 	return (
 		<div className="relative">
@@ -43,14 +50,14 @@ const UserMenu = () => {
             whitespace-nowrap
           "
 				>
-					{false ? <AiOutlineMenu /> : 'Sign In'}
+					{currentUser ? <AiOutlineMenu /> : 'Sign In'}
 					<div className="hidden md:block">
-						<Avatar />
+						<Avatar src={currentUser?.image} />
 					</div>
 				</div>
 			</div>
 
-			{isOpen && false && (
+			{isOpen && currentUser && (
 				<div
 					className="
             absolute 
@@ -65,8 +72,12 @@ const UserMenu = () => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
+							<MenuItem onClick={() => {}} label="Profile" />
+							<MenuItem onClick={() => {}} label="My Favorite Pets" />
 							<MenuItem onClick={() => {}} label="Settings" />
-							<MenuItem onClick={() => {}} label="Logout" />
+							<MenuItem onClick={() => {}} label="Help" />
+							<hr />
+							<MenuItem onClick={() => signOut()} label="Logout" />
 						</>
 					</div>
 				</div>
