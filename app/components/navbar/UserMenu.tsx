@@ -1,11 +1,13 @@
 'use client';
 
+import { signOut } from 'next-auth/react';
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 
 import useLoginModal from '@/app/hooks/useLoginModal';
+import usePostModal from '@/app/hooks/usePostModal';
+
 import { SafeUser } from '@/app/types';
-import { signOut } from 'next-auth/react';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 
@@ -15,6 +17,7 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	const loginModal = useLoginModal();
+	const postModal = usePostModal();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleOpen = useCallback(() => {
@@ -24,6 +27,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 			setIsOpen((value) => !value);
 		}
 	}, [loginModal, currentUser]);
+
+	const onPost = useCallback(() => {
+		if (!currentUser) {
+			return loginModal.onOpen();
+		}
+
+		postModal.onOpen();
+	}, [currentUser, loginModal, postModal]);
 
 	return (
 		<div className="relative">
@@ -72,6 +83,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
+							<MenuItem onClick={postModal.onOpen} label="Post an Adoption" />
+							<hr />
 							<MenuItem onClick={() => {}} label="Profile" />
 							<MenuItem onClick={() => {}} label="My Favorite Pets" />
 							<MenuItem onClick={() => {}} label="Settings" />

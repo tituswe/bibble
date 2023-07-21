@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
+
 import getCurrentUser from './actions/getCurrentUser';
-import LoginModal from './components/modals/LoginModal';
-import RegisterModal from './components/modals/RegisterModal';
 import Navbar from './components/navbar/Navbar';
 import './globals.css';
 import ToasterProvider from './providers/ToasterProvider';
+
+import LoginModal from './components/modals/LoginModal';
+import PostModal from './components/modals/PostModal';
+import RegisterModal from './components/modals/RegisterModal';
 
 export const metadata: Metadata = {
 	title: 'Bibble',
@@ -25,6 +28,7 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={font.className}>
 				<ToasterProvider />
+				<PostModal />
 				<LoginModal />
 				<RegisterModal />
 				<Navbar currentUser={currentUser} />

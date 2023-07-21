@@ -66,6 +66,8 @@ model Pet {
   name String
   birthday DateTime
   breed String
+  imageSrc String
+  price Int
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   petListing PetListing @relation(fields: [petListingId], references: [id], onDelete: Cascade)
