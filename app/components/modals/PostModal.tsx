@@ -1,17 +1,18 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-
-import usePostModal from '@/app/hooks/usePostModal';
-
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
+
+import usePostModal from '@/app/hooks/usePostModal';
 import Heading from '../Heading';
+import BirthdayInput from '../inputs/BirthdayInput';
 import BreedInput from '../inputs/BreedInput';
 import GenderInput from '../inputs/GenderInput';
+import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import { breeds } from '../navbar/Breeds';
 import Modal from './Modal';
@@ -44,7 +45,7 @@ const PostModal = () => {
 			breed: '',
 			gender: '',
 			name: '',
-			birthday: Date.now(),
+			birthday: new Date(Date.now()).toISOString(), // TODO Implement this; take note of ISOString format
 			imageSrc: '',
 			price: 0,
 		},
@@ -184,11 +185,30 @@ const PostModal = () => {
 	}
 
 	if (step === STEPS.BIRTHDAY) {
-		bodyContent = <div>TO BE IMPLEMENTED</div>;
+		bodyContent = (
+			<div className="flex flex-col h-full gap-8">
+				<Heading
+					title="Introduce us to your friend"
+					subtitle="What's their birthday?"
+				/>
+				<BirthdayInput />
+			</div>
+		);
 	}
 
 	if (step === STEPS.IMAGES) {
-		bodyContent = <div>TO BE IMPLEMENTED</div>;
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="Add some photos"
+					subtitle="Show what your friend looks like!"
+				/>
+				<ImageUpload
+					onChange={(value) => setCustomValue('imageSrc', value)}
+					value={imageSrc}
+				/>
+			</div>
+		);
 	}
 
 	if (step === STEPS.PRICE) {
