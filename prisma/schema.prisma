@@ -22,7 +22,6 @@ model User {
   favoriteIds String[] @db.ObjectId
 
   accounts Account[]
-  petListings PetListing[]
   pets Pet[]
 }
 
@@ -45,28 +44,16 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model PetListing {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  petId String @db.ObjectId
-  title String
-  description String
-  imageSrc String
-  createdAt DateTime @default(now())
-  price Int
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  pets Pet[]
-}
-
 model Pet {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
-  petListingId String @db.ObjectId
   name String
+  gender String
   birthday DateTime
   breed String
+  imageSrc String
+  postedAt DateTime @default(now())
+  price Int
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  petListing PetListing @relation(fields: [petListingId], references: [id], onDelete: Cascade)
 }
