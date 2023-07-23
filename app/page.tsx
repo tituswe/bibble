@@ -33,7 +33,7 @@ export default async function Home() {
 						gap-8
 					"
 				>
-					{pets.map((pet: any) => {
+					{pets.map((pet) => {
 						return (
 							<PetCard currentUser={currentUser} key={pet.id} data={pet} />
 						);

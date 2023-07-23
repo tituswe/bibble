@@ -8,7 +8,13 @@ export default async function getPets() {
 			},
 		});
 
-		return pets;
+		const safePets = pets.map((pet) => ({
+			...pet,
+			birthday: pet.birthday.toISOString(),
+			postedAt: pet.postedAt.toISOString(),
+		}));
+
+		return safePets;
 	} catch (error: any) {
 		throw new Error(error);
 	}

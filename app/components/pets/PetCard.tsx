@@ -1,7 +1,6 @@
 'use client';
 
-import { SafeUser } from '@/app/types';
-import { Pet } from '@prisma/client';
+import { SafePet, SafeUser } from '@/app/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -9,7 +8,7 @@ import Button from '../Button';
 import HeartButton from '../HeartButton';
 
 interface PetCardProps {
-	data: Pet;
+	data: SafePet;
 	onAction?: (id: string) => void;
 	disabled?: boolean;
 	actionLabel?: string;
