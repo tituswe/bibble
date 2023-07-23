@@ -52,6 +52,7 @@ model Pet {
   birthday DateTime
   breed String
   imageSrc String
+  postedAt DateTime @default(now())
   price Int
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

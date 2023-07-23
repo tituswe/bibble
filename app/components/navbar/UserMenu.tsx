@@ -57,6 +57,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             rounded-full
             cursor-pointer
             hover:shadow-md
+						hover:scale-110
             transition
             whitespace-nowrap
           "

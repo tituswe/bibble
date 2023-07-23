@@ -13,6 +13,7 @@ const Search = () => {
       rounded-full
       shadow-sm
       hover:shadow-md
+      hover:scale-110
       transition
       cursor-pointer
     "
