@@ -1,6 +1,8 @@
 'use client';
 
+import getAge from '@/app/actions/getAge';
 import { SafePet, SafeUser } from '@/app/types';
+import { toCamelCase } from '@/app/utils/toCamelCase';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -25,6 +27,7 @@ const PetCard: React.FC<PetCardProps> = ({
 	currentUser,
 }) => {
 	const router = useRouter();
+	const age = getAge({ data });
 
 	const handleCancel = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,20 +41,6 @@ const PetCard: React.FC<PetCardProps> = ({
 		},
 		[onAction, actionId, disabled]
 	);
-
-	// TODO: Factor month age
-	const getAge = () => {
-		const today = new Date();
-		const birthDate = new Date(data.birthday);
-		let age = today.getFullYear() - birthDate.getFullYear();
-		const m = today.getMonth() - birthDate.getMonth();
-
-		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-			age--;
-		}
-
-		return age;
-	};
 
 	return (
 		<div
@@ -88,7 +77,7 @@ const PetCard: React.FC<PetCardProps> = ({
 				</div>
 				<div className="font-semibold text-lg">{data.name}</div>
 				<div className="font-light text-neutral-500">
-					{data.breed} | {getAge()} Years Old
+					{toCamelCase(data.gender)} | {data.breed} | {age} Years Old
 				</div>
 				<div className="flex flex-row items-center gap-1">
 					<div className="font-semibold">$ {data.price} SGD</div>

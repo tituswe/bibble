@@ -1,3 +1,4 @@
+import { toCamelCase } from '@/app/utils/toCamelCase';
 import { IconType } from 'react-icons';
 
 interface GenderInputProps {
@@ -13,10 +14,6 @@ const GenderInput: React.FC<GenderInputProps> = ({
 	selected,
 	onClick,
 }) => {
-	const toCamelCase = (str: string) => {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	};
-
 	const isMale = label === 'male';
 
 	return (
