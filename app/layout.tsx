@@ -9,6 +9,7 @@ import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/modals/LoginModal';
 import PostModal from './components/modals/PostModal';
 import RegisterModal from './components/modals/RegisterModal';
+import SearchModal from './components/modals/SearchModal';
 
 export const metadata: Metadata = {
 	title: 'Bibble',
@@ -28,6 +29,7 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={font.className}>
 				<ToasterProvider />
+				<SearchModal />
 				<PostModal />
 				<LoginModal />
 				<RegisterModal />

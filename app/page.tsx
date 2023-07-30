@@ -1,12 +1,16 @@
 import getCurrentUser from './actions/getCurrentUser';
-import getPets from './actions/getPets';
+import getPets, { IPetsParams } from './actions/getPets';
 import ClientOnly from './components/ClientOnly';
 import Container from './components/Container';
 import EmptyState from './components/EmptyState';
 import PetCard from './components/pets/PetCard';
 
-export default async function Home() {
-	const pets = await getPets();
+interface HomeProps {
+	searchParams: IPetsParams;
+}
+
+const Home = async ({ searchParams }: HomeProps) => {
+	const pets = await getPets(searchParams);
 	const currentUser = await getCurrentUser();
 
 	if (pets.length === 0) {
@@ -42,4 +46,6 @@ export default async function Home() {
 			</Container>
 		</ClientOnly>
 	);
-}
+};
+
+export default Home;

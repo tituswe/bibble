@@ -1,6 +1,7 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 
@@ -18,6 +19,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	const loginModal = useLoginModal();
 	const postModal = usePostModal();
+	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleOpen = useCallback(() => {
@@ -84,10 +86,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
-							<MenuItem onClick={postModal.onOpen} label="Post an Adoption" />
+							<MenuItem onClick={postModal.onOpen} label="Post a pet" />
 							<hr />
+							<MenuItem
+								onClick={() => router.push('/postings')}
+								label="My postings"
+							/>
+							<MenuItem
+								onClick={() => router.push('/favorites')}
+								label="My favorite pets"
+							/>
 							<MenuItem onClick={() => {}} label="Profile" />
-							<MenuItem onClick={() => {}} label="My Favorite Pets" />
 							<MenuItem onClick={() => {}} label="Settings" />
 							<MenuItem onClick={() => {}} label="Help" />
 							<hr />

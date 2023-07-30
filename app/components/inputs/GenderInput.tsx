@@ -23,6 +23,7 @@ const GenderInput: React.FC<GenderInputProps> = ({
         rounded-xl
         border-2
         p-4
+				pl-2
         flex
         flex-row
         items-center
