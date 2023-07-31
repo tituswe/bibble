@@ -1,22 +1,42 @@
 'use client';
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+
+import useLoginModal from '@/app/hooks/useLoginModal';
+import usePostModal from '@/app/hooks/usePostModal';
+
+import { SafeUser } from '@/app/types';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 
-const UserMenu = () => {
-	const registerModal = useRegisterModal();
+interface UserMenuProps {
+	currentUser?: SafeUser | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+	const loginModal = useLoginModal();
+	const postModal = usePostModal();
+	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleOpen = useCallback(() => {
-		if (!false) {
-			registerModal.onOpen();
+		if (!currentUser) {
+			loginModal.onOpen();
+		} else {
+			setIsOpen((value) => !value);
+		}
+	}, [loginModal, currentUser]);
+
+	const onPost = useCallback(() => {
+		if (!currentUser) {
+			return loginModal.onOpen();
 		}
 
-		setIsOpen((value) => !value);
-	}, []);
+		postModal.onOpen();
+	}, [currentUser, loginModal, postModal]);
 
 	return (
 		<div className="relative">
@@ -39,18 +59,19 @@ const UserMenu = () => {
             rounded-full
             cursor-pointer
             hover:shadow-md
+						hover:scale-110
             transition
             whitespace-nowrap
           "
 				>
-					{false ? <AiOutlineMenu /> : 'Sign In'}
+					{currentUser ? <AiOutlineMenu /> : 'Sign In'}
 					<div className="hidden md:block">
-						<Avatar />
+						<Avatar src={currentUser?.image} />
 					</div>
 				</div>
 			</div>
 
-			{isOpen && false && (
+			{isOpen && currentUser && (
 				<div
 					className="
             absolute 
@@ -65,8 +86,21 @@ const UserMenu = () => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
+							<MenuItem onClick={postModal.onOpen} label="Post a pet" />
+							<hr />
+							<MenuItem
+								onClick={() => router.push('/postings')}
+								label="My postings"
+							/>
+							<MenuItem
+								onClick={() => router.push('/favorites')}
+								label="My favorite pets"
+							/>
+							<MenuItem onClick={() => {}} label="Profile" />
 							<MenuItem onClick={() => {}} label="Settings" />
-							<MenuItem onClick={() => {}} label="Logout" />
+							<MenuItem onClick={() => {}} label="Help" />
+							<hr />
+							<MenuItem onClick={() => signOut()} label="Logout" />
 						</>
 					</div>
 				</div>

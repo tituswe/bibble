@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
 		setShowModal(false);
 		setTimeout(() => {
 			onClose();
-		}, 300);
+		}, 500);
 	}, [disabled, onClose]);
 
 	const handleSubmit = useCallback(() => {
@@ -90,29 +90,31 @@ const Modal: React.FC<ModalProps> = ({
             md:w-4/6
             lg:w-3/6
             xl:w-2/5
+						max-w-lg
             my-6
             mx-auto
-            h-full
-            lg:h-auto
-            md:h-auto
-          "
+						h-full
+						lg:h-auto
+						md:h-auto
+					"
 				>
 					{/* CONTENT */}
 					<div
 						className={`
               translate
-              duration-300
+							transition
+              duration-500
               h-full
-              ${showModal ? '' : 'transform -scale-x-50'}
+              ${showModal ? 'transform scale-x-100' : 'transform -scale-x-50'}
               ${showModal ? 'opacity-100' : 'opacity-0'}
             `}
 					>
 						<div
-							className="
+							className={`
                 translate
-                h-full
-                lg:h-auto
-                md:h-auto
+            		h-full
+								lg:h-auto
+								md:h-auto
                 border-0
                 rounded-lg
                 shadow-lg
@@ -123,7 +125,7 @@ const Modal: React.FC<ModalProps> = ({
                 bg-white
                 outline-none
                 focus:outline-none
-              "
+							`}
 						>
 							{/* HEADER */}
 							<div
