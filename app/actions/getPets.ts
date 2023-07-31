@@ -4,13 +4,13 @@ export interface IPetsParams {
 	userId?: string;
 	breed?: string;
 	gender?: string;
-	ageRange?: Range;
-	postedAtRange?: Range;
+	startDate?: string;
+	endDate?: string;
 }
 
 export default async function getPets(params: IPetsParams) {
 	try {
-		const { userId, breed, gender, ageRange, postedAtRange } = params;
+		const { userId, breed, gender, startDate, endDate } = params;
 
 		let query: any = {};
 
@@ -26,12 +26,17 @@ export default async function getPets(params: IPetsParams) {
 			query.gender = gender;
 		}
 
-		if (ageRange) {
-			// TODO: TO IMPLEMENT
-		}
-
-		if (postedAtRange) {
-			// TODO: TO IMPLEMENT
+		if (startDate && endDate) {
+			query = {
+				AND: [
+					{
+						birthday: { gte: startDate },
+					},
+					{
+						birthday: { lte: endDate },
+					},
+				],
+			};
 		}
 
 		const pets = await prisma.pet.findMany({

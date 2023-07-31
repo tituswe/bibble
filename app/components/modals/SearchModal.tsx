@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useState } from 'react';
-import { Range } from 'react-date-range';
+import { DateRange, Range } from 'react-date-range';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
 import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
@@ -20,11 +20,6 @@ const SearchModal = () => {
 	const [gender, setGender] = useState('');
 	const [breed, setBreed] = useState('');
 	const [ageRange, setAgeRange] = useState<Range>({
-		startDate: new Date(),
-		endDate: new Date(),
-		key: 'selection',
-	});
-	const [postedAtRange, setPostedAtRange] = useState<Range>({
 		startDate: new Date(),
 		endDate: new Date(),
 		key: 'selection',
@@ -62,14 +57,6 @@ const SearchModal = () => {
 			updatedQuery.endDate = formatISO(ageRange.endDate);
 		}
 
-		if (postedAtRange.startDate) {
-			updatedQuery.startDate = formatISO(postedAtRange.startDate);
-		}
-
-		if (postedAtRange.endDate) {
-			updatedQuery.endDate = formatISO(postedAtRange.endDate);
-		}
-
 		const url = qs.stringifyUrl(
 			{
 				url: '/',
@@ -80,7 +67,7 @@ const SearchModal = () => {
 
 		searchModal.onClose();
 		router.push(url);
-	}, [breed, gender, ageRange, postedAtRange, searchModal, router, params]);
+	}, [breed, gender, ageRange, searchModal, router, params]);
 
 	const bodyContent = (
 		<div className="flex flex-col gap-8">
@@ -103,7 +90,14 @@ const SearchModal = () => {
 					icon={BiFemaleSign}
 				/>
 			</div>
-			<div>IMPLEMENT AGE RANGE SELECT</div>
+			<div className="flex justify-center">
+				<DateRange
+					editableDateInputs={true}
+					onChange={(item) => setAgeRange(item.selection)}
+					moveRangeOnFirstSelection={false}
+					ranges={[ageRange]}
+				/>
+			</div>
 			<div>IMPLEMENT POSTED RANGE SELECT</div>
 		</div>
 	);

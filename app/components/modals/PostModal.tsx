@@ -45,7 +45,7 @@ const PostModal = () => {
 			breed: '',
 			gender: '',
 			name: '',
-			birthday: undefined, // TODO Implement this; take note of ISOString format
+			birthday: undefined,
 			imageSrc: '',
 			price: 0,
 		},
