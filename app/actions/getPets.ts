@@ -44,12 +44,21 @@ export default async function getPets(params: IPetsParams) {
 			orderBy: {
 				postedAt: 'desc',
 			},
+			include: {
+				user: true,
+			},
 		});
 
 		const safePets = pets.map((pet) => ({
 			...pet,
 			birthday: pet.birthday.toISOString(),
 			postedAt: pet.postedAt.toISOString(),
+			user: {
+				...pet.user,
+				createdAt: pet.user.createdAt.toISOString(),
+				updatedAt: pet.user.updatedAt.toISOString(),
+				emailVerified: pet.user.emailVerified?.toISOString() || null,
+			},
 		}));
 
 		return safePets;

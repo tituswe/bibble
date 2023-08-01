@@ -5,14 +5,16 @@ import { SafePet, SafeUser } from '@/app/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { BiMaleSign } from 'react-icons/bi';
+import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
 import { LuVerified } from 'react-icons/lu';
 import Avatar from '../Avatar';
 import Button from '../Button';
 import HeartButton from '../HeartButton';
 
 interface PetCardProps {
-	data: SafePet;
+	data: SafePet & {
+		user: SafeUser;
+	};
 	onAction?: (id: string) => void;
 	disabled?: boolean;
 	actionLabel?: string;
@@ -61,8 +63,8 @@ const PetCard: React.FC<PetCardProps> = ({
 	          overflow-hidden
 	          rounded-3xl
 						z-10
-						drop-shadow-md
-						hover:drop-shadow-xl
+						shadow-lg
+						hover:drop-shadow-lg
 						hover:scale-110
 						transition
 	        "
@@ -85,25 +87,29 @@ const PetCard: React.FC<PetCardProps> = ({
 				</div>
 
 				<div className="flex flex-col pt-24">
-					<div className="relative aspect-square rounded-3xl border-[1px] z-0">
+					<div className="relative aspect-square rounded-3xl border-[1px] z-0 shadow-md">
 						<div className="absolute inset-0 flex items-end p-4">
-							<div className="flex flex-col w-full">
+							<div className="flex flex-col w-full px-2">
 								<div className="flex flex-row items-center gap-2">
 									<div className="font-semibold text-lg">{data.breed}</div>
-									<BiMaleSign className="text-xl" />
+									{data.gender == 'male' ? (
+										<BiMaleSign className="text-xl" />
+									) : (
+										<BiFemaleSign className="text-xl" />
+									)}
 								</div>
-								<div className="text-sky-500 text-sm pb-4 pt-1">
-									{`Perth, Australia |  ${age} Years`}
+								<div className="flex flex-row justify-between text-sky-500 text-sm pb-4 pt-1">
+									<div>Perth, Australia</div>
+									<div>{age}</div>
 								</div>
 								<hr />
 								<div className="flex flex-row justify-between items-center pt-4 text-neutral-500 text-sm">
 									<div className="flex flex-row items-center gap-1">
-										{/* insert lister details */}
-										<Avatar small src={currentUser?.image} />
-										<div className="pl-1">Pet Society</div>
+										<Avatar small src={data.user?.image} />
+										<div className="pl-1">{data.user?.name}</div>
 										<LuVerified className="text-sky-500" />
 									</div>
-									<div>$SGD 2000</div>
+									<div>${data.price}</div>
 								</div>
 								{onAction && actionLabel && (
 									<Button

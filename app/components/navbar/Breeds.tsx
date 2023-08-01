@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import BreedBox from '../BreedBox';
+import BreedBox from '../Box';
 import Container from '../Container';
 
 import { IconType } from 'react-icons';
