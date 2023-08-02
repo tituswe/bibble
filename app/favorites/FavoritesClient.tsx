@@ -6,7 +6,7 @@ import PetCard from '../components/pets/PetCard';
 import { SafePet, SafeUser } from '../types';
 
 interface FavoritesClientProps {
-	pets: SafePet[];
+	pets: (SafePet & { user: SafeUser })[];
 	currentUser: SafeUser | null;
 }
 

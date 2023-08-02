@@ -3,6 +3,7 @@
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
+import { IconType } from 'react-icons';
 
 import useLoginModal from '@/app/hooks/useLoginModal';
 import usePostModal from '@/app/hooks/usePostModal';
@@ -18,11 +19,39 @@ interface UserMenuProps {
 	currentUser?: SafeUser | null;
 }
 
+type NavButton = {
+	onClick: () => void;
+	icon: IconType;
+	disabled?: boolean;
+};
+
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	const loginModal = useLoginModal();
 	const postModal = usePostModal();
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
+
+	const navButtons: NavButton[] = [
+		{
+			onClick: () => router.push('/favorites'),
+			icon: BiHeart,
+			disabled: true,
+		},
+		{
+			onClick: () => router.push('/messages'),
+			icon: BiBell,
+			disabled: true,
+		},
+		{
+			onClick: () => router.push('/settings'),
+			icon: LuSettings,
+			disabled: true,
+		},
+		{
+			onClick: () => signOut(),
+			icon: BiLogOutCircle,
+		},
+	];
 
 	const toggleOpen = useCallback(() => {
 		if (!currentUser) {
@@ -43,10 +72,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	return (
 		<div className="relative">
 			<div className="flex flex-row items-center gap-3">
-				<Button onClick={() => router.push('/favorites')} icon={BiHeart} />
-				<Button onClick={() => router.push('/messages')} icon={BiBell} />
-				<Button onClick={() => {}} icon={LuSettings} />
-				<Button onClick={() => signOut()} icon={BiLogOutCircle} />
+				{navButtons.map((button) => (
+					<Button
+						onClick={button.onClick}
+						icon={button.icon}
+						disabled={button.disabled}
+					/>
+				))}
 				<div className="block lg:hidden">
 					<div
 						onClick={toggleOpen}

@@ -17,6 +17,7 @@ export const pages: Page[] = [
 	{
 		label: 'featured',
 		icon: BiBulb,
+		disabled: true,
 	},
 	{
 		label: 'explore',
@@ -30,6 +31,7 @@ export const pages: Page[] = [
 	{
 		label: 'rescue',
 		icon: BiHomeHeart,
+		disabled: true,
 	},
 ];
 

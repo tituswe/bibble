@@ -27,12 +27,23 @@ const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
         gap-2
         p-3
         border-b-2
-        ${!disabled && 'hover:text-neutral-800'}
         transition
-        cursor-pointer
-        ${selected ? 'border-b-sky-500' : 'border-transparent'}
-        ${selected ? 'text-neutral-800' : 'text-neutral-500'}
-				${disabled && 'text-neutral-200'}
+        ${!disabled && 'hover:text-neutral-800'}
+        ${!disabled && 'cursor-pointer'}
+        ${
+					disabled
+						? 'border-none'
+						: selected
+						? 'border-b-sky-500'
+						: 'border-transparent'
+				}
+        ${
+					disabled
+						? 'text-neutral-200'
+						: selected
+						? 'text-neutral-800'
+						: 'text-neutral-500'
+				}
       `}
 		>
 			<Icon size={26} />
