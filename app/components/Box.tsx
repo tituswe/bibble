@@ -32,7 +32,7 @@ const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
         cursor-pointer
         ${selected ? 'border-b-sky-500' : 'border-transparent'}
         ${selected ? 'text-neutral-800' : 'text-neutral-500'}
-				${disabled && 'text-neutral-300'}
+				${disabled && 'text-neutral-200'}
       `}
 		>
 			<Icon size={26} />

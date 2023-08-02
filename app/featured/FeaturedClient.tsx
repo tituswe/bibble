@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 
-interface RescueClientProps {}
+interface FeaturedClientProps {}
 
-const RescueClient: React.FC<RescueClientProps> = ({}) => {
+const FeaturedClient: React.FC<FeaturedClientProps> = ({}) => {
 	return (
 		<div className="flex flex-col h-[100vh] justify-center items-center gap-8 pb-72">
 			<div className="font-bold text-2xl pb-16">
-				Shelter under construction...
+				Featured under construction...
 			</div>
 			<Image
 				alt="Coming Soon!"
@@ -21,4 +21,4 @@ const RescueClient: React.FC<RescueClientProps> = ({}) => {
 	);
 };
 
-export default RescueClient;
+export default FeaturedClient;

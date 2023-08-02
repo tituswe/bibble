@@ -6,7 +6,7 @@ interface AnalyticsButtonProps {
 
 const AnalyticsButton: React.FC<AnalyticsButtonProps> = ({ disabled }) => {
 	return (
-		<div className="relative">
+		<div className="relative hidden md:block">
 			<div className="flex flex-row items-center gap-3">
 				<div
 					onClick={() => {}}
@@ -32,7 +32,7 @@ const AnalyticsButton: React.FC<AnalyticsButtonProps> = ({ disabled }) => {
             ${disabled && 'text-neutral-300'}
           `}
 				>
-					<div className="hidden md:block py-1.5">
+					<div className="py-1.5">
 						<BiNetworkChart size={18} />
 					</div>
 					Analytics

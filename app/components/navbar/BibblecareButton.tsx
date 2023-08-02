@@ -6,7 +6,7 @@ interface BibblecareButtonProps {
 
 const BibblecareButton: React.FC<BibblecareButtonProps> = ({ disabled }) => {
 	return (
-		<div className="relative">
+		<div className="relative hidden md:block">
 			<div className="flex flex-row items-center gap-3">
 				<div
 					onClick={() => {}}
@@ -32,7 +32,7 @@ const BibblecareButton: React.FC<BibblecareButtonProps> = ({ disabled }) => {
             ${disabled && 'text-neutral-300'}
           `}
 				>
-					<div className="hidden md:block py-1.5">
+					<div className="py-1.5">
 						<LuPartyPopper size={18} />
 					</div>
 					Bibblecare

@@ -8,34 +8,20 @@ const Search = () => {
 
 	return (
 		<div
+			onClick={searchModal.onOpen}
 			className="
-        fixed 
-        top-0 
-        left-0 
+        border-[1px] 
         w-full 
-        pt-5
-        flex 
-        items-top 
-        justify-center
+        py-2 
+        rounded-full 
+        shadow-sm 
+        hover:shadow-md 
+        transition 
+        cursor-pointer
       "
 		>
 			<div
-				onClick={searchModal.onOpen}
 				className="
-          border-[1px]
-          w-full
-          md:w-1/3
-          py-2
-          rounded-full
-          shadow-sm
-          hover:shadow-md
-          hover:scale-110
-          transition
-          cursor-pointer
-        "
-			>
-				<div
-					className="
           text-sm
           font-semibold
           pl-6 
@@ -46,18 +32,17 @@ const Search = () => {
           justify-between
           gap-3
         "
-				>
-					<div className="sm:block">Find a best friend</div>
-					<div
-						className="
+			>
+				<div className="sm:block">Find a best friend</div>
+				<div
+					className="
               p-2
               bg-sky-500
               rounded-full
               text-white
             "
-					>
-						<BiSearch size={18} />
-					</div>
+				>
+					<BiSearch size={18} />
 				</div>
 			</div>
 		</div>

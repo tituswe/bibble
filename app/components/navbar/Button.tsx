@@ -8,9 +8,10 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ onClick, icon: Icon, disabled }) => {
 	return (
-		<div
-			onClick={onClick}
-			className={`
+		<div className="hidden lg:block">
+			<div
+				onClick={onClick}
+				className={`
         relative
         w-10
         h-10 
@@ -24,8 +25,9 @@ const Button: React.FC<ButtonProps> = ({ onClick, icon: Icon, disabled }) => {
         ${!disabled && 'hover:shadow-md'}
         ${disabled && 'text-neutral-300'}
       `}
-		>
-			<Icon size={18} />
+			>
+				<Icon size={18} />
+			</div>
 		</div>
 	);
 };

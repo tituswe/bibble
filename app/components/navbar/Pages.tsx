@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Box from '../Box';
 import Container from '../Container';
 
@@ -34,14 +34,7 @@ export const pages: Page[] = [
 ];
 
 const Pages = () => {
-	const params = useSearchParams();
 	const pathname = usePathname();
-
-	const isMainPage = pathname === '/';
-
-	if (!isMainPage) {
-		return null;
-	}
 
 	return (
 		<Container>
