@@ -84,7 +84,7 @@ const Modal: React.FC<ModalProps> = ({
         "
 			>
 				<div
-					className={`
+					className="
             relative
             w-full
             md:w-4/6
@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({
 						h-full
 						lg:h-auto
 						md:h-auto
-					`}
+					"
 				>
 					{/* CONTENT */}
 					<div

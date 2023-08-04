@@ -45,7 +45,7 @@ const PostModal = () => {
 			breed: '',
 			gender: '',
 			name: '',
-			birthday: new Date(Date.now()).toISOString(), // TODO Implement this; take note of ISOString format
+			birthday: undefined,
 			imageSrc: '',
 			price: 0,
 		},
@@ -178,7 +178,6 @@ const PostModal = () => {
 					disabled={isLoading}
 					register={register}
 					errors={errors}
-					required
 				/>
 			</div>
 		);
@@ -191,7 +190,10 @@ const PostModal = () => {
 					title="Introduce us to your friend"
 					subtitle="What's their birthday?"
 				/>
-				<BirthdayInput />
+				<BirthdayInput
+					date={birthday}
+					onChange={(date: Date) => setCustomValue('birthday', date)}
+				/>
 			</div>
 		);
 	}

@@ -1,9 +1,12 @@
 'use client';
 
 import { SafeUser } from '@/app/types';
+import { useRouter } from 'next/navigation';
 import Container from '../Container';
-import Breeds from './Breeds';
+import AnalyticsButton from './AnalyticsButton';
+import BibblecareButton from './BibblecareButton';
 import Logo from './Logo';
+import Pages from './Pages';
 import Search from './Search';
 import UserMenu from './UserMenu';
 
@@ -12,9 +15,11 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+	const router = useRouter();
+
 	return (
-		<div className="fixed w-full bg-white z-10 shadow-sm">
-			<div className="py-4 border-b-[1px]">
+		<div className="fixed w-full bg-white z-50 pb-4">
+			<div className="py-6 shadow-md">
 				<Container>
 					<div
 						className="
@@ -22,17 +27,24 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 							flex-row
 							items-center
 							justify-between
-							gap-3
-							md:gap-0
+							w-full
+							gap-4
+							md:gap-8
 						"
 					>
 						<Logo />
 						<Search />
-						<UserMenu currentUser={currentUser} />
+						<div className="flex flex-row items-center gap-4">
+							<AnalyticsButton />
+							<BibblecareButton />
+							<UserMenu currentUser={currentUser} />
+						</div>
 					</div>
 				</Container>
 			</div>
-			<Breeds />
+			<div className="flex flex-row justify-center">
+				<Pages />
+			</div>
 		</div>
 	);
 };

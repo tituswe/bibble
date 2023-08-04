@@ -1,9 +1,10 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import BreedBox from '../BreedBox';
+import BreedBox from '../Box';
 import Container from '../Container';
 
+import { IconType } from 'react-icons';
 import {
 	TbZodiacAquarius,
 	TbZodiacAries,
@@ -19,7 +20,12 @@ import {
 	TbZodiacVirgo,
 } from 'react-icons/tb';
 
-export const breeds = [
+export type Breed = {
+	label: string;
+	icon: IconType;
+};
+
+export const breeds: Breed[] = [
 	{
 		label: 'Labrador',
 		icon: TbZodiacSagittarius,
