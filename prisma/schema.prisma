@@ -10,6 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum HairCoat {
+  SHORT
+  MEDIUM
+  LONG
+}
+
+enum SaleType {
+  PURCHASE
+  RESCUE
+  ADOPT
+}
+
+
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String?
@@ -46,14 +64,69 @@ model Account {
 
 model Pet {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  name String
-  gender String
+  name String?
+  species Species @relation(fields: [speciesId], references: [id])
+  speciesId String @db.ObjectId
+  saleType SaleType
+  gender Gender
+  breed Breed @relation(fields: [breedId], references: [id])
+  breedId String @db.ObjectId
   birthday DateTime
-  breed String
-  imageSrc String
-  postedAt DateTime @default(now())
+  origin Country @relation(fields: [originId], references: [id])
+  originId String @db.ObjectId
+  lister User @relation(fields: [listerId], references: [id], onDelete: Cascade)
+  listerId String @db.ObjectId
+  images String[]
   price Int
+  postedAt DateTime @default(now())
+  isHealthTested Boolean
+  isHdbApproved Boolean
+  avsLicense AvsLicense?
+  vaccines Vaccine[]
+  isNeutered Boolean
+  isHypoallergenic Boolean
+  hairCoat HairCoat
+  isPottyTrained Boolean
+  locationValue String
+}
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Species {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  pets Pet[]
+}
+
+model Breed {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  pets Pet[]
+}
+
+model Country {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  petId String @unique @db.ObjectId
+  name String
+
+  pets Pet[]
+}
+
+model AvsLicense {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String @unique @db.ObjectId
+  licensee String
+  licenseNumber String
+  issuedAt DateTime
+  expiresAt DateTime
+}
+
+model Vaccine {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String @db.ObjectId
+  name String
+  takenAt DateTime
+  expiresAt DateTime
 }
