@@ -10,7 +10,7 @@ import { SafePet, SafeUser } from '@/app/types';
 
 interface PetClientProps {
 	pet: SafePet & {
-		user: SafeUser;
+		lister: SafeUser;
 	};
 	currentUser: SafeUser | null;
 }
