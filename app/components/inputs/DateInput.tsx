@@ -5,12 +5,12 @@ import 'react-date-range/dist/theme/default.css'; // theme css fil
 
 import { Calendar } from 'react-date-range';
 
-interface BirthdayInputProps {
+interface DateInputProps {
 	date: Date;
 	onChange: (value: Date) => void;
 }
 
-const BirthdayInput: React.FC<BirthdayInputProps> = ({ date, onChange }) => {
+const DateInput: React.FC<DateInputProps> = ({ date, onChange }) => {
 	return (
 		<div className="flex justify-center items-center">
 			<Calendar date={date} onChange={onChange} />
@@ -18,4 +18,4 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({ date, onChange }) => {
 	);
 };
 
-export default BirthdayInput;
+export default DateInput;

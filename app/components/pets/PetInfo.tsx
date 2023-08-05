@@ -5,15 +5,20 @@ import { Breed } from '@/app/components/navbar/Breeds';
 import { SafePet, SafeUser } from '@/app/types';
 import Avatar from '../Avatar';
 import PetBreed from './PetBreed';
+import { Breed as BreedSchema, Country, Species } from '@prisma/client';
 
 interface PetInfoProps {
-	pet: SafePet;
+	pet: (SafePet & {
+		lister: SafeUser;
+		origin: Country;
+		species: Species;
+		breed: BreedSchema;
+	});
 	breed: Breed | undefined;
 	user: SafeUser;
 }
 
 const PetInfo: React.FC<PetInfoProps> = ({ pet, breed, user }) => {
-	const { name, birthday, gender } = pet;
 
 	return (
 		<>

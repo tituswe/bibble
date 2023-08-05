@@ -8,18 +8,22 @@ import PetHead from '@/app/components/pets/PetHead';
 import PetInfo from '@/app/components/pets/PetInfo';
 import { SafePet, SafeUser } from '@/app/types';
 import AppointmentBox from '@/app/components/AppointmentBox';
+import { Breed as BreedSchema, Country, Species } from '@prisma/client';
 
 interface PetClientProps {
-	pet: SafePet & {
+	pet: (SafePet & {
 		lister: SafeUser;
-	};
+		origin: Country;
+		species: Species;
+		breed: BreedSchema;
+	});
 	currentUser: SafeUser | null;
 }
 
 const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 	const breed: Breed | undefined = useMemo(() => {
-		return breeds.find((item) => item.label === pet.breed);
-	}, [pet.breed]);
+		return breeds.find((item) => item.label === pet.breed.name);
+	}, [pet.breed.name]);
 
 	return (
 		<Container>
@@ -35,7 +39,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 						"
 					>
 						<div>
-							<PetInfo pet={pet} breed={breed} user={pet.user} />
+							<PetInfo pet={pet} breed={breed} user={pet.lister} />
 						</div>
 						<div>
 							<AppointmentBox pet={pet}/>

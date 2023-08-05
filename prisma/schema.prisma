@@ -23,7 +23,6 @@ enum HairCoat {
 
 enum SaleType {
   PURCHASE
-  RESCUE
   ADOPT
 }
 
