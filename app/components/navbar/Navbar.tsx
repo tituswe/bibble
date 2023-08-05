@@ -42,9 +42,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 					</div>
 				</Container>
 			</div>
-			<div className="flex flex-row justify-center">
+			{/* <div className="flex flex-row justify-center">
 				<Pages />
-			</div>
+			</div> */}
 		</div>
 	);
 };

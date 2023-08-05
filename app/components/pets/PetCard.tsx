@@ -57,28 +57,28 @@ const PetCard: React.FC<PetCardProps> = ({
 				<div className="flex justify-center">
 					<div
 						className="
-	          aspect-square
-	          w-5/6
+						aspect-square
+						w-5/6
 						absolute
-	          overflow-hidden
-	          rounded-3xl
+						overflow-hidden
+						rounded-3xl
 						z-10
 						shadow-lg
 						hover:drop-shadow-lg
 						hover:scale-110
 						transition
-	        "
+	        			"
 					>
 						<Image
 							fill
 							alt="Pet"
 							src={data.imageSrc}
 							className="
-	            object-cover
-	            h-5/6
-	            w-5/6
-	            transition
-	          "
+							object-cover
+							h-5/6
+							w-5/6
+							transition
+							"
 						/>
 						<div className="absolute top-3 right-3">
 							<HeartButton petId={data.id} currentUser={currentUser} />

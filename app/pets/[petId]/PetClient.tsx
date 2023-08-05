@@ -7,6 +7,7 @@ import { Breed, breeds } from '@/app/components/navbar/Breeds';
 import PetHead from '@/app/components/pets/PetHead';
 import PetInfo from '@/app/components/pets/PetInfo';
 import { SafePet, SafeUser } from '@/app/types';
+import AppointmentBox from '@/app/components/AppointmentBox';
 
 interface PetClientProps {
 	pet: SafePet & {
@@ -28,13 +29,17 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 					<div
 						className="
 							grid
-							grid-cols-1
-							md:grid-cols-7
-							md:gap-10
+							grid-cols-2
+							gap-4
 							mt-6
 						"
 					>
-						<PetInfo pet={pet} breed={breed} user={pet.user} />
+						<div>
+							<PetInfo pet={pet} breed={breed} user={pet.user} />
+						</div>
+						<div>
+							<AppointmentBox pet={pet}/>
+						</div>
 					</div>
 				</div>
 			</div>

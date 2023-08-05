@@ -1,5 +1,6 @@
 'use client';
 
+import { BiBadgeCheck } from 'react-icons/bi';
 import { Breed } from '@/app/components/navbar/Breeds';
 import { SafePet, SafeUser } from '@/app/types';
 import Avatar from '../Avatar';
@@ -20,26 +21,30 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, breed, user }) => {
 				<div className="flex flex-col gap-2">
 					<div
 						className="
-              text-xl
-              font-semibold
-              flex
-              flex-row
-              items-center
-              gap-2
-            "
+						text-xl
+						font-semibold
+						flex
+						flex-row
+						justify-between
+						gap-2
+						"
 					>
-						<div>Posted by {user.name}</div>
+						<div className='flex place-items-center'>
+							<p className='pr-1'>Posted by {user.name}</p>
+							{/* TODO: Add check for verified account */}
+							<BiBadgeCheck size={20} className='fill-sky-500'/>
+						</div>
 						<Avatar src={user?.image} />
 					</div>
 					<div
 						className="
-              flex
-              flex-row
-              items-center
-              gap-4
-              font-light
-              text-neutral-500
-            "
+						flex
+						flex-row
+						items-center
+						gap-4
+						font-light
+						text-neutral-500
+						"
 					>
 						<div>User info to be added</div>
 					</div>
