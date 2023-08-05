@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 	const router = useRouter();
 
 	return (
-		<div className="fixed w-full bg-white z-50 pb-4">
+		<div className="sticky top-0 w-full bg-white z-50 pb-4">
 			<div className="py-6 shadow-md">
 				<Container>
 					<div
@@ -42,9 +42,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 					</div>
 				</Container>
 			</div>
-			{/* <div className="flex flex-row justify-center">
+			<div className="flex flex-row justify-center">
 				<Pages />
-			</div> */}
+			</div>
 		</div>
 	);
 };
