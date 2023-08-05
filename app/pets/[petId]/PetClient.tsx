@@ -28,13 +28,13 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 	return (
 		<Container>
 			<div className="max-w-screen-lg mx-auto">
-				<div className="flex flex-col gap-6">
+				<div className="flex flex-col gap-2">
 					<PetHead id={pet.id} pet={pet} currentUser={currentUser} />
 					<div
 						className="
 							grid
 							grid-cols-2
-							gap-4
+							gap-6
 							mt-6
 						"
 					>
