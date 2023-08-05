@@ -94,11 +94,14 @@ model Species {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
 
+  breeds Breed[]
   pets Pet[]
 }
 
 model Breed {
   id String @id @default(auto()) @map("_id") @db.ObjectId
+  species Species @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  speciesId String @db.ObjectId
   name String
 
   pets Pet[]
@@ -106,7 +109,6 @@ model Breed {
 
 model Country {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  petId String @unique @db.ObjectId
   name String
 
   pets Pet[]

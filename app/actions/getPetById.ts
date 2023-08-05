@@ -13,7 +13,10 @@ export default async function getPetById(params: IParams) {
 				id: petId,
 			},
 			include: {
-				user: true,
+				species: true,
+				breed: true,
+				origin: true,
+				lister: true,
 			},
 		});
 
@@ -25,11 +28,11 @@ export default async function getPetById(params: IParams) {
 			...pet,
 			postedAt: pet.postedAt.toISOString(),
 			birthday: pet.birthday.toISOString(),
-			user: {
-				...pet.user,
-				createdAt: pet.user.createdAt.toISOString(),
-				updatedAt: pet.user.updatedAt.toISOString(),
-				emailVerified: pet.user.emailVerified?.toISOString() || null,
+			lister: {
+				...pet.lister,
+				createdAt: pet.lister.createdAt.toISOString(),
+				updatedAt: pet.lister.updatedAt.toISOString(),
+				emailVerified: pet.lister.emailVerified?.toISOString() || null,
 			},
 		};
 	} catch (error: any) {

@@ -45,7 +45,10 @@ export default async function getPets(params: IPetsParams) {
 				postedAt: 'desc',
 			},
 			include: {
-				user: true,
+				species: true,
+				breed: true,
+				origin: true,
+				lister: true,
 			},
 		});
 
@@ -54,10 +57,10 @@ export default async function getPets(params: IPetsParams) {
 			birthday: pet.birthday.toISOString(),
 			postedAt: pet.postedAt.toISOString(),
 			user: {
-				...pet.user,
-				createdAt: pet.user.createdAt.toISOString(),
-				updatedAt: pet.user.updatedAt.toISOString(),
-				emailVerified: pet.user.emailVerified?.toISOString() || null,
+				...pet.lister,
+				createdAt: pet.lister.createdAt.toISOString(),
+				updatedAt: pet.lister.updatedAt.toISOString(),
+				emailVerified: pet.lister.emailVerified?.toISOString() || null,
 			},
 		}));
 
