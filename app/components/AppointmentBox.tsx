@@ -43,6 +43,7 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
 	return (
         <div 
             className='
+                sticky
                 grid 
                 grid-cols-none
                 gap-2
