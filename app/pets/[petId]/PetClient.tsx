@@ -30,16 +30,9 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 			<div className="max-w-screen-lg mx-auto">
 				<div className="flex flex-col gap-2">
 					<PetHead id={pet.id} pet={pet} currentUser={currentUser} />
-					<div
-						className="
-							grid
-							grid-cols-2
-							gap-6
-							mt-6
-						"
-					>
+					<div className="grid grid-cols-2 gap-8 mt-6">
 						<div>
-							<PetInfo pet={pet} breed={breed} user={pet.lister} />
+							<PetInfo pet={pet} lister={pet.lister} />
 						</div>
 						<div>
 							<AppointmentBox pet={pet}/>
