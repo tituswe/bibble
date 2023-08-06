@@ -1,10 +1,12 @@
 'use client';
 
+import getAge from '@/app/actions/getAge';
+
 import { Breed, Country, Gender, Species } from '@prisma/client';
 import { SafePet, SafeUser } from '@/app/types';
 
 import { BiBadgeCheck, BiMaleSign, BiFemaleSign, BiBone, BiCalendar, BiCheck, BiX } from 'react-icons/bi';
-import { AiOutlineInfoCircle, AiOutlineMedicineBox, AiOutlineQuestionCircle } from 'react-icons/ai';
+import { AiOutlineAudit, AiOutlineInfoCircle, AiOutlineMedicineBox, AiOutlineQuestionCircle } from 'react-icons/ai';
 
 import Avatar from '../Avatar';
 
@@ -15,10 +17,9 @@ interface PetInfoProps {
 		species: Species;
 		breed: Breed;
 	});
-	lister: SafeUser;
 }
 
-const PetInfo: React.FC<PetInfoProps> = ({ pet, lister }) => {
+const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 	const listDate = new Date(pet.postedAt);
 	const birthDate = new Date(pet.birthday);
 
@@ -26,32 +27,32 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, lister }) => {
 		return Math.floor((new Date(Date.now()).getTime() - listDate.getTime()) / (1000 * 60 * 60 * 24))
 	}
 
-	const getAgeToString = () => {
-		let today = new Date(Date.now());
-		let age = today.getFullYear() - birthDate.getFullYear();
-		let m = today.getMonth() - birthDate.getMonth();
-		age = age + m / 12;
-		if (age < 1) {
-			return `${age * 12} months`;
-		} else {
-			let y = Math.floor(age);
-			let remainingMonths = Math.round((age - y) * 12)
-			return remainingMonths == 0 ? `${y} years` : `${y} years ${remainingMonths} months`
-		}
-	}
+	// const getAgeToString = () => {
+	// 	let today = new Date(Date.now());
+	// 	let age = today.getFullYear() - birthDate.getFullYear();
+	// 	let m = today.getMonth() - birthDate.getMonth();
+	// 	age = age + m / 12;
+	// 	if (age < 1) {
+	// 		return `${age * 12} months`;
+	// 	} else {
+	// 		let y = Math.floor(age);
+	// 		let remainingMonths = Math.round((age - y) * 12)
+	// 		return remainingMonths == 0 ? `${y} years` : `${y} years ${remainingMonths} months`
+	// 	}
+	// }
 
 	return (
 		<>
 			<div className="col-span-4 flex flex-col gap-4">
 				{/* Listing Information Header */}
 				<div className="flex flex-col gap-2">
-					<div className="text-xl ont-semibold flex flex-row justify-between gap-2">
+					<div className="text-xl font-semibold flex flex-row justify-between gap-2">
 						<div className='flex place-items-center'>
-							<p className='pr-1'>Posted by {lister.name}</p>
+							<p className='pr-1'>Posted by {pet.lister.name ? pet.lister.name : 'NO LISTER NAME'}</p>
 							{/* TODO: Add check for verified account */}
 							<BiBadgeCheck size={20} className='fill-sky-500'/>
 						</div>
-						<Avatar src={lister?.image} />
+						<Avatar src={pet.lister.image} />
 					</div>
 					<div className="font-light text-neutral-500">
 						Listed on {listDate.toLocaleDateString('en-GB', { timeZone: 'SST' })} ({getDaysAgo()} days ago)
@@ -80,7 +81,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, lister }) => {
 
 					<div className='flex items-center gap-4'>
 						<BiCalendar size={18} className='fill-neutral-700'/>
-						{birthDate.toLocaleDateString('en-GB', { timeZone: 'SST'})} ({getAgeToString()})
+						{birthDate.toLocaleDateString('en-GB', { timeZone: 'SST'})} ({getAge({ data: pet})})
 					</div>
 				</div>
 
@@ -134,8 +135,8 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, lister }) => {
 					</div>
 
 					<div className='flex items-center gap-4'>
-						{pet.isHealthTested ? <BiCheck size={18} className='fill-neutral-700'/> : <BiX size={18} className='fill-neutral-700'/>}
-						Vaccinated (CHANGE DB FIELD 'isHealthTested' to 'isVaccianted')
+						{false ? <BiCheck size={18} className='fill-neutral-700'/> : <BiX size={18} className='fill-neutral-700'/>}
+						Vaccinated (MISSING FIELD IN DB)
 					</div>
 
 					<div className='flex items-center gap-4'>
@@ -149,6 +150,27 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, lister }) => {
 					</div>
 				</div>
 
+				{/* Legal Information */}
+				<div className='flex flex-col gap-2'>
+					<div className='flex items-center gap-1'>
+						<AiOutlineAudit size={23} className='fill-neutral-300'/> <hr className='grow'/>
+					</div>
+
+					<div className='flex items-center gap-4'>
+						{pet.isHdbApproved ? <BiCheck size={18} className='fill-neutral-700'/> : <BiX size={18} className='fill-neutral-700'/>}
+						HDB Approved
+					</div>
+
+					<div className='flex items-center gap-4'>
+						{pet.isHealthTested ? <BiCheck size={18} className='fill-neutral-700'/> : <BiX size={18} className='fill-neutral-700'/>}
+						AVS License
+					</div>
+
+					<div className='flex items-center gap-4'>
+						{pet.isHealthTested ? <BiCheck size={18} className='fill-neutral-700'/> : <BiX size={18} className='fill-neutral-700'/>}
+						Health Tested
+					</div>
+				</div>
 			</div>
 		</>
 	);

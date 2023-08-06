@@ -1,15 +1,14 @@
 'use client';
 
+import { SafePet, SafeUser } from '@/app/types';
+import { Breed, Country, Species } from '@prisma/client';
+
+import Heading from '../Heading';
+import ShareButton from '../ShareButton';
+import HeartButton from '../HeartButton';
+
 import Image from 'next/image';
 
-import getAge from '@/app/actions/getAge';
-import { SafePet, SafeUser } from '@/app/types';
-import { toCamelCase } from '@/app/utils/toCamelCase';
-import Heading from '../Heading';
-import HeartButton from '../HeartButton';
-import ShareButton from '../ShareButton';
-import SaveButton from '../SaveButton';
-import { Breed, Country, Species } from '@prisma/client';
 
 interface PetHeadProps {
 	id: string;
@@ -26,15 +25,17 @@ const PetHead: React.FC<PetHeadProps> = ({ id, pet, currentUser }) => {
 	const images = pet.images;
 	return (
 		<>
+			{/* Head Banner */}
 			<div className='flex justify-between'>
 				<div>
 					<Heading title={pet.breed.name} subtitle={pet.origin.name}/>
 				</div>
-				<div className='flex place-self-end'>
+				<div className='flex place-self-end gap-2'>
 					<ShareButton petId={pet.id} currentUser={currentUser}/>
-					<SaveButton petId={pet.id} currentUser={currentUser}/>
+					<HeartButton petId={pet.id} currentUser={currentUser} showSubtext/>
 				</div>
 			</div>
+
 			<div className='grid grid-cols-2 gap-2'>
 				{/* Cover Image */}
 				<div className='w-full aspect-square overflow-hidden rounded-2xl relative'>

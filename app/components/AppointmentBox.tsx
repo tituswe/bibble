@@ -54,7 +54,7 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
                 border
                 border-neutral-200
                 bg-white
-                drop-shadow-xl
+                shadow-xl
                 '
         >
             <div className="w-5/6 mt-8 mb-2">
