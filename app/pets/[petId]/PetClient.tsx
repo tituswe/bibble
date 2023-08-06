@@ -77,11 +77,13 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 
 					{/* Lister Info */}
 					<div className='flex flex-col gap-2'>
+						{/* Divider */}
 						<div className='flex items-center gap-1'>
 							<AiOutlineUser size={23} className='fill-neutral-300'/> <hr className='grow'/>
 						</div>
 
 						<div className='grid grid-cols-2 gap-8'>
+							{/* Left Column */}
 							<div className='flex flex-col gap-4'>
 								{/* Lister Banner */}
 								<div className='flex flex-rows items-center gap-4'>
@@ -107,8 +109,14 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 								</div>
 							</div>
 
-							<GeoCard />
+							{/* Right Column */}
+							{/* TODO: ADD LISTER ADDRESS FIELD TO DB */}
+							<GeoCard location={'96 Joo Chiat Terrace Singapore 427253'}/> 
 						</div>
+					</div>
+
+					<div className='w-full h-96'>
+						fdsjlaf
 					</div>
 				</div>
 			</div>
