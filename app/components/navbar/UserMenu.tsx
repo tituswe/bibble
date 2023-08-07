@@ -9,7 +9,7 @@ import useLoginModal from '@/app/hooks/useLoginModal';
 import usePostModal from '@/app/hooks/usePostModal';
 
 import { SafeUser } from '@/app/types';
-import { BiBell, BiHeart, BiLogOutCircle } from 'react-icons/bi';
+import { BiBell, BiHeart } from 'react-icons/bi';
 import { LuSettings } from 'react-icons/lu';
 import Avatar from '../Avatar';
 import Button from './Button';
@@ -35,21 +35,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 		{
 			onClick: () => router.push('/favorites'),
 			icon: BiHeart,
-			disabled: true,
+			// disabled: true,
 		},
 		{
 			onClick: () => router.push('/messages'),
 			icon: BiBell,
-			disabled: true,
+			// disabled: true,
 		},
 		{
 			onClick: () => router.push('/settings'),
 			icon: LuSettings,
-			disabled: true,
-		},
-		{
-			onClick: () => signOut(),
-			icon: BiLogOutCircle,
+			// disabled: true,
 		},
 	];
 
@@ -80,26 +76,53 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 						disabled={button.disabled}
 					/>
 				))}
-				<div className="block lg:hidden">
-					<div
-						onClick={toggleOpen}
-						className="
+				<div
+					onClick={toggleOpen}
+					className="
         			relative
-        			w-10
-        			h-10 
-        			border 
+        			border-[1px]
+							border-neutral-200
         			rounded-full 
         			flex 
         			items-center 
         			justify-center
 							cursor-pointer
 							hover:scale-110
+							hover:bg-neutral-200
 							hover:shadow-md
-							text-neutral-300
+							transition
 						"
-					>
-						<Avatar src={currentUser?.image} />
-					</div>
+				>
+					{currentUser ? (
+						<div
+							className="
+							relative
+							flex
+        			items-center 
+        			justify-center
+							w-10
+							h-10
+						"
+						>
+							<Avatar src={currentUser?.image} />
+						</div>
+					) : (
+						<div
+							className="
+							p-4
+							h-10
+							px-4
+							text-sm
+							font-semibold
+							flex
+							items-center
+							gap-3
+							whitespace-nowrap
+							"
+						>
+							Sign In
+						</div>
+					)}
 				</div>
 			</div>
 
@@ -109,7 +132,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             absolute 
             rounded-xl 
             shadow-md 
-            w-[20vw] 
+						w-72
             bg-white 
             overflow-hidden
             right-0
@@ -124,14 +147,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 								onClick={() => router.push('/postings')}
 								label="My postings"
 							/>
-							<MenuItem
-								onClick={() => router.push('/favorites')}
-								label="My favorite pets"
-							/>
-							<MenuItem onClick={() => {}} label="Profile" />
-							<MenuItem onClick={() => {}} label="Settings" />
-							<MenuItem onClick={() => {}} label="Help" />
 							<hr />
+							<MenuItem onClick={() => {}} label="Help Center" />
 							<MenuItem onClick={() => signOut()} label="Logout" />
 						</>
 					</div>

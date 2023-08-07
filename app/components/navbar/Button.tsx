@@ -15,13 +15,14 @@ const Button: React.FC<ButtonProps> = ({ onClick, icon: Icon, disabled }) => {
         relative
         w-10
         h-10 
-        border 
         rounded-full 
         flex 
         items-center 
         justify-center
+        transition
         ${!disabled && 'cursor-pointer'}
         ${!disabled && 'hover:scale-110'}
+        ${!disabled && 'hover:bg-neutral-200'}
         ${!disabled && 'hover:shadow-md'}
         ${disabled && 'text-neutral-300'}
       `}
