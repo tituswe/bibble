@@ -1,5 +1,6 @@
 'use client';
 
+import { Breed, Country, Gender, Species } from '@prisma/client';
 import getAge from '@/app/actions/getAge';
 import { SafePet, SafeUser } from '@/app/types';
 import Image from 'next/image';
@@ -13,7 +14,10 @@ import HeartButton from '../HeartButton';
 
 interface PetCardProps {
 	data: SafePet & {
-		user: SafeUser;
+		lister: SafeUser;
+		origin: Country;
+		species: Species;
+		breed: Breed;
 	};
 	onAction?: (id: string) => void;
 	disabled?: boolean;
@@ -57,28 +61,28 @@ const PetCard: React.FC<PetCardProps> = ({
 				<div className="flex justify-center">
 					<div
 						className="
-	          aspect-square
-	          w-5/6
+						aspect-square
+						w-5/6
 						absolute
-	          overflow-hidden
-	          rounded-3xl
+						overflow-hidden
+						rounded-3xl
 						z-10
 						shadow-lg
 						hover:drop-shadow-lg
 						hover:scale-110
 						transition
-	        "
+	        			"
 					>
 						<Image
 							fill
 							alt="Pet"
-							src={data.imageSrc}
+							src={data.images[0]}
 							className="
-	            object-cover
-	            h-5/6
-	            w-5/6
-	            transition
-	          "
+							object-cover
+							h-5/6
+							w-5/6
+							transition
+							"
 						/>
 						<div className="absolute top-3 right-3">
 							<HeartButton petId={data.id} currentUser={currentUser} />
@@ -91,8 +95,8 @@ const PetCard: React.FC<PetCardProps> = ({
 						<div className="absolute inset-0 flex items-end p-4">
 							<div className="flex flex-col w-full px-2">
 								<div className="flex flex-row items-center gap-2">
-									<div className="font-semibold text-lg">{data.breed}</div>
-									{data.gender == 'male' ? (
+									<div className="font-semibold text-lg">{data.breed.name}</div>
+									{data.gender == Gender.MALE ? (
 										<BiMaleSign className="text-xl" />
 									) : (
 										<BiFemaleSign className="text-xl" />
@@ -105,8 +109,8 @@ const PetCard: React.FC<PetCardProps> = ({
 								<hr />
 								<div className="flex flex-row justify-between items-center pt-4 text-neutral-500 text-sm">
 									<div className="flex flex-row items-center gap-1">
-										<Avatar small src={data.user?.image} />
-										<div className="pl-1">{data.user?.name}</div>
+										<Avatar small src={data.lister?.image} />
+										<div className="pl-1">{data.lister?.name}</div>
 										<LuVerified className="text-sky-500" />
 									</div>
 									<div>${data.price}</div>

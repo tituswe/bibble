@@ -9,7 +9,7 @@ import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
 
 import usePostModal from '@/app/hooks/usePostModal';
 import Heading from '../Heading';
-import BirthdayInput from '../inputs/BirthdayInput';
+import DateInput from '../inputs/DateInput';
 import BreedInput from '../inputs/BreedInput';
 import GenderInput from '../inputs/GenderInput';
 import ImageUpload from '../inputs/ImageUpload';
@@ -185,15 +185,17 @@ const PostModal = () => {
 
 	if (step === STEPS.BIRTHDAY) {
 		bodyContent = (
-			<div className="flex flex-col h-full gap-8">
+			<div className="flex flex-col h-full gap-20">
 				<Heading
 					title="Introduce us to your friend"
 					subtitle="What's their birthday?"
 				/>
-				<BirthdayInput
-					date={birthday}
-					onChange={(date: Date) => setCustomValue('birthday', date)}
-				/>
+				<div className='scale-150 pb-4'>
+					<DateInput
+						date={birthday}
+						onChange={(date: Date) => setCustomValue('birthday', date)}
+					/>
+				</div>
 			</div>
 		);
 	}

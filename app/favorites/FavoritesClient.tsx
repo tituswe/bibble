@@ -1,13 +1,19 @@
 'use client';
 
+import { Breed, Country, Species } from '@prisma/client';
 import Container from '../components/Container';
 import Heading from '../components/Heading';
 import PetCard from '../components/pets/PetCard';
 import { SafePet, SafeUser } from '../types';
 
 interface FavoritesClientProps {
-	pets: (SafePet & { user: SafeUser })[];
-	currentUser: SafeUser | null;
+	currentUser?: SafeUser | null;
+	pets: (SafePet & {
+		lister: SafeUser;
+		origin: Country;
+		species: Species;
+		breed: Breed;
+	})[];
 }
 
 const FavoritesClient: React.FC<FavoritesClientProps> = ({

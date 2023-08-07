@@ -178,7 +178,7 @@ export const createPetsData = (
 	for (let i: number = 0; i < 8; i++) {
 		data.push({
 			name: null,
-			speciesId: '64ce0d940b45376b879caf7e',
+			speciesId: '64ce515e4b302a2efb975b74',
 			saleType: getRandomSaleType(),
 			gender: getRandomGender(),
 			breedId: getRandomId(breeds),

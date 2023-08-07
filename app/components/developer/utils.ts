@@ -7,9 +7,8 @@ export function getRandomGender() {
 export function getRandomSaleType() {
 	return Math.random() > 0.5
 		? SaleType.PURCHASE
-		: Math.random() > 0.5
-		? SaleType.ADOPT
-		: SaleType.RESCUE;
+		: SaleType.ADOPT
+
 }
 
 export function getRandomHairCoat() {
