@@ -72,8 +72,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	return (
 		<div className="relative">
 			<div className="flex flex-row items-center gap-3">
-				{navButtons.map((button) => (
+				{navButtons.map((button, i) => (
 					<Button
+						key={i}
 						onClick={button.onClick}
 						icon={button.icon}
 						disabled={button.disabled}
