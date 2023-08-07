@@ -3,6 +3,7 @@ import EmptyState from '../components/EmptyState';
 
 import getCurrentUser from '../actions/getCurrentUser';
 import getFavoritePets from '../actions/getFavoritePets';
+import BrowsingPage from '../components/BrowsingPage';
 import FavoritesClient from './FavoritesClient';
 
 const FavoritePage = async () => {
@@ -22,7 +23,9 @@ const FavoritePage = async () => {
 
 	return (
 		<ClientOnly>
-			<FavoritesClient pets={pets} currentUser={currentUser} />
+			<BrowsingPage>
+				<FavoritesClient pets={pets} currentUser={currentUser} />
+			</BrowsingPage>
 		</ClientOnly>
 	);
 };

@@ -1,3 +1,4 @@
+import BrowsingPage from '../components/BrowsingPage';
 import ClientOnly from '../components/ClientOnly';
 
 import RescueClient from './RescueClient';
@@ -5,7 +6,9 @@ import RescueClient from './RescueClient';
 const RescuePage = async () => {
 	return (
 		<ClientOnly>
-			<RescueClient />
+			<BrowsingPage>
+				<RescueClient />
+			</BrowsingPage>
 		</ClientOnly>
 	);
 };

@@ -5,7 +5,7 @@ import Box from '../Box';
 import Container from '../Container';
 
 import { IconType } from 'react-icons';
-import { BiBulb, BiCompass, BiHomeHeart, BiStar } from 'react-icons/bi';
+import { BiBulb, BiCompass, BiHomeHeart } from 'react-icons/bi';
 
 export type Page = {
 	label: string;
@@ -17,16 +17,10 @@ export const pages: Page[] = [
 	{
 		label: 'featured',
 		icon: BiBulb,
-		disabled: true,
 	},
 	{
 		label: 'explore',
 		icon: BiCompass,
-	},
-	{
-		label: 'popular',
-		icon: BiStar,
-		disabled: true,
 	},
 	{
 		label: 'rescue',
@@ -49,6 +43,7 @@ const Pages = () => {
           justify-between
           overflow-x-auto
 					gap-8
+					sticky
         "
 			>
 				{pages.map((p) => (

@@ -1,3 +1,4 @@
+import BrowsingPage from '../components/BrowsingPage';
 import ClientOnly from '../components/ClientOnly';
 
 import FeaturedClient from './FeaturedClient';
@@ -5,7 +6,9 @@ import FeaturedClient from './FeaturedClient';
 const FeaturedPage = async () => {
 	return (
 		<ClientOnly>
-			<FeaturedClient />
+			<BrowsingPage>
+				<FeaturedClient />
+			</BrowsingPage>
 		</ClientOnly>
 	);
 };

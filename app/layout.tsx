@@ -29,11 +29,11 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={font.className}>
 				<ToasterProvider />
+				<Navbar currentUser={currentUser} />
 				<SearchModal />
 				<PostModal />
 				<LoginModal />
 				<RegisterModal />
-				<Navbar currentUser={currentUser} />
 				<div>{children}</div>
 			</body>
 		</html>
