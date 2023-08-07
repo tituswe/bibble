@@ -2,6 +2,7 @@ import ClientOnly from '../components/ClientOnly';
 
 import getCurrentUser from '../actions/getCurrentUser';
 import getPets, { IPetsParams } from '../actions/getPets';
+import BrowsingPage from '../components/BrowsingPage';
 import EmptyState from '../components/EmptyState';
 import ExploreClient from './ExploreClient';
 
@@ -23,7 +24,9 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
 
 	return (
 		<ClientOnly>
-			<ExploreClient currentUser={currentUser} pets={pets} />
+			<BrowsingPage>
+				<ExploreClient currentUser={currentUser} pets={pets} />
+			</BrowsingPage>
 		</ClientOnly>
 	);
 };
