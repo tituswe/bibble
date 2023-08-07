@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useState } from 'react';
-import { DateRange, Range } from 'react-date-range';
+import { Range } from 'react-date-range';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
 import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
@@ -90,14 +90,7 @@ const SearchModal = () => {
 					icon={BiFemaleSign}
 				/>
 			</div>
-			<div className="flex justify-center">
-				<DateRange
-					editableDateInputs={true}
-					onChange={(item) => setAgeRange(item.selection)}
-					moveRangeOnFirstSelection={false}
-					ranges={[ageRange]}
-				/>
-			</div>
+			<div>IMPLEMENT AGE RANGE SELECT</div>
 			<div>IMPLEMENT POSTED RANGE SELECT</div>
 		</div>
 	);
