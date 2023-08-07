@@ -1,10 +1,16 @@
-import { BiNetworkChart } from 'react-icons/bi';
+import { IconType } from 'react-icons';
 
-interface AnalyticsButtonProps {
+interface LabelButtonProps {
 	disabled?: boolean;
+	label: string;
+	icon: IconType;
 }
 
-const AnalyticsButton: React.FC<AnalyticsButtonProps> = ({ disabled }) => {
+const LabelButton: React.FC<LabelButtonProps> = ({
+	disabled,
+	label,
+	icon: Icon,
+}) => {
 	return (
 		<div className="relative hidden md:block">
 			<div className="flex flex-row items-center gap-3">
@@ -17,8 +23,6 @@ const AnalyticsButton: React.FC<AnalyticsButtonProps> = ({ disabled }) => {
             md:pl-4
             text-sm
             font-semibold
-            border-[1px]
-            border-neutral-200
             flex
             flex-row
             items-center
@@ -26,20 +30,21 @@ const AnalyticsButton: React.FC<AnalyticsButtonProps> = ({ disabled }) => {
             rounded-full
             ${!disabled && 'cursor-pointer'}
             ${!disabled && 'hover:shadow-md'}
+            ${!disabled && 'hover:bg-neutral-200'}
 						${!disabled && 'hover:scale-110'}
+            ${disabled && 'text-neutral-300'}
             transition
             whitespace-nowrap
-            ${disabled && 'text-neutral-300'}
           `}
 				>
 					<div className="py-1.5">
-						<BiNetworkChart size={18} />
+						<Icon size={18} />
 					</div>
-					Analytics
+					{label}
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default AnalyticsButton;
+export default LabelButton;
