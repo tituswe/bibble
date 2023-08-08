@@ -97,9 +97,7 @@ const PetCard: React.FC<PetCardProps> = ({
 						<div className="absolute inset-0 flex items-end p-4">
 							<div className="flex flex-col w-full px-2">
 								<div className="flex flex-row items-center gap-2">
-									<div className="font-semibold text-lg">
-										{data.breed.name} {species}
-									</div>
+									<div className="font-semibold text-md">{data.breed.name}</div>
 									{data.gender == Gender.MALE ? (
 										<BiMaleSign className="text-xl" />
 									) : (

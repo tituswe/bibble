@@ -175,10 +175,10 @@ export const createPetsData = (
 ): Omit<Pet, 'id'>[] => {
 	let data: Omit<Pet, 'id'>[] = [];
 
-	for (let i: number = 0; i < 8; i++) {
+	for (let i: number = 0; i < 24; i++) {
 		data.push({
 			name: null,
-			speciesId: '64ce515e4b302a2efb975b74',
+			speciesId: '64d2703b484ade8a1bc55099',
 			saleType: getRandomSaleType(),
 			gender: getRandomGender(),
 			breedId: getRandomId(breeds),
