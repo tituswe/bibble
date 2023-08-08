@@ -83,6 +83,7 @@ model Pet {
   vaccines Vaccine[]
   isNeutered Boolean
   isHypoallergenic Boolean
+  isMicrochipped Boolean
   hairCoat HairCoat
   isPottyTrained Boolean
   locationValue String

@@ -1,7 +1,8 @@
 'use client';
 
-import getAge from '@/app/actions/getAge';
 import { SafePet, SafeUser } from '@/app/types';
+import getAgeLabel from '@/app/utils/getAgeLabel';
+import getSpeciesLabel from '@/app/utils/getSpeciesLabel';
 import { Breed, Country, Gender, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -35,7 +36,8 @@ const PetCard: React.FC<PetCardProps> = ({
 	currentUser,
 }) => {
 	const router = useRouter();
-	const age = getAge({ data });
+	const age = getAgeLabel({ data });
+	const species = getSpeciesLabel({ data });
 
 	const handleCancel = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -95,7 +97,9 @@ const PetCard: React.FC<PetCardProps> = ({
 						<div className="absolute inset-0 flex items-end p-4">
 							<div className="flex flex-col w-full px-2">
 								<div className="flex flex-row items-center gap-2">
-									<div className="font-semibold text-lg">{data.breed.name}</div>
+									<div className="font-semibold text-lg">
+										{data.breed.name} {species}
+									</div>
 									{data.gender == Gender.MALE ? (
 										<BiMaleSign className="text-xl" />
 									) : (
@@ -103,8 +107,11 @@ const PetCard: React.FC<PetCardProps> = ({
 									)}
 								</div>
 								<div className="flex flex-row justify-between text-sky-500 text-sm pb-4 pt-1">
-									<div>Perth, Australia</div>
-									<div>{age}</div>
+									<div className="flex flex-row gap-2">
+										<div>{data.origin.name}</div>
+										<div>|</div>
+										<div>{age} Old</div>
+									</div>
 								</div>
 								<hr />
 								<div className="flex flex-row justify-between items-center pt-4 text-neutral-500 text-sm">

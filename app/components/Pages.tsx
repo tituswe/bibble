@@ -34,19 +34,21 @@ interface PagesProps {
 }
 
 const Pages: React.FC<PagesProps> = ({ scrollY }) => {
+	const pathname = usePathname() || '';
 	const isUnlocked = scrollY > 24;
-	const pathname = usePathname();
+	const offsets: Record<string, string> = {
+		featured: '-translate-x-28',
+		explore: '',
+		rescue: 'translate-x-28',
+	};
+	console.log(pathname);
 
 	return (
 		<Container>
 			<div
 				className={`
-          flex
-          flex-row
-          items-center
-          justify-between
-          overflow-x-auto
-					gap-8
+					flex 
+					flex-col
 					bg-white
 					rounded-full
 					py-4
@@ -54,19 +56,40 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 					transition
 					translate
 					duration-300
+					items-center
 					${isUnlocked && 'shadow-lg'}
 					${isUnlocked && 'hover:translate-y-20'}
-        `}
+				`}
 			>
-				{pages.map((p) => (
-					<Box
-						key={p.label}
-						label={p.label}
-						selected={pathname === `/${p.label}`}
-						icon={p.icon}
-						disabled={p.disabled}
-					/>
-				))}
+				<div
+					className={`
+          flex
+          flex-row
+          items-center
+          justify-between
+					gap-8
+        `}
+				>
+					{pages.map((p, i) => (
+						<Box
+							key={i}
+							label={p.label}
+							selected={pathname === `/${p.label}`}
+							icon={p.icon}
+							disabled={p.disabled}
+						/>
+					))}
+				</div>
+				<div
+					className={`
+						w-[56px]
+						border-[1px]
+						border-sky-500
+						transition
+						duration-100
+						${offsets[pathname.substring(1)]}
+					`}
+				></div>
 			</div>
 		</Container>
 	);

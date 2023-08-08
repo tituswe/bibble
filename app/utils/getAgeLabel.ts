@@ -4,7 +4,7 @@ interface IParams {
 	data: SafePet;
 }
 
-export default function getAge(params: IParams): string {
+export default function getAgeLabel(params: IParams): string {
 	const { data } = params;
 
 	const today = new Date();
