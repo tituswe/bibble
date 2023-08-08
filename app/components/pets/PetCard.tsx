@@ -1,8 +1,8 @@
 'use client';
 
-import { Breed, Country, Gender, Species } from '@prisma/client';
 import getAge from '@/app/actions/getAge';
 import { SafePet, SafeUser } from '@/app/types';
+import { Breed, Country, Gender, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -61,17 +61,17 @@ const PetCard: React.FC<PetCardProps> = ({
 				<div className="flex justify-center">
 					<div
 						className="
-						aspect-square
-						w-5/6
-						absolute
-						overflow-hidden
-						rounded-3xl
-						z-10
-						shadow-lg
-						hover:drop-shadow-lg
-						hover:scale-110
-						transition
-	        			"
+							aspect-square
+							w-5/6
+							absolute
+							overflow-hidden
+							rounded-3xl
+							z-10
+							shadow-lg
+							hover:drop-shadow-lg
+							hover:scale-110
+							transition
+	       		"
 					>
 						<Image
 							fill
