@@ -192,6 +192,7 @@ export const createPetsData = (
 			isHdbApproved: getRandomBoolean(),
 			// need to do avsLicense
 			// need to do vaccines
+			isMicrochipped: getRandomBoolean(),
 			isNeutered: getRandomBoolean(),
 			isHypoallergenic: getRandomBoolean(),
 			hairCoat: getRandomHairCoat(),

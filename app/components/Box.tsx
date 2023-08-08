@@ -5,20 +5,38 @@ import { IconType } from 'react-icons';
 import { toCamelCase } from '../utils/toCamelCase';
 
 interface BoxProps {
+	key: number;
 	label: string;
 	icon: IconType;
 	selected?: boolean;
 	disabled?: boolean;
 }
 
-const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
+const Box: React.FC<BoxProps> = ({
+	key,
+	label,
+	selected,
+	icon: Icon,
+	disabled,
+}) => {
 	const router = useRouter();
+
+	const delay = (ms: number) =>
+		new Promise((resolve) => setTimeout(resolve, ms));
+
+	const handleOnClick = async () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+
+		await delay(900 * (1 - Math.exp(-window.scrollY * Math.PI)));
+		router.push(`/${label}`);
+	};
 
 	return (
 		<div
-			onClick={() => {
-				router.push(`/${label}`);
-			}}
+			onClick={handleOnClick}
 			className={`
         flex
         flex-col
@@ -26,17 +44,10 @@ const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
         justify-center
         gap-2
         p-3
-        border-b-2
         transition
+				w-[80px]
         ${!disabled && 'hover:text-neutral-800'}
         ${!disabled && 'cursor-pointer'}
-        ${
-					disabled
-						? 'border-none'
-						: selected
-						? 'border-b-sky-500'
-						: 'border-transparent'
-				}
         ${
 					disabled
 						? 'text-neutral-200'

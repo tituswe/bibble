@@ -7,7 +7,16 @@ interface LinkTextProps {
 
 const LinkText: React.FC<LinkTextProps> = ({ children, bold }) => {
 	return (
-		<div className={`${bold && 'font-medium'} font-light text-sm p-3`}>
+		<div
+			onClick={() => {}}
+			className={`
+        ${bold && 'font-medium'} 
+        font-light 
+        text-sm 
+        p-3 
+        hover:underline
+      `}
+		>
 			{children}
 		</div>
 	);
