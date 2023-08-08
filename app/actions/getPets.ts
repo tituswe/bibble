@@ -49,6 +49,7 @@ export default async function getPets(params: IPetsParams) {
 				breed: true,
 				origin: true,
 				lister: true,
+				vaccines: true,
 			},
 		});
 
@@ -56,7 +57,7 @@ export default async function getPets(params: IPetsParams) {
 			...pet,
 			birthday: pet.birthday.toISOString(),
 			postedAt: pet.postedAt.toISOString(),
-			user: {
+			lister: {
 				...pet.lister,
 				createdAt: pet.lister.createdAt.toISOString(),
 				updatedAt: pet.lister.updatedAt.toISOString(),

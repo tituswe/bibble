@@ -5,10 +5,7 @@ export function getRandomGender() {
 }
 
 export function getRandomSaleType() {
-	return Math.random() > 0.5
-		? SaleType.PURCHASE
-		: SaleType.ADOPT
-
+	return Math.random() > 0.5 ? SaleType.PURCHASE : SaleType.ADOPT;
 }
 
 export function getRandomHairCoat() {
@@ -41,7 +38,13 @@ export function getRandomId(data: Array<any>): string {
 	return data[randomIndex].id;
 }
 
-export function getRandomDate(): Date {
+export function getRandomLicenseNumber() {
+	const num = Math.floor(Math.random() * 900000) + 100000;
+
+	return num.toString();
+}
+
+export function getRandomDate(maxDate?: Date): Date {
 	const currentDate = new Date();
 	const randomMonthOffset = Math.floor(Math.random() * 12) + 1;
 	const oneMonthAgo = new Date(
@@ -52,6 +55,10 @@ export function getRandomDate(): Date {
 	const timeDifference = currentDate.getTime() - oneMonthAgo.getTime();
 	const randomTimeOffset = Math.floor(Math.random() * timeDifference);
 	const randomDate = new Date(oneMonthAgo.getTime() + randomTimeOffset);
+
+	if (maxDate && randomDate > maxDate) {
+		return getRandomDate(maxDate);
+	}
 
 	return randomDate;
 }
