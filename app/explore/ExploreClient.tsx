@@ -30,7 +30,6 @@ const ExploreClient: React.FC<ExploreClientProps> = ({ currentUser, pets }) => {
 		<Container>
 			<div
 				className="
-						pt-12
 						grid
 						grid-cols-1
 						sm:grid-cols-2
