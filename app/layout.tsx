@@ -30,16 +30,17 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={font.className}>
 				<ToasterProvider />
-				<Navbar currentUser={currentUser} />
+				<div className="flex flex-col gap-4">
+					<Navbar currentUser={currentUser} />
+					<div className="h-full pt-20">{children}</div>
+					<Footer />
+				</div>
+
+				{/* Modal Provider */}
 				<FilterModal />
 				<PostModal />
 				<LoginModal />
 				<RegisterModal />
-				<div className="flex flex-col gap-8">
-					<div className="h-full pt-20">{children}</div>
-					<div></div>
-				</div>
-				<Footer />
 			</body>
 		</html>
 	);
