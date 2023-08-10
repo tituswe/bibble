@@ -6,10 +6,10 @@ import './globals.css';
 import ToasterProvider from './providers/ToasterProvider';
 
 import Footer from './components/footer/Footer';
+import FilterModal from './components/modals/FilterModal';
 import LoginModal from './components/modals/LoginModal';
 import PostModal from './components/modals/PostModal';
 import RegisterModal from './components/modals/RegisterModal';
-import SearchModal from './components/modals/SearchModal';
 import Navbar from './components/navbar/Navbar';
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default async function RootLayout({
 			<body className={font.className}>
 				<ToasterProvider />
 				<Navbar currentUser={currentUser} />
-				<SearchModal />
+				<FilterModal />
 				<PostModal />
 				<LoginModal />
 				<RegisterModal />
