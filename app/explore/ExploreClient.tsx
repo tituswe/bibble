@@ -4,6 +4,7 @@ import { Breed, Country, Species } from '@prisma/client';
 import ClientOnly from '../components/ClientOnly';
 import Container from '../components/Container';
 import EmptyState from '../components/EmptyState';
+import FilterBox from '../components/FilterBox';
 import PetCard from '../components/pets/PetCard';
 import { SafePet, SafeUser } from '../types';
 
@@ -43,6 +44,9 @@ const ExploreClient: React.FC<ExploreClientProps> = ({ currentUser, pets }) => {
 				{pets.map((pet) => {
 					return <PetCard currentUser={currentUser} key={pet.id} data={pet} />;
 				})}
+			</div>
+			<div className="fixed top-24 right-24 z-40">
+				<FilterBox />
 			</div>
 		</Container>
 	);
