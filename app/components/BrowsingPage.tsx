@@ -26,7 +26,7 @@ const BrowsingPage: React.FC<BrowsingPageProps> = ({ children }) => {
 			<div className="flex justify-center py-2 sticky top-6 z-40">
 				<Pages scrollY={scrollY} />
 			</div>
-			<div className="pt-2">{children}</div>
+			<div>{children}</div>
 		</div>
 	);
 };

@@ -2,7 +2,6 @@
 
 import { SafePet, SafeUser } from '@/app/types';
 import getAgeLabel from '@/app/utils/getAgeLabel';
-import getSpeciesLabel from '@/app/utils/getSpeciesLabel';
 import { Breed, Country, Gender, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -37,7 +36,6 @@ const PetCard: React.FC<PetCardProps> = ({
 }) => {
 	const router = useRouter();
 	const age = getAgeLabel({ data });
-	const species = getSpeciesLabel({ data });
 
 	const handleCancel = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,7 +57,120 @@ const PetCard: React.FC<PetCardProps> = ({
 	    col-span-1 cursor-pointer group
 	  "
 		>
-			<div className="relative gap-2 w-full">
+			<div className="flex flex-col gap-2 w-full">
+				<div
+					className="
+						aspect-square 
+            w-full 
+            relative 
+            overflow-hidden 
+            rounded-3xl
+						transition
+						scale-95
+						hover:scale-100
+						hover:shadow-xl
+						z-10
+	       	"
+				>
+					<Image
+						fill
+						alt="Pet"
+						src={data.images[0]}
+						className="
+							object-cover 
+							h-full 
+							w-full 
+							transition
+						"
+					/>
+					<div className="absolute top-3 right-3">
+						<HeartButton petId={data.id} currentUser={currentUser} />
+					</div>
+				</div>
+				<div
+					className="
+						flex 
+						flex-col 
+						border-[1px] 
+						px-4 
+						rounded-3xl
+					"
+				>
+					<div
+						className="
+							flex 
+							flex-row 
+							justify-end 
+							h-0 
+							w-full
+							translate-x-6
+							-translate-y-1
+						"
+					>
+						<div
+							className="
+								flex 
+								items-center 
+								justify-center 
+								bg-white 
+								rounded-full 
+								p-2
+							"
+						>
+							{data.gender == Gender.MALE ? (
+								<BiMaleSign className="text-sky-500 text-sm" />
+							) : (
+								<BiFemaleSign className="text-rose-500 text-sm" />
+							)}
+						</div>
+					</div>
+					<div className="flex flex-col items-center py-4">
+						<div className="font-semibold text-md overflow-clip h-[24px]">
+							{data.breed.name}
+						</div>
+
+						<div
+							className="
+								font-light 
+								text-sm
+							 text-neutral-500 
+								overflow-clip 
+								h-[20px]
+							"
+						>
+							{data.origin.name}, {age}
+						</div>
+					</div>
+					<hr className="mx-4" />
+					<div
+						className="
+							flex 
+							flex-row 
+							justify-between 
+							items-center 
+							text-sm 
+							py-4 
+							gap-1
+						"
+					>
+						<div className="flex flex-row items-center gap-1">
+							<Avatar small src={data.lister?.image} />
+							<div className="pl-1">{data.lister?.name}</div>
+							<LuVerified className="text-sky-500" />
+						</div>
+						<div className="font-light text-neutral-500">$ {data.price}</div>
+					</div>
+				</div>
+				{onAction && actionLabel && (
+					<Button
+						disabled={disabled}
+						small
+						label={actionLabel}
+						onClick={handleCancel}
+					/>
+				)}
+			</div>
+			{/* <div className="relative gap-2 w-full">
 				<div className="flex justify-center">
 					<div
 						className="
@@ -95,8 +206,8 @@ const PetCard: React.FC<PetCardProps> = ({
 				<div className="flex flex-col pt-24">
 					<div className="relative aspect-square rounded-3xl border-[1px] z-0 shadow-md">
 						<div className="absolute inset-0 flex items-end p-4">
-							<div className="flex flex-col w-full px-2">
-								<div className="flex flex-row items-center gap-2">
+							<div className="flex flex-col w-full">
+								<div className="flex flex-row justify-between items-center gap-2">
 									<div className="font-semibold text-md">{data.breed.name}</div>
 									{data.gender == Gender.MALE ? (
 										<BiMaleSign className="text-xl" />
@@ -132,7 +243,7 @@ const PetCard: React.FC<PetCardProps> = ({
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

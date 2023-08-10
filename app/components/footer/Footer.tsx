@@ -9,19 +9,16 @@ const Footer = () => {
 
 	const toggleOpen = useCallback(() => {
 		setIsOpen(!isOpen);
+		alert('Implement Footer');
 	}, [isOpen]);
 
 	return (
 		<div
 			onClick={toggleOpen}
 			className={`
-        fixed
+				sticky
         bottom-0
-        h-64
         w-full
-        translate
-        duration-300
-        ${!isOpen && 'translate-y-52'}
         bg-white
         z-50
         px-8
