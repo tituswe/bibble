@@ -35,7 +35,10 @@ export default async function RootLayout({
 				<PostModal />
 				<LoginModal />
 				<RegisterModal />
-				<div className="h-full pt-20">{children}</div>
+				<div className="flex flex-col gap-8">
+					<div className="h-full pt-20">{children}</div>
+					<div></div>
+				</div>
 				<Footer />
 			</body>
 		</html>
