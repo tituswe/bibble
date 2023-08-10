@@ -1,12 +1,12 @@
 'use client';
 
-import useSearchModal from '@/app/hooks/useSearchModal';
+import useFilterModal from '@/app/hooks/useFilterModal';
 import { useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
+import { BiSlider } from 'react-icons/bi';
 
 const Search = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const searchModal = useSearchModal();
+	const filterModal = useFilterModal();
 
 	return (
 		<div
@@ -64,14 +64,18 @@ const Search = () => {
 					Find your best friend
 				</label>
 				<div
+					onClick={filterModal.onOpen}
 					className="
               p-2
-              bg-sky-500
+              border
               rounded-full
-              text-white
+              hover:shadow-md
+              hover:bg-neutral-200
+              hover:scale-110
+              transition
             "
 				>
-					<BiSearch size={18} />
+					<BiSlider size={18} />
 				</div>
 			</div>
 		</div>

@@ -6,16 +6,20 @@ import qs from 'query-string';
 import { useCallback, useState } from 'react';
 import { Range } from 'react-date-range';
 
-import useSearchModal from '@/app/hooks/useSearchModal';
-import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
-import Heading from '../Heading';
-import GenderInput from '../inputs/GenderInput';
+import useFilterModal from '@/app/hooks/useFilterModal';
+import AgeInput from '../filter/AgeInput';
+import BreedInput from '../filter/BreedInput';
+import GenderInput from '../filter/GenderInput';
+import MiscInput from '../filter/MiscInput';
+import OriginInput from '../filter/OriginInput';
+import SaleTypeInput from '../filter/SaleTypeInput';
+import SpeciesInput from '../filter/SpeciesInput';
 import Modal from './Modal';
 
 const SearchModal = () => {
 	const router = useRouter();
 	const params = useSearchParams();
-	const searchModal = useSearchModal();
+	const filterModal = useFilterModal();
 
 	const [gender, setGender] = useState('');
 	const [breed, setBreed] = useState('');
@@ -65,40 +69,32 @@ const SearchModal = () => {
 			{ skipNull: true }
 		);
 
-		searchModal.onClose();
+		filterModal.onClose();
 		router.push(url);
-	}, [breed, gender, ageRange, searchModal, router, params]);
+	}, [breed, gender, ageRange, filterModal, router, params]);
 
 	const bodyContent = (
 		<div className="flex flex-col gap-8">
-			<Heading
-				title="What kind of friend are you looking for?"
-				subtitle="Find them here!"
-			/>
-			<div>IMPLEMENT BREED SELECT</div>
-			<div className="flex flex-row justify-between gap-3">
-				<GenderInput
-					onClick={() => onSet('male', gender, setGender)}
-					selected={gender === 'male'}
-					label={'male'}
-					icon={BiMaleSign}
-				/>
-				<GenderInput
-					onClick={() => onSet('female', gender, setGender)}
-					selected={gender === 'female'}
-					label={'female'}
-					icon={BiFemaleSign}
-				/>
-			</div>
-			<div>IMPLEMENT AGE RANGE SELECT</div>
-			<div>IMPLEMENT POSTED RANGE SELECT</div>
+			<SaleTypeInput />
+			<hr />
+			<SpeciesInput />
+			<hr />
+			<BreedInput />
+			<hr />
+			<AgeInput />
+			<hr />
+			<OriginInput />
+			<hr />
+			<GenderInput />
+			<hr />
+			<MiscInput />
 		</div>
 	);
 
 	return (
 		<Modal
-			isOpen={searchModal.isOpen}
-			onClose={searchModal.onClose}
+			isOpen={filterModal.isOpen}
+			onClose={filterModal.onClose}
 			onSubmit={onSubmit}
 			title="Filters"
 			actionLabel="Search"

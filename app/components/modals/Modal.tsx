@@ -159,7 +159,7 @@ const Modal: React.FC<ModalProps> = ({
 								{body}
 							</div>
 							{/* FOOTER */}
-							<div className="flex flex-col gap-2 p-6">
+							<div className="flex flex-col gap-2 p-6 border-t-[1px]">
 								<div
 									className="
                     flex
