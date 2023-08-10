@@ -41,7 +41,6 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 		explore: '',
 		rescue: 'translate-x-28',
 	};
-	console.log(pathname);
 
 	return (
 		<Container>
@@ -57,6 +56,7 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 					translate
 					duration-300
 					items-center
+        	hover:shadow-lg
 					${isUnlocked && 'shadow-lg'}
 					${isUnlocked && 'hover:translate-y-20'}
 				`}
