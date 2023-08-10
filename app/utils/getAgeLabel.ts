@@ -22,10 +22,10 @@ export default function getAgeLabel(params: IParams): string {
 
 	if (ageInMonths >= 12) {
 		const ageInYears = Math.floor(ageInMonths / 12);
-		return `${ageInYears} Years`;
+		return ageInYears === 1 ? `${ageInYears} Year` : `${ageInYears} Years`;
 	} else if (ageInMonths >= 1) {
-		return `${ageInMonths} Months`;
+		return ageInMonths === 1 ? `${ageInMonths} Month` : `${ageInMonths} Months`;
 	} else {
-		return `${ageInDays} Days`;
+		return ageInDays === 1 ? `${ageInDays} Day` : `${ageInDays} Days`;
 	}
 }

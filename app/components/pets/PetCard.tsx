@@ -6,7 +6,13 @@ import { Breed, Country, Gender, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
+import {
+	BiFemaleSign,
+	BiGlobe,
+	BiHourglass,
+	BiMaleSign,
+	BiRuler,
+} from 'react-icons/bi';
 import { LuVerified } from 'react-icons/lu';
 import Avatar from '../Avatar';
 import Button from '../Button';
@@ -118,27 +124,43 @@ const PetCard: React.FC<PetCardProps> = ({
 							"
 						>
 							{data.gender == Gender.MALE ? (
-								<BiMaleSign className="text-sky-500 text-sm" />
+								<BiMaleSign className="text-sky-500" />
 							) : (
-								<BiFemaleSign className="text-rose-500 text-sm" />
+								<BiFemaleSign className="text-rose-500" />
 							)}
 						</div>
 					</div>
-					<div className="flex flex-col items-center py-4">
+					<div className="flex flex-col items-center gap-3 py-4">
 						<div className="font-semibold text-md overflow-clip h-[24px]">
 							{data.breed.name}
 						</div>
 
 						<div
 							className="
+								flex
+								flex-col
+								justify-center	
 								font-light 
 								text-sm
 							 text-neutral-500 
 								overflow-clip 
-								h-[20px]
+								h-auto
+								w-full
+								gap-1
 							"
 						>
-							{data.origin.name}, {age}
+							<div className="flex flex-row items-center gap-2">
+								<BiGlobe />
+								{data.origin.name}
+							</div>
+							<div className="flex flex-row items-center gap-2">
+								<BiHourglass />
+								{age} Old
+							</div>
+							<div className="flex flex-row items-center gap-2">
+								<BiRuler />
+								TO IMPLEMENT
+							</div>
 						</div>
 					</div>
 					<hr className="mx-4" />
