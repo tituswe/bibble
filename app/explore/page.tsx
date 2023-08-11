@@ -2,8 +2,8 @@ import ClientOnly from '../components/ClientOnly';
 
 import getCurrentUser from '../actions/getCurrentUser';
 import getPets, { IPetsParams } from '../actions/getPets';
-import BrowsingPage from '../components/browsing/BrowsingPage';
 import EmptyState from '../components/EmptyState';
+import KennelWrapper from '../wrappers/KennelWrapper';
 import ExploreClient from './ExploreClient';
 
 interface ExplorePageProps {
@@ -24,9 +24,9 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
 
 	return (
 		<ClientOnly>
-			<BrowsingPage>
+			<KennelWrapper>
 				<ExploreClient currentUser={currentUser} pets={pets} />
-			</BrowsingPage>
+			</KennelWrapper>
 		</ClientOnly>
 	);
 };

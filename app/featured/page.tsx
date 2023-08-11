@@ -1,14 +1,14 @@
-import BrowsingPage from '../components/browsing/BrowsingPage';
 import ClientOnly from '../components/ClientOnly';
+import KennelWrapper from '../wrappers/KennelWrapper';
 
 import FeaturedClient from './FeaturedClient';
 
 const FeaturedPage = async () => {
 	return (
 		<ClientOnly>
-			<BrowsingPage>
+			<KennelWrapper>
 				<FeaturedClient />
-			</BrowsingPage>
+			</KennelWrapper>
 		</ClientOnly>
 	);
 };

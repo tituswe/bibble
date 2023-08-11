@@ -1,14 +1,14 @@
-import BrowsingPage from '../components/browsing/BrowsingPage';
 import ClientOnly from '../components/ClientOnly';
+import KennelWrapper from '../wrappers/KennelWrapper';
 
 import RescueClient from './RescueClient';
 
 const RescuePage = async () => {
 	return (
 		<ClientOnly>
-			<BrowsingPage>
+			<KennelWrapper>
 				<RescueClient />
-			</BrowsingPage>
+			</KennelWrapper>
 		</ClientOnly>
 	);
 };
