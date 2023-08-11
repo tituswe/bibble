@@ -72,9 +72,9 @@ const PetCard: React.FC<PetCardProps> = ({
             overflow-hidden 
             rounded-3xl
 						transition
-						scale-95
-						hover:scale-100
+						scale-100
 						hover:shadow-xl
+						hover:-translate-y-2
 						z-10
 	       	"
 				>
