@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Pages from './Pages';
+import Pages from '../components/Pages';
 
-interface BrowsingPageProps {
+interface KennelWrapperProps {
 	children: React.ReactNode;
 }
 
-const BrowsingPage: React.FC<BrowsingPageProps> = ({ children }) => {
+const KennelWrapper: React.FC<KennelWrapperProps> = ({ children }) => {
 	const [scrollY, setScrollY] = useState(0);
 
 	const handleScroll = () => {
@@ -31,4 +31,4 @@ const BrowsingPage: React.FC<BrowsingPageProps> = ({ children }) => {
 	);
 };
 
-export default BrowsingPage;
+export default KennelWrapper;

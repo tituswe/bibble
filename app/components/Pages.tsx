@@ -1,8 +1,8 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import Box from '../Box';
-import Container from '../Container';
+import Box from './Box';
+import Container from './Container';
 
 import { IconType } from 'react-icons';
 import { BiBulb, BiCompass, BiHomeHeart } from 'react-icons/bi';

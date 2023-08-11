@@ -1,16 +1,11 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
-import getCurrentUser from './actions/getCurrentUser';
 import './globals.css';
 import ToasterProvider from './providers/ToasterProvider';
 
-import Footer from './components/footer/Footer';
-import FilterModal from './components/modals/FilterModal';
-import LoginModal from './components/modals/LoginModal';
-import PostModal from './components/modals/PostModal';
-import RegisterModal from './components/modals/RegisterModal';
-import Navbar from './components/navbar/Navbar';
+import ModalProvider from './providers/ModalProvider';
+import BibbleWrapper from './wrappers/BibbleWrapper';
 
 export const metadata: Metadata = {
 	title: 'Bibble',
@@ -24,23 +19,12 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const currentUser = await getCurrentUser();
-
 	return (
 		<html lang="en">
 			<body className={font.className}>
 				<ToasterProvider />
-				<div className="flex flex-col gap-4">
-					<Navbar currentUser={currentUser} />
-					<div className="h-full pt-20">{children}</div>
-					<Footer />
-				</div>
-
-				{/* Modal Provider */}
-				<FilterModal />
-				<PostModal />
-				<LoginModal />
-				<RegisterModal />
+				<BibbleWrapper>{children}</BibbleWrapper>
+				<ModalProvider />
 			</body>
 		</html>
 	);
