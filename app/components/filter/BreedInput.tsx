@@ -52,6 +52,7 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 				flex-col
 			"
 		>
+			<div className="font-semibold pb-6 text-2xl">Breeds</div>
 			<div
 				className="
 				flex

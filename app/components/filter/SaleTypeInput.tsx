@@ -94,7 +94,7 @@ const SaleTypeInput = () => {
 
 	return (
 		<div className="flex flex-col justify-center gap-6">
-			<div className="font-bold text-xl">Type of pet</div>
+			<div className="font-semibold text-2xl">Purchase Type</div>
 			<div className="flex flex-row justify-center">
 				{saleTypes.map((item, i) => (
 					<SaleTypeOption
