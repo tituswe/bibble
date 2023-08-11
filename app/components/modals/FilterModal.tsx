@@ -17,7 +17,7 @@ import SaleTypeInput from '../filter/SaleTypeInput';
 import SpeciesInput from '../filter/SpeciesInput';
 import Modal from './Modal';
 
-const SearchModal = () => {
+const FilterModal = () => {
 	const router = useRouter();
 	const params = useSearchParams();
 	const filterModal = useFilterModal();
@@ -100,10 +100,10 @@ const SearchModal = () => {
 			onClose={filterModal.onClose}
 			onSubmit={onSubmit}
 			title="Filters"
-			actionLabel="Search"
+			actionLabel="Filter"
 			body={bodyContent}
 		/>
 	);
 };
 
-export default SearchModal;
+export default FilterModal;

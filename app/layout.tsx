@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
 import './globals.css';
-import ToasterProvider from './providers/ToasterProvider';
 
-import ModalProvider from './providers/ModalProvider';
+import Providers from './providers/Providers';
 import BibbleWrapper from './wrappers/BibbleWrapper';
 
 export const metadata: Metadata = {
@@ -22,9 +21,9 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<ToasterProvider />
-				<BibbleWrapper>{children}</BibbleWrapper>
-				<ModalProvider />
+				<BibbleWrapper>
+					<Providers>{children}</Providers>
+				</BibbleWrapper>
 			</body>
 		</html>
 	);

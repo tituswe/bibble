@@ -1,11 +1,10 @@
 'use client';
 
+import Container from '@/app/components/Container';
 import { Breed, Country, Species } from '@prisma/client';
-import ClientOnly from '../components/ClientOnly';
-import Container from '../components/Container';
-import EmptyState from '../components/EmptyState';
-import PetCard from '../components/pets/PetCard';
-import { SafePet, SafeUser } from '../types';
+import EmptyState from '../../components/EmptyState';
+import PetCard from '../../components/pets/PetCard';
+import { SafePet, SafeUser } from '../../types';
 
 interface ExploreClientProps {
 	currentUser?: SafeUser | null;
@@ -19,11 +18,7 @@ interface ExploreClientProps {
 
 const ExploreClient: React.FC<ExploreClientProps> = ({ currentUser, pets }) => {
 	if (pets.length === 0) {
-		return (
-			<ClientOnly>
-				<EmptyState showReset />
-			</ClientOnly>
-		);
+		return <EmptyState showReset />;
 	}
 
 	return (

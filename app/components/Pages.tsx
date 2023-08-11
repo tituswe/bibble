@@ -54,7 +54,7 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 		});
 
 		await delay(900 * (1 - Math.exp(-window.scrollY * Math.PI)));
-		router.push(`/${label}`);
+		router.push(`/kennel/${label}`);
 	};
 
 	return (
@@ -89,7 +89,7 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 						<Box
 							key={i}
 							label={p.label}
-							selected={pathname === `/${p.label}`}
+							selected={pathname === `/kennel/${p.label}`}
 							icon={p.icon}
 							disabled={p.disabled}
 							onClick={() => onClick(p.label)}
@@ -103,7 +103,7 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 						border-sky-500
 						transition
 						duration-100
-						${offsets[pathname.substring(1)]}
+						${offsets[pathname.split('/kennel/')[1]]}
 					`}
 				></div>
 			</div>
