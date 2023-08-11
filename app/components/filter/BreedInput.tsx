@@ -4,7 +4,11 @@ import { Breed } from '@prisma/client';
 import { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
-const BreedInput = () => {
+interface BreedInputProps {
+	breeds: Breed[];
+}
+
+const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 	const [value, setValue] = useState('');
 	const [selected, setSelected] = useState<Array<Breed>>([]);
 

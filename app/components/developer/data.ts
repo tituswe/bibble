@@ -17,11 +17,12 @@ const hairCoats = ['SHORT', 'MEDIUM', 'LONG'];
 const saleTypes = ['PURCHASE', 'RESCUE', 'ADOPT'];
 
 export const speciesData: Omit<Species, 'id'>[] = [
-	{ name: 'Dog' },
-	{ name: 'Cat' },
-	{ name: 'Bird' },
-	{ name: 'Hamster' },
-	{ name: 'Rabbit' },
+	{ name: 'dog' },
+	{ name: 'cat' },
+	{ name: 'bird' },
+	{ name: 'rodent' },
+	{ name: 'rabbit' },
+	{ name: 'reptile' },
 ];
 
 export const breedsData: Omit<Breed, 'id'>[] = [
