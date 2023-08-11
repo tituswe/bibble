@@ -12,6 +12,7 @@ import BreedInput from '../filter/BreedInput';
 import GenderInput from '../filter/GenderInput';
 import MiscInput from '../filter/MiscInput';
 import OriginInput from '../filter/OriginInput';
+import PriceInput from '../filter/PriceInput';
 import SaleTypeInput from '../filter/SaleTypeInput';
 import SpeciesInput from '../filter/SpeciesInput';
 import Modal from './Modal';
@@ -80,6 +81,8 @@ const SearchModal = () => {
 			<SpeciesInput />
 			<hr />
 			<BreedInput />
+			<hr />
+			<PriceInput />
 			<hr />
 			<AgeInput />
 			<hr />

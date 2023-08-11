@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import Box from './Box';
-import Container from './Container';
+import { usePathname, useRouter } from 'next/navigation';
+import Box from '../Box';
+import Container from '../Container';
 
 import { IconType } from 'react-icons';
 import { BiBulb, BiCompass, BiHomeHeart } from 'react-icons/bi';
@@ -34,12 +34,27 @@ interface PagesProps {
 }
 
 const Pages: React.FC<PagesProps> = ({ scrollY }) => {
+	const router = useRouter();
 	const pathname = usePathname() || '';
 	const isUnlocked = scrollY > 24;
+
 	const offsets: Record<string, string> = {
 		featured: '-translate-x-28',
 		explore: '',
 		rescue: 'translate-x-28',
+	};
+
+	const delay = (ms: number) =>
+		new Promise((resolve) => setTimeout(resolve, ms));
+
+	const onClick = async (label: string) => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+
+		await delay(900 * (1 - Math.exp(-window.scrollY * Math.PI)));
+		router.push(`/${label}`);
 	};
 
 	return (
@@ -77,6 +92,7 @@ const Pages: React.FC<PagesProps> = ({ scrollY }) => {
 							selected={pathname === `/${p.label}`}
 							icon={p.icon}
 							disabled={p.disabled}
+							onClick={() => onClick(p.label)}
 						/>
 					))}
 				</div>
