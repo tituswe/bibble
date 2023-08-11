@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
-import getCurrentUser from './actions/getCurrentUser';
-import Navbar from './components/navbar/Navbar';
 import './globals.css';
-import ToasterProvider from './providers/ToasterProvider';
 
-import LoginModal from './components/modals/LoginModal';
-import PostModal from './components/modals/PostModal';
-import RegisterModal from './components/modals/RegisterModal';
-import SearchModal from './components/modals/SearchModal';
+import getCurrentUser from './actions/getCurrentUser';
+import Footer from './components/footer/Footer';
+import Navbar from './components/navbar/Navbar';
+import Providers from './providers/Providers';
 
 export const metadata: Metadata = {
 	title: 'Bibble',
@@ -28,13 +25,13 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<ToasterProvider />
-				<SearchModal />
-				<PostModal />
-				<LoginModal />
-				<RegisterModal />
-				<Navbar currentUser={currentUser} />
-				<div>{children}</div>
+				<Providers>
+					<div className="flex flex-col gap-4">
+						<Navbar currentUser={currentUser} />
+						<div className="h-full pt-20">{children}</div>
+						<Footer />
+					</div>
+				</Providers>
 			</body>
 		</html>
 	);

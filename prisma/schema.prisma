@@ -26,7 +26,6 @@ enum SaleType {
   ADOPT
 }
 
-
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String?
@@ -84,6 +83,7 @@ model Pet {
   vaccines Vaccine[]
   isNeutered Boolean
   isHypoallergenic Boolean
+  isMicrochipped Boolean
   hairCoat HairCoat
   isPottyTrained Boolean
   locationValue String

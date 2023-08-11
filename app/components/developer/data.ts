@@ -17,11 +17,12 @@ const hairCoats = ['SHORT', 'MEDIUM', 'LONG'];
 const saleTypes = ['PURCHASE', 'RESCUE', 'ADOPT'];
 
 export const speciesData: Omit<Species, 'id'>[] = [
-	{ name: 'Dog' },
-	{ name: 'Cat' },
-	{ name: 'Bird' },
-	{ name: 'Hamster' },
-	{ name: 'Rabbit' },
+	{ name: 'dog' },
+	{ name: 'cat' },
+	{ name: 'bird' },
+	{ name: 'rodent' },
+	{ name: 'rabbit' },
+	{ name: 'reptile' },
 ];
 
 export const breedsData: Omit<Breed, 'id'>[] = [
@@ -175,10 +176,10 @@ export const createPetsData = (
 ): Omit<Pet, 'id'>[] => {
 	let data: Omit<Pet, 'id'>[] = [];
 
-	for (let i: number = 0; i < 8; i++) {
+	for (let i: number = 0; i < 24; i++) {
 		data.push({
 			name: null,
-			speciesId: '64ce515e4b302a2efb975b74',
+			speciesId: '64d2703b484ade8a1bc55099',
 			saleType: getRandomSaleType(),
 			gender: getRandomGender(),
 			breedId: getRandomId(breeds),
@@ -192,6 +193,7 @@ export const createPetsData = (
 			isHdbApproved: getRandomBoolean(),
 			// need to do avsLicense
 			// need to do vaccines
+			isMicrochipped: getRandomBoolean(),
 			isNeutered: getRandomBoolean(),
 			isHypoallergenic: getRandomBoolean(),
 			hairCoat: getRandomHairCoat(),

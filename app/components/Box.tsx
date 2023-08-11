@@ -1,24 +1,27 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { IconType } from 'react-icons';
 import { toCamelCase } from '../utils/toCamelCase';
 
 interface BoxProps {
+	key: number;
 	label: string;
 	icon: IconType;
 	selected?: boolean;
 	disabled?: boolean;
+	onClick?: (e: any) => void;
 }
 
-const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
-	const router = useRouter();
-
+const Box: React.FC<BoxProps> = ({
+	label,
+	selected,
+	icon: Icon,
+	disabled,
+	onClick,
+}) => {
 	return (
 		<div
-			onClick={() => {
-				router.push(`/${label}`);
-			}}
+			onClick={onClick}
 			className={`
         flex
         flex-col
@@ -26,22 +29,15 @@ const Box: React.FC<BoxProps> = ({ label, selected, icon: Icon, disabled }) => {
         justify-center
         gap-2
         p-3
-        border-b-2
         transition
+				w-[80px]
         ${!disabled && 'hover:text-neutral-800'}
         ${!disabled && 'cursor-pointer'}
         ${
 					disabled
-						? 'border-none'
-						: selected
-						? 'border-b-sky-500'
-						: 'border-transparent'
-				}
-        ${
-					disabled
 						? 'text-neutral-200'
 						: selected
-						? 'text-neutral-800'
+						? 'text-sky-500'
 						: 'text-neutral-500'
 				}
       `}

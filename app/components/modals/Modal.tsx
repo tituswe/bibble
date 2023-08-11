@@ -73,8 +73,6 @@ const Modal: React.FC<ModalProps> = ({
           justify-center
           items-center
           flex
-          overflow-x-hidden
-          overflow-y-auto
           fixed
           inset-0
           z-50
@@ -87,10 +85,10 @@ const Modal: React.FC<ModalProps> = ({
 					className="
             relative
             w-full
-            md:w-4/6
-            lg:w-3/6
-            xl:w-2/5
-						max-w-lg
+            md:w-2xl
+            lg:w-2xl
+            xl:w-2xl
+						max-w-2xl
             my-6
             mx-auto
 						h-full
@@ -115,6 +113,8 @@ const Modal: React.FC<ModalProps> = ({
             		h-full
 								lg:h-auto
 								md:h-auto
+								lg:max-h-[90vh]
+								md:max-h-[90vh]
                 border-0
                 rounded-lg
                 shadow-lg
@@ -155,9 +155,11 @@ const Modal: React.FC<ModalProps> = ({
 								<div className="text-lg font-semibold">{title}</div>
 							</div>
 							{/* BODY */}
-							<div className="relative flex-auto p-6">{body}</div>
+							<div className="relative flex-auto overflow-y-auto p-8">
+								{body}
+							</div>
 							{/* FOOTER */}
-							<div className="flex flex-col gap-2 p-6">
+							<div className="flex flex-col gap-2 p-6 border-t-[1px]">
 								<div
 									className="
                     flex
