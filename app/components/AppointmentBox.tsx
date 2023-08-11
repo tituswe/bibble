@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from "react";
+import useReserveVisitationModal from "../hooks/useReserveVisitationModal";
+
 import { BiChevronDownCircle } from 'react-icons/bi';
 
-import DateInput from "./inputs/DateInput";
-import { SafePet } from "../types";
-import { useState } from "react";
+import { SafePet } from '@/app/types';
+
 import Button from "./Button";
 
 interface AppointmentBoxProps {
@@ -13,26 +15,12 @@ interface AppointmentBoxProps {
 
 const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
     const { price } = pet;
+
+    const reserveVisitationModal = useReserveVisitationModal();
+    
     const [appointmentDate, setAppointmentDate] = useState(new Date(Date.now()));
-    const [showDatePicker, setShowDatePicker] = useState(false);
-
     const [appointmentTime, setAppointmentTime] = useState(new Date(Date.now()));
-    const [showTimePicker, setShowTimePicker] = useState(false);
-
     const [numberOfVisitors, setNumberOfVisitors] = useState(1);
-    const [showNumberPicker, setShowNumberPicker] = useState(false);
-
-    const toggleShowDatePicker = () => {
-        setShowDatePicker(!showDatePicker);
-    }
-
-    const toggleShowTimePicker = () => {
-        setShowTimePicker(!showTimePicker);
-    }
-
-    const toggleShowNumberPicker = () => {
-        setShowNumberPicker(!showNumberPicker);
-    }
 
     const handleReserveVisitation = () => {
         // TODO: Implement reserve visitation
@@ -65,24 +53,19 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
                 <div className="flex">
                     <div className="relative w-1/2 border-r p-3 pl-5">
                         <p className="text-lg font-semibold">Date</p>
-                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition" onClick={toggleShowDatePicker}>{appointmentDate.getDate()}/{appointmentDate.getMonth()}/{appointmentDate.getFullYear()}</button>
-                        {showDatePicker && (
-                            <div className="absolute z-10 top-13 right-0 bg-white p-3 shadow-2xl rounded-xl">
-                                <DateInput date={appointmentDate} onChange={(date: Date) => setAppointmentDate(date)}/>
-                                <Button label="Select Date" onClick={toggleShowDatePicker}/>
-                            </div>
-                        )}
+                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition"
+                        onClick={reserveVisitationModal.onOpen}>
+                            {appointmentDate.getDate()}/{appointmentDate.getMonth()}/{appointmentDate.getFullYear()}
+                        </button>
                     </div>
                     
                     <div className="relative w-1/2 p-3 pl-5">
                         <p className="text-lg font-semibold">Time</p>
-                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition" onClick={toggleShowTimePicker}>{appointmentTime.getHours()} : {appointmentTime.getMinutes()} hrs</button>
-                        {showTimePicker && (
-                            <div className="absolute z-10 top-13 right-0 bg-white p-3 shadow-2xl rounded-xl">
-                                <p>TODO: Implement Time Picker</p>
-                                <Button label="Select Time" onClick={toggleShowTimePicker}/>
-                            </div>
-                        )}
+                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition" 
+                        onClick={reserveVisitationModal.onOpen}>
+                            {appointmentTime.getHours()} : {appointmentTime.getMinutes()} hrs
+                        </button>
+
                     </div>
                 </div>
                 
@@ -91,15 +74,12 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
                 <div className="flex justify-between">
                     <div className="relative w-1/2 p-3 pl-5">
                         <p className="text-lg font-semibold">Number of Visitors</p>
-                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition" onClick={toggleShowNumberPicker}>{numberOfVisitors} persons</button>
-                        {showNumberPicker && (
-                            <div className="absolute z-10 top-13 left-3 bg-white p-3 shadow-2xl rounded-xl">
-                                <p>TODO: Implement Number Picker</p>
-                                <Button label="Select Number" onClick={toggleShowNumberPicker}/>
-                            </div>
-                        )}
+                        <button className="underline underline-offset-2 font-light hover:text-sky-500 transition"
+                        onClick={reserveVisitationModal.onOpen}>
+                            {numberOfVisitors} persons
+                        </button>
                     </div>
-                    <button className='p-3 pr-5 self-center' onClick={toggleShowNumberPicker}>
+                    <button className='p-3 pr-5 self-center' onClick={reserveVisitationModal.onOpen}>
                         <BiChevronDownCircle size={24} className='fill-neutral-700 hover:fill-sky-500 transition'/>
                     </button>
                 </div>
