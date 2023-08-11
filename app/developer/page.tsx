@@ -1,5 +1,3 @@
-import ClientOnly from '../components/ClientOnly';
-
 import getBreeds from '../actions/getBreeds';
 import getCountries from '../actions/getCountries';
 import { IPetsParams } from '../actions/getPets';
@@ -17,14 +15,12 @@ const DeveloperPage = async ({ searchParams }: DeveloperPageProps) => {
 	const breeds = await getBreeds();
 	const countries = await getCountries();
 	return (
-		<ClientOnly>
-			<DeveloperClient
-				users={users}
-				species={species}
-				breeds={breeds}
-				countries={countries}
-			/>
-		</ClientOnly>
+		<DeveloperClient
+			users={users}
+			species={species}
+			breeds={breeds}
+			countries={countries}
+		/>
 	);
 };
 

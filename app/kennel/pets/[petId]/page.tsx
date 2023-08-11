@@ -1,6 +1,5 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getPetById from '@/app/actions/getPetById';
-import ClientOnly from '@/app/components/ClientOnly';
 import EmptyState from '@/app/components/EmptyState';
 import PetClient from './PetClient';
 
@@ -13,18 +12,10 @@ const PetPage = async ({ params }: { params: IParams }) => {
 	const currentUser = await getCurrentUser();
 
 	if (!pet) {
-		return (
-			<ClientOnly>
-				<EmptyState />
-			</ClientOnly>
-		);
+		return <EmptyState />;
 	}
 
-	return (
-		<ClientOnly>
-			<PetClient pet={pet} currentUser={currentUser} />
-		</ClientOnly>
-	);
+	return <PetClient pet={pet} currentUser={currentUser} />;
 };
 
 export default PetPage;

@@ -1,13 +1,7 @@
-import ClientOnly from '../components/ClientOnly';
-
 import SettingsClient from './SettingsClient';
 
 const SettingsPage = async () => {
-	return (
-		<ClientOnly>
-			<SettingsClient />
-		</ClientOnly>
-	);
+	return <SettingsClient />;
 };
 
 export default SettingsPage;
