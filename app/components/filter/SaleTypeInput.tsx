@@ -50,6 +50,7 @@ const SaleTypeOption: React.FC<SaleTypeOptionProps> = ({
 			w-[200px]
 			items-center
 			cursor-pointer
+			transition
 			hover:shadow-inner
 			hover:bg-neutral-100
 			${selected && 'bg-neutral-100'}
