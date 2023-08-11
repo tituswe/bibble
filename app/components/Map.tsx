@@ -21,7 +21,7 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
         <GoogleMap
             mapContainerClassName="w-full h-full"
             center={center}
-            zoom={19}
+            zoom={16}
         >
             <Marker position={coordinates} />
         </GoogleMap>

@@ -42,7 +42,7 @@ const GeoCard: React.FC<GeoCardProps> = ({ location }) => {
     }, [])
 
     return isLoaded ? (
-        <div className='h-4/6 bg-neutral-200 shadow-xl rounded-2xl'>
+        <div className='h-96 bg-neutral-200 shadow-xl rounded-2xl'>
             {/* Header */}
             <div className='flex flex-rows m-4 justify-between items-center'>
                 <BiCurrentLocation size={20} className='fill-neutral-500'/>
@@ -52,7 +52,7 @@ const GeoCard: React.FC<GeoCardProps> = ({ location }) => {
             </div>
 
             {/* Map */}
-            <div className='h-5/6 bg-white content-center'>
+            <div className='h-80 content-center'>
                 <Map coordinates={data ? data.coordinates : { lat: -25.344, lng: 131.031 }}/>
             </div>
         </div>
