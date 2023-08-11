@@ -3,7 +3,7 @@ import EmptyState from '../components/EmptyState';
 
 import getCurrentUser from '../actions/getCurrentUser';
 import getFavoritePets from '../actions/getFavoritePets';
-import BrowsingPage from '../components/BrowsingPage';
+import BrowsingPage from '../components/browsing/BrowsingPage';
 import FavoritesClient from './FavoritesClient';
 
 const FavoritePage = async () => {

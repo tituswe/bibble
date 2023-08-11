@@ -1,4 +1,4 @@
-import BrowsingPage from '../components/BrowsingPage';
+import BrowsingPage from '../components/browsing/BrowsingPage';
 import ClientOnly from '../components/ClientOnly';
 
 import RescueClient from './RescueClient';

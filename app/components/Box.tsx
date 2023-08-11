@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { IconType } from 'react-icons';
 import { toCamelCase } from '../utils/toCamelCase';
 
@@ -10,33 +9,19 @@ interface BoxProps {
 	icon: IconType;
 	selected?: boolean;
 	disabled?: boolean;
+	onClick?: (e: any) => void;
 }
 
 const Box: React.FC<BoxProps> = ({
-	key,
 	label,
 	selected,
 	icon: Icon,
 	disabled,
+	onClick,
 }) => {
-	const router = useRouter();
-
-	const delay = (ms: number) =>
-		new Promise((resolve) => setTimeout(resolve, ms));
-
-	const handleOnClick = async () => {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth',
-		});
-
-		await delay(900 * (1 - Math.exp(-window.scrollY * Math.PI)));
-		router.push(`/${label}`);
-	};
-
 	return (
 		<div
-			onClick={handleOnClick}
+			onClick={onClick}
 			className={`
         flex
         flex-col
@@ -52,7 +37,7 @@ const Box: React.FC<BoxProps> = ({
 					disabled
 						? 'text-neutral-200'
 						: selected
-						? 'text-neutral-800'
+						? 'text-sky-500'
 						: 'text-neutral-500'
 				}
       `}
