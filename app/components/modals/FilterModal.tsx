@@ -7,6 +7,8 @@ import { useCallback, useState } from 'react';
 import { Range } from 'react-date-range';
 
 import useFilterModal from '@/app/hooks/useFilterModal';
+import { SafePet } from '@/app/types';
+import { Breed, Country, Species } from '@prisma/client';
 import AgeInput from '../filter/AgeInput';
 import BreedInput from '../filter/BreedInput';
 import GenderInput from '../filter/GenderInput';
@@ -17,7 +19,18 @@ import SaleTypeInput from '../filter/SaleTypeInput';
 import SpeciesInput from '../filter/SpeciesInput';
 import Modal from './Modal';
 
-const FilterModal = () => {
+interface FilterModalProps {
+	data: {
+		pets: SafePet[];
+		species: Species[];
+		breeds: Breed[];
+		origins: Country[];
+	};
+}
+
+const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
+	const { species, breeds, origins } = data;
+
 	const router = useRouter();
 	const params = useSearchParams();
 	const filterModal = useFilterModal();
@@ -29,17 +42,6 @@ const FilterModal = () => {
 		endDate: new Date(),
 		key: 'selection',
 	});
-
-	const onSet = useCallback(
-		(input: string, curr: string, setFn: (value: string) => void) => {
-			if (input == curr) {
-				input == '';
-			}
-
-			setFn(input);
-		},
-		[]
-	);
 
 	const onSubmit = useCallback(async () => {
 		let currentQuery = {};
@@ -78,15 +80,15 @@ const FilterModal = () => {
 		<div className="flex flex-col gap-8">
 			<SaleTypeInput />
 			<hr />
-			<SpeciesInput />
+			<SpeciesInput species={species} />
 			<hr />
-			<BreedInput />
+			<BreedInput breeds={breeds} />
 			<hr />
 			<PriceInput />
 			<hr />
 			<AgeInput />
 			<hr />
-			<OriginInput />
+			<OriginInput origins={origins} />
 			<hr />
 			<GenderInput />
 			<hr />

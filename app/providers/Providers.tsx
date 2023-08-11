@@ -1,5 +1,3 @@
-'use client';
-
 import ModalProvider from './ModalProvider';
 import ToasterProvider from './ToasterProvider';
 
