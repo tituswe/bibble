@@ -11,6 +11,7 @@ import {
 	AiOutlineMedicineBox,
 	AiOutlineQuestionCircle,
 } from 'react-icons/ai';
+
 import {
 	BiBadgeCheck,
 	BiBone,
@@ -42,20 +43,6 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 				(1000 * 60 * 60 * 24)
 		);
 	};
-
-	// const getAgeToString = () => {
-	// 	let today = new Date(Date.now());
-	// 	let age = today.getFullYear() - birthDate.getFullYear();
-	// 	let m = today.getMonth() - birthDate.getMonth();
-	// 	age = age + m / 12;
-	// 	if (age < 1) {
-	// 		return `${age * 12} months`;
-	// 	} else {
-	// 		let y = Math.floor(age);
-	// 		let remainingMonths = Math.round((age - y) * 12)
-	// 		return remainingMonths == 0 ? `${y} years` : `${y} years ${remainingMonths} months`
-	// 	}
-	// }
 
 	return (
 		<>
