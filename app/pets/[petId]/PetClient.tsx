@@ -16,6 +16,7 @@ import Heading from '@/app/components/Heading';
 import { BiBadgeCheck } from 'react-icons/bi';
 import Avatar from '@/app/components/Avatar';
 import GeoCard from '@/app/components/GeoCard';
+import Button from '@/app/components/Button';
 
 interface PetClientProps {
 	pet: (SafePet & {
@@ -63,7 +64,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 	return (
 		<Container>
 			<div className="max-w-screen-lg mx-auto">
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-4">
 					<PetHead id={pet.id} pet={pet} currentUser={currentUser} />
 					
 					<div className="grid grid-cols-2 gap-8 mt-6">
@@ -76,7 +77,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 					</div>
 
 					{/* Lister Info */}
-					<div className='flex flex-col gap-2'>
+					<div className='flex flex-col gap-6'>
 						{/* Divider */}
 						<div className='flex items-center gap-1'>
 							<AiOutlineUser size={23} className='fill-neutral-300'/> <hr className='grow'/>
@@ -84,7 +85,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 
 						<div className='grid grid-cols-2 gap-8'>
 							{/* Left Column */}
-							<div className='flex flex-col gap-4'>
+							<div className='flex flex-col gap-6'>
 								{/* Lister Banner */}
 								<div className='flex flex-rows items-center gap-4'>
 									<div className='ml-1 aspect-square'>
@@ -105,18 +106,20 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 
 								{/* Lister Description */}
 								<div className=''>
-									Might want to look to add a review system
+									<p>
+										TODO: Add Bio field to DB for user
+									</p>
+								</div>
+
+								<div className='w-1/3 self-center'>
+									<Button label='Contact Lister' onClick={() => {}} outline/>
 								</div>
 							</div>
 
 							{/* Right Column */}
 							{/* TODO: ADD LISTER ADDRESS FIELD TO DB */}
-							<GeoCard location={'96 Joo Chiat Terrace Singapore 427253'}/> 
+							<GeoCard location={'10 Heng Mui Keng Terrace'}/> 
 						</div>
-					</div>
-
-					<div className='w-full h-96'>
-						fdsjlaf
 					</div>
 				</div>
 			</div>
