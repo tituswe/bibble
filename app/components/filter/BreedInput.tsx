@@ -1,8 +1,9 @@
 'use client';
 
 import { Breed } from '@prisma/client';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { RxCross2 } from 'react-icons/rx';
 
 interface BreedInputProps {
 	breeds: Breed[];
@@ -12,12 +13,43 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 	const [value, setValue] = useState('');
 	const [selected, setSelected] = useState<Array<Breed>>([]);
 
+	const filteredBreeds = breeds
+		.filter((item) => !selected.includes(item))
+		.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
+		.sort((a, b) => {
+			const indexOfA = a.name.toLowerCase().indexOf(value.toLowerCase());
+			const indexOfB = b.name.toLowerCase().indexOf(value.toLowerCase());
+
+			if (indexOfA === indexOfB) {
+				return a.name.localeCompare(b.name);
+			}
+
+			return indexOfA - indexOfB;
+		});
+
+	const handleAdd = useCallback(
+		(item: Breed) => {
+			if (selected.includes(item)) {
+				return;
+			}
+
+			setSelected([...selected, item]);
+		},
+		[selected]
+	);
+
+	const handleRemove = useCallback(
+		(item: Breed) => {
+			setSelected(selected.filter((e) => e !== item));
+		},
+		[selected]
+	);
+
 	return (
 		<div
 			className="
 				flex
 				flex-col
-				gap-6
 			"
 		>
 			<div
@@ -36,6 +68,7 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 					<BiSearch />
 					<input
 						onChange={(e) => setValue(e.target.value)}
+						value={value}
 						className="
 						peer
 						w-full
@@ -54,7 +87,7 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
           peer-placeholder-shown:scale-100
           peer-placeholder-shown:translate-y-0
           peer-focus:scale-75
-          peer-focus:-translate-y-5
+          peer-focus:-translate-y-6
           peer-focus:bg-white
           peer-focus:rounded-3xl
           peer-focus:px-2
@@ -68,14 +101,81 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 					>
 						Select breeds
 					</label>
+					<div
+						onClick={() => setValue('')}
+						className="
+							p-2
+							rounded-full
+							transition
+							text-neutral-500
+							hover:text-rose-500
+							hover:bg-rose-100
+							hover:shadow-inner
+						"
+					>
+						<RxCross2 />
+					</div>
 				</div>
 			</div>
-			<div className="flex flex-row gap-4">
-				<div className="p-4 border-[1px] rounded-3xl">Husky</div>
-				<div className="p-4 border-[1px] rounded-3xl">Corgi</div>
-				<div className="p-4 border-[1px] rounded-3xl">German Sheperd</div>
-			</div>
+			{value && filteredBreeds.length > 0 && (
+				<div
+					className="
+					flex
+					flex-col
+					w-full 
+					max-h-96
+					rounded-l-3xl 
+					overflow-y-auto
+					scrollbar-hide
+					border-[1px] 
+					mt-4
+				"
+				>
+					{filteredBreeds.map((item, i) => (
+						<div
+							key={i}
+							className={`
+								p-6 
+								${i !== filteredBreeds.length - 1 && 'border-b-[1px]'}
+								cursor-pointer
+								hover:bg-neutral-100 
+								hover:shadow-inner
+								transition
+							`}
+							onClick={() => handleAdd(item)}
+						>
+							{item.name}
+						</div>
+					))}
+				</div>
+			)}
+			{selected.length > 0 ? (
+				<div className="flex flex-wrap gap-4 p-4">
+					{selected.map((item, i) => (
+						<div
+							key={i}
+							className="
+								p-4 
+								border-[1px] 
+								rounded-3xl
+								hover:shadow-inner
+								hover:bg-rose-100
+								transition
+								cursor-pointer
+							"
+							onClick={() => handleRemove(item)}
+						>
+							{item.name}
+						</div>
+					))}
+				</div>
+			) : (
+				<div className="pt-4 px-4 text-neutral-500 text-light text-sm">
+					Search for the breeds you love
+				</div>
+			)}
 		</div>
 	);
 };
+
 export default BreedInput;

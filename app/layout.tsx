@@ -3,8 +3,10 @@ import { Nunito } from 'next/font/google';
 
 import './globals.css';
 
+import getCurrentUser from './actions/getCurrentUser';
+import Footer from './components/footer/Footer';
+import Navbar from './components/navbar/Navbar';
 import Providers from './providers/Providers';
-import BibbleWrapper from './wrappers/BibbleWrapper';
 
 export const metadata: Metadata = {
 	title: 'Bibble',
@@ -18,12 +20,18 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	const currentUser = await getCurrentUser();
+
 	return (
 		<html lang="en">
 			<body className={font.className}>
-				<BibbleWrapper>
-					<Providers>{children}</Providers>
-				</BibbleWrapper>
+				<Providers>
+					<div className="flex flex-col gap-4">
+						<Navbar currentUser={currentUser} />
+						<div className="h-full pt-20">{children}</div>
+						<Footer />
+					</div>
+				</Providers>
 			</body>
 		</html>
 	);
