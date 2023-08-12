@@ -5,8 +5,10 @@ import { BiDollar } from 'react-icons/bi';
 import ReactSlider from 'react-slider';
 
 const PriceInput = () => {
-	const [minValue, setMinValue] = useState(0);
-	const [maxValue, setMaxValue] = useState(100);
+	const MIN = 0;
+	const MAX = 100;
+	const [minValue, setMinValue] = useState(MIN);
+	const [maxValue, setMaxValue] = useState(MAX);
 
 	return (
 		<div
@@ -40,14 +42,15 @@ const PriceInput = () => {
 					bg-neutral-800
 					rounded-full
 				"
-				defaultValue={[minValue, maxValue]}
+				defaultValue={[MIN, MAX]}
+				value={[minValue, maxValue]}
 				onChange={([min, max]) => {
 					setMinValue(min);
 					setMaxValue(max);
 				}}
+				max={MAX}
 				ariaLabel={['Lower thumb', 'Upper thumb']}
 				ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-				renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
 			/>
 			{/* PRICE INPUTS */}
 			<div
@@ -71,7 +74,9 @@ const PriceInput = () => {
 						rounded-xl
 					"
 				>
-					<div className="text-light text-neutral-500 text-xs">Minimum</div>
+					<div className="text-light text-neutral-500 text-xs">
+						Minimum Price
+					</div>
 					<div
 						className="
 							flex
@@ -84,7 +89,12 @@ const PriceInput = () => {
 						<input
 							type="number"
 							value={minValue * 100}
-							onChange={(e) => setMinValue(parseInt(e.target.value))}
+							onChange={(e) => {
+								const newValue = parseInt(e.target.value) / 100;
+
+								setMinValue(newValue > MAX ? maxValue : newValue);
+							}}
+							step="100"
 							min="0"
 							className="
 								outline-none
@@ -109,7 +119,9 @@ const PriceInput = () => {
 						rounded-xl
 					"
 				>
-					<div className="text-light text-neutral-500 text-xs">Maximum</div>
+					<div className="text-light text-neutral-500 text-xs">
+						Maximum Price
+					</div>
 					<div
 						className="
 							flex
@@ -122,7 +134,12 @@ const PriceInput = () => {
 						<input
 							type="number"
 							value={maxValue * 100}
-							onChange={(e) => setMaxValue(parseInt(e.target.value) / 100)}
+							onChange={(e) => {
+								const newValue = parseInt(e.target.value) / 100;
+
+								setMaxValue(newValue > MAX ? maxValue : newValue);
+							}}
+							step="100"
 							min="0"
 							className="
 								outline-none
