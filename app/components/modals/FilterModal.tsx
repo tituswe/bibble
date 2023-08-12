@@ -8,7 +8,7 @@ import { Range } from 'react-date-range';
 
 import useFilterModal from '@/app/hooks/useFilterModal';
 import { SafePet } from '@/app/types';
-import { Breed, Country, Species } from '@prisma/client';
+import { Breed, Country, Species, Vaccine } from '@prisma/client';
 import AgeInput from '../filter/AgeInput';
 import BreedInput from '../filter/BreedInput';
 import GenderInput from '../filter/GenderInput';
@@ -25,11 +25,12 @@ interface FilterModalProps {
 		species: Species[];
 		breeds: Breed[];
 		origins: Country[];
+		vaccines: Vaccine[];
 	};
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
-	const { species, breeds, origins } = data;
+	const { species, breeds, origins, vaccines } = data;
 
 	const router = useRouter();
 	const params = useSearchParams();
@@ -92,7 +93,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 			<hr />
 			<GenderInput />
 			<hr />
-			<MiscInput />
+			<MiscInput vaccines={vaccines} />
 		</div>
 	);
 

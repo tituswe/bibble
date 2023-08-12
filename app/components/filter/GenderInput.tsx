@@ -7,7 +7,6 @@ import Box from '../Box';
 
 const GenderInput = () => {
 	const [selected, setSelected] = useState<Gender>();
-	const genders = [Gender.MALE, Gender.FEMALE];
 
 	const onClick = useCallback((e: Gender) => {
 		setSelected(e);

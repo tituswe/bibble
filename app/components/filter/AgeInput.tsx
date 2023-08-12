@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 
 const AgeInput = () => {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const [timeUnit, setTimeUnit] = useState('Months');
 	const MIN = 0;
 	const MAX = timeUnit === 'Months' ? 12 : 24;
