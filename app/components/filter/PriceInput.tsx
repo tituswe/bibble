@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { BiDollar } from 'react-icons/bi';
+import ReactSlider from 'react-slider';
 
 const PriceInput = () => {
 	const [minValue, setMinValue] = useState(0);
-	const [maxValue, setMaxValue] = useState(0);
+	const [maxValue, setMaxValue] = useState(100);
 
 	return (
 		<div
@@ -17,13 +18,37 @@ const PriceInput = () => {
 		>
 			<div className="font-semibold text-2xl">Price range</div>
 			{/* PRICE TOGGLE */}
-			<div className="flex flex-row w-full justify-center items-center">
-				<div className="flex flex-row w-full justify-between">
-					<div className="p-4 rounded-full bg-white border-[1px] z-10"></div>
-					<div className="p-4 rounded-full bg-white border-[1px] z-10"></div>
-				</div>
-				<div className="absolute w-5/6 items-center h-[2px] bg-neutral-800"></div>
-			</div>
+			<ReactSlider
+				className="flex items-center m-4"
+				thumbClassName="
+					h-8 
+					w-8  
+					text-clip 
+					bg-white 
+					text-white 
+					text-xs
+					rounded-full 
+					border-[2px]
+					border-sky-500
+					hover:bg-neutral-200
+					hover:shadow-2xl
+					hover:text-neutral-200
+					cursor-grab
+				"
+				trackClassName="
+					h-1 
+					bg-neutral-800
+					rounded-full
+				"
+				defaultValue={[minValue, maxValue]}
+				onChange={([min, max]) => {
+					setMinValue(min);
+					setMaxValue(max);
+				}}
+				ariaLabel={['Lower thumb', 'Upper thumb']}
+				ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
+				renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+			/>
 			{/* PRICE INPUTS */}
 			<div
 				className="
@@ -58,14 +83,13 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={minValue}
+							value={minValue * 100}
 							onChange={(e) => setMinValue(parseInt(e.target.value))}
-							step="100"
 							min="0"
 							className="
 								outline-none
-								[appearance:textfield] 
-								[&::-webkit-outer-spin-button]:appearance-none 
+								[appearance:textfield]
+								[&::-webkit-outer-spin-button]:appearance-none
 								[&::-webkit-inner-spin-button]:appearance-none
 							"
 						/>
@@ -97,14 +121,13 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={maxValue}
-							onChange={(e) => setMaxValue(parseInt(e.target.value))}
-							step="100"
+							value={maxValue * 100}
+							onChange={(e) => setMaxValue(parseInt(e.target.value) / 100)}
 							min="0"
 							className="
 								outline-none
-								[appearance:textfield] 
-								[&::-webkit-outer-spin-button]:appearance-none 
+								[appearance:textfield]
+								[&::-webkit-outer-spin-button]:appearance-none
 								[&::-webkit-inner-spin-button]:appearance-none
 							"
 						/>
