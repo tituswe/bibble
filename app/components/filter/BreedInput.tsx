@@ -6,12 +6,17 @@ import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 
 interface BreedInputProps {
+	selected: Array<Breed>;
+	setSelected: (e: Array<Breed>) => void;
 	breeds: Breed[];
 }
 
-const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
+const BreedInput: React.FC<BreedInputProps> = ({
+	selected,
+	setSelected,
+	breeds,
+}) => {
 	const [value, setValue] = useState('');
-	const [selected, setSelected] = useState<Array<Breed>>([]);
 
 	const filteredBreeds = breeds
 		.filter((item) => !selected.includes(item))
@@ -35,14 +40,14 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 
 			setSelected([...selected, item]);
 		},
-		[selected]
+		[selected, setSelected]
 	);
 
 	const handleRemove = useCallback(
 		(item: Breed) => {
 			setSelected(selected.filter((e) => e !== item));
 		},
-		[selected]
+		[selected, setSelected]
 	);
 
 	return (

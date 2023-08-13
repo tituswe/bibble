@@ -1,16 +1,26 @@
 'use client';
 
 import { Gender } from '@prisma/client';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { BiMaleSign } from 'react-icons/bi';
 import Box from '../Box';
 
-const GenderInput = () => {
-	const [selected, setSelected] = useState<Gender>();
+interface GenderInputProps {
+	selected: Gender | '';
+	setSelected: (e: Gender | '') => void;
+}
 
-	const onClick = useCallback((e: Gender) => {
-		setSelected(e);
-	}, []);
+const GenderInput: React.FC<GenderInputProps> = ({ selected, setSelected }) => {
+	const onClick = useCallback(
+		(e: Gender) => {
+			if (selected === e) {
+				setSelected('');
+			} else {
+				setSelected(e);
+			}
+		},
+		[selected, setSelected]
+	);
 
 	return (
 		<div
@@ -29,6 +39,7 @@ const GenderInput = () => {
 			"
 			>
 				<div
+					onClick={() => onClick(Gender.MALE)}
 					className="
 						flex
 						justify-center
@@ -51,6 +62,7 @@ const GenderInput = () => {
 					/>
 				</div>
 				<div
+					onClick={() => onClick(Gender.FEMALE)}
 					className="
 						flex
 						justify-center

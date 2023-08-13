@@ -9,15 +9,17 @@ import PostModal from '../components/modals/PostModal';
 import RegisterModal from '../components/modals/RegisterModal';
 
 const ModalProvider = async () => {
-	const pets = await getPets({});
-	const species = await getSpecies();
-	const breeds = await getBreeds();
-	const origins = await getCountries();
-	const vaccines = await getVaccines();
+	const allPets = await getPets({});
+	const allSpecies = await getSpecies();
+	const allBreeds = await getBreeds();
+	const allOrigins = await getCountries();
+	const allVaccines = await getVaccines();
 
 	return (
 		<>
-			<FilterModal data={{ pets, species, breeds, origins, vaccines }} />
+			<FilterModal
+				data={{ allPets, allSpecies, allBreeds, allOrigins, allVaccines }}
+			/>
 			<PostModal />
 			<LoginModal />
 			<RegisterModal />

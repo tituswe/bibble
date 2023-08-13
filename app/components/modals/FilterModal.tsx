@@ -1,14 +1,19 @@
 'use client';
 
-import { formatISO } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useState } from 'react';
-import { Range } from 'react-date-range';
 
 import useFilterModal from '@/app/hooks/useFilterModal';
-import { SafePet } from '@/app/types';
-import { Breed, Country, Species, Vaccine } from '@prisma/client';
+import { SafePet, TimeUnit } from '@/app/types';
+import {
+	Breed,
+	Country,
+	Gender,
+	SaleType,
+	Species,
+	Vaccine,
+} from '@prisma/client';
 import AgeInput from '../filter/AgeInput';
 import BreedInput from '../filter/BreedInput';
 import GenderInput from '../filter/GenderInput';
@@ -17,32 +22,53 @@ import OriginInput from '../filter/OriginInput';
 import PriceInput from '../filter/PriceInput';
 import SaleTypeInput from '../filter/SaleTypeInput';
 import SpeciesInput from '../filter/SpeciesInput';
+import VaccineInput from '../filter/VaccineInput';
 import Modal from './Modal';
 
 interface FilterModalProps {
 	data: {
-		pets: SafePet[];
-		species: Species[];
-		breeds: Breed[];
-		origins: Country[];
-		vaccines: Vaccine[];
+		allPets: SafePet[];
+		allSpecies: Species[];
+		allBreeds: Breed[];
+		allOrigins: Country[];
+		allVaccines: Vaccine[];
 	};
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
-	const { species, breeds, origins, vaccines } = data;
+	const { allSpecies, allBreeds, allOrigins, allVaccines } = data;
 
 	const router = useRouter();
 	const params = useSearchParams();
 	const filterModal = useFilterModal();
 
-	const [gender, setGender] = useState('');
-	const [breed, setBreed] = useState('');
-	const [ageRange, setAgeRange] = useState<Range>({
-		startDate: new Date(),
-		endDate: new Date(),
-		key: 'selection',
-	});
+	const MIN_PRICE = 0;
+	const MAX_PRICE = 10000;
+	const [timeUnit, setTimeUnit] = useState<TimeUnit>('months');
+	const MIN_AGE = 0;
+	const MAX_AGE = timeUnit === 'months' ? 12 : 24;
+	const medicalOptions = [
+		{ field: 'isHealthTested', label: 'Health Tested' },
+		{ field: 'isNeutered', label: ' Neutered' },
+		{ field: 'isHypoallergenic', label: 'Hypoallergenic' },
+	];
+	const otherOptions = [
+		{ field: 'isHdbApproved', label: 'HDB Approved' },
+		{ field: 'isPottyTrained', label: 'Potty Trained' },
+	];
+
+	const [saleType, setSaleType] = useState<SaleType | ''>('');
+	const [species, setSpecies] = useState<Array<Species>>([]);
+	const [breeds, setBreeds] = useState<Array<Breed>>([]);
+	const [minPrice, setMinPrice] = useState<number>(MIN_PRICE);
+	const [maxPrice, setMaxPrice] = useState<number>(MAX_PRICE);
+	const [minAge, setMinAge] = useState<number>(MIN_AGE);
+	const [maxAge, setMaxAge] = useState<number>(MAX_AGE);
+	const [gender, setGender] = useState<Gender | ''>('');
+	const [origins, setOrigins] = useState<Array<Country>>([]);
+	const [vaccines, setVaccines] = useState<Array<Vaccine>>([]);
+	console.log(vaccines);
+	const [options, setOptions] = useState<Array<string>>([]);
 
 	const onSubmit = useCallback(async () => {
 		let currentQuery = {};
@@ -51,23 +77,30 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 			currentQuery = qs.parse(params.toString());
 		}
 
+		const speciesIds = species.map((item) => item.id);
+		const breedIds = breeds.map((item) => item.id);
+		const originIds = origins.map((item) => item.id);
+		const vaccineIds = vaccines.map((item) => item.id);
+
 		const updatedQuery: any = {
 			...currentQuery,
+			saleType,
+			speciesIds,
+			breedIds,
+			minPrice,
+			maxPrice,
+			minAge,
+			maxAge,
+			timeUnit,
 			gender,
-			breed,
+			originIds,
+			vaccineIds,
+			options,
 		};
-
-		if (ageRange.startDate) {
-			updatedQuery.startDate = formatISO(ageRange.startDate);
-		}
-
-		if (ageRange.endDate) {
-			updatedQuery.endDate = formatISO(ageRange.endDate);
-		}
 
 		const url = qs.stringifyUrl(
 			{
-				url: '/',
+				url: '/kennel/explore/',
 				query: updatedQuery,
 			},
 			{ skipNull: true }
@@ -75,25 +108,80 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 
 		filterModal.onClose();
 		router.push(url);
-	}, [breed, gender, ageRange, filterModal, router, params]);
+	}, [
+		saleType,
+		species,
+		breeds,
+		minPrice,
+		maxPrice,
+		minAge,
+		maxAge,
+		timeUnit,
+		gender,
+		origins,
+		vaccines,
+		options,
+		filterModal,
+		router,
+		params,
+	]);
 
 	const bodyContent = (
 		<div className="flex flex-col gap-8">
-			<SaleTypeInput />
+			<SaleTypeInput selected={saleType} setSelected={setSaleType} />
 			<hr />
-			<SpeciesInput species={species} />
+			<SpeciesInput
+				selected={species}
+				setSelected={setSpecies}
+				species={allSpecies}
+			/>
 			<hr />
-			<BreedInput breeds={breeds} />
+			<BreedInput
+				selected={breeds}
+				setSelected={setBreeds}
+				breeds={allBreeds}
+			/>
 			<hr />
-			<PriceInput />
+			<PriceInput
+				MIN={MIN_PRICE}
+				MAX={MAX_PRICE}
+				minValue={minPrice}
+				setMinValue={setMinPrice}
+				maxValue={maxPrice}
+				setMaxValue={setMaxPrice}
+			/>
 			<hr />
-			<AgeInput />
+			<AgeInput
+				MIN={MIN_AGE}
+				MAX={MAX_AGE}
+				minValue={minAge}
+				setMinValue={setMinAge}
+				maxValue={maxAge}
+				setMaxValue={setMaxAge}
+				timeUnit={timeUnit}
+				setTimeUnit={setTimeUnit}
+			/>
 			<hr />
-			<OriginInput origins={origins} />
+			<OriginInput
+				selected={origins}
+				setSelected={setOrigins}
+				origins={allOrigins}
+			/>
 			<hr />
-			<GenderInput />
+			<GenderInput selected={gender} setSelected={setGender} />
 			<hr />
-			<MiscInput vaccines={vaccines} />
+			<VaccineInput
+				selected={vaccines}
+				setSelected={setVaccines}
+				vaccines={allVaccines}
+			/>
+			<hr />
+			<MiscInput
+				selected={options}
+				setSelected={setOptions}
+				medicalOptions={medicalOptions}
+				otherOptions={otherOptions}
+			/>
 		</div>
 	);
 

@@ -1,15 +1,25 @@
 'use client';
 
-import { useState } from 'react';
 import { BiDollar } from 'react-icons/bi';
 import ReactSlider from 'react-slider';
 
-const PriceInput = () => {
-	const MIN = 0;
-	const MAX = 100;
-	const [minValue, setMinValue] = useState(MIN);
-	const [maxValue, setMaxValue] = useState(MAX);
+interface PriceInputProps {
+	MIN: number;
+	MAX: number;
+	minValue: number;
+	setMinValue: (e: number) => void;
+	maxValue: number;
+	setMaxValue: (e: number) => void;
+}
 
+const PriceInput: React.FC<PriceInputProps> = ({
+	MIN,
+	MAX,
+	minValue,
+	setMinValue,
+	maxValue,
+	setMaxValue,
+}) => {
 	return (
 		<div
 			className="
@@ -49,6 +59,7 @@ const PriceInput = () => {
 					setMaxValue(max);
 				}}
 				max={MAX}
+				step={100}
 				ariaLabel={['Lower thumb', 'Upper thumb']}
 				ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
 			/>
@@ -88,9 +99,9 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={minValue * 100}
+							value={minValue}
 							onChange={(e) => {
-								const newValue = parseInt(e.target.value) / 100;
+								const newValue = parseInt(e.target.value);
 
 								setMinValue(newValue > MAX ? maxValue : newValue);
 							}}
@@ -133,9 +144,9 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={maxValue * 100}
+							value={maxValue}
 							onChange={(e) => {
-								const newValue = parseInt(e.target.value) / 100;
+								const newValue = parseInt(e.target.value);
 
 								setMaxValue(newValue > MAX ? maxValue : newValue);
 							}}

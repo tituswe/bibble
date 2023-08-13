@@ -1,24 +1,44 @@
 'use client';
 
+import { TimeUnit } from '@/app/types';
+import { toCamelCase } from '@/app/utils/toCamelCase';
 import { useCallback, useState } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 
-const AgeInput = () => {
+interface AgeInputProps {
+	MIN: number;
+	MAX: number;
+	minValue: number;
+	setMinValue: (e: number) => void;
+	maxValue: number;
+	setMaxValue: (e: number) => void;
+	timeUnit: TimeUnit;
+	setTimeUnit: (e: TimeUnit) => void;
+}
+
+const AgeInput: React.FC<AgeInputProps> = ({
+	MIN,
+	MAX,
+	minValue,
+	setMinValue,
+	maxValue,
+	setMaxValue,
+	timeUnit,
+	setTimeUnit,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [timeUnit, setTimeUnit] = useState('Months');
-	const MIN = 0;
-	const MAX = timeUnit === 'Months' ? 12 : 24;
-	const [minValue, setMinValue] = useState(MIN);
-	const [maxValue, setMaxValue] = useState(MAX);
 
 	const toggleOpen = useCallback(() => {
 		setIsOpen(!isOpen);
 	}, [isOpen]);
 
-	const selectTimeUnit = useCallback((e: string) => {
-		setTimeUnit(e);
-		setIsOpen(false);
-	}, []);
+	const selectTimeUnit = useCallback(
+		(e: TimeUnit) => {
+			setTimeUnit(e);
+			setIsOpen(false);
+		},
+		[setTimeUnit]
+	);
 
 	return (
 		<div
@@ -90,7 +110,7 @@ const AgeInput = () => {
 							"
 							/>
 							<div className="font-light text-sm text-neutral-500">
-								{timeUnit}
+								{toCamelCase(timeUnit)}
 							</div>
 						</div>
 					</div>
@@ -135,7 +155,7 @@ const AgeInput = () => {
 							"
 							/>
 							<div className="font-light text-sm text-neutral-500">
-								{timeUnit}
+								{toCamelCase(timeUnit)}
 							</div>
 						</div>
 					</div>
@@ -159,7 +179,7 @@ const AgeInput = () => {
 								w-full
 								p-4
 								border-[1px]
-								rounded-3xl
+								rounded-xl
 								items-center
 								justify-between
 								cursor-pointer
@@ -169,7 +189,7 @@ const AgeInput = () => {
 								transition
 						`}
 						>
-							{timeUnit}
+							{toCamelCase(timeUnit)}
 							<AiOutlineDown />
 						</div>
 						{isOpen && (
@@ -183,7 +203,7 @@ const AgeInput = () => {
 						"
 							>
 								<div
-									onClick={() => selectTimeUnit('Months')}
+									onClick={() => selectTimeUnit('months')}
 									className="
 									cursor-pointer
 									hover:shadow-inner
@@ -197,7 +217,7 @@ const AgeInput = () => {
 								</div>
 								<hr />
 								<div
-									onClick={() => selectTimeUnit('Years')}
+									onClick={() => selectTimeUnit('years')}
 									className="
 									cursor-pointer
 									hover:shadow-inner

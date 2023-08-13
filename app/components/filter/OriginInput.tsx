@@ -6,12 +6,17 @@ import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 
 interface OriginInputProps {
+	selected: Array<Country>;
+	setSelected: (e: Array<Country>) => void;
 	origins: Country[];
 }
 
-const OriginInput: React.FC<OriginInputProps> = ({ origins }) => {
+const OriginInput: React.FC<OriginInputProps> = ({
+	selected,
+	setSelected,
+	origins,
+}) => {
 	const [value, setValue] = useState('');
-	const [selected, setSelected] = useState<Array<Country>>([]);
 
 	const filteredOrigins = origins
 		.filter((item) => !selected.includes(item))
@@ -35,14 +40,14 @@ const OriginInput: React.FC<OriginInputProps> = ({ origins }) => {
 
 			setSelected([...selected, item]);
 		},
-		[selected]
+		[selected, setSelected]
 	);
 
 	const handleRemove = useCallback(
 		(item: Country) => {
 			setSelected(selected.filter((e) => e !== item));
 		},
-		[selected]
+		[selected, setSelected]
 	);
 
 	return (

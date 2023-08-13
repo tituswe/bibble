@@ -1,7 +1,7 @@
 'use client';
 
 import { Species } from '@prisma/client';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineQuestion } from 'react-icons/ai';
 import { BiSolidCat, BiSolidDog } from 'react-icons/bi';
@@ -10,12 +10,16 @@ import { PiBirdFill } from 'react-icons/pi';
 import Box from '../Box';
 
 interface SpeciesInputProps {
+	selected: Array<Species>;
+	setSelected: (e: Array<Species>) => void;
 	species: Species[];
 }
 
-const SpeciesInput: React.FC<SpeciesInputProps> = ({ species }) => {
-	const [selected, setSelected] = useState<Array<string>>([]);
-
+const SpeciesInput: React.FC<SpeciesInputProps> = ({
+	selected,
+	setSelected,
+	species,
+}) => {
 	const iconMap: Record<string, IconType> = {
 		dog: BiSolidDog,
 		cat: BiSolidCat,
@@ -26,14 +30,14 @@ const SpeciesInput: React.FC<SpeciesInputProps> = ({ species }) => {
 	};
 
 	const onClick = useCallback(
-		(label: string) => {
-			if (selected.includes(label)) {
-				setSelected(selected.filter((e) => e !== label));
+		(item: Species) => {
+			if (selected.includes(item)) {
+				setSelected(selected.filter((e) => e !== item));
 			} else {
-				setSelected([...selected, label]);
+				setSelected([...selected, item]);
 			}
 		},
-		[selected]
+		[selected, setSelected]
 	);
 
 	return (
@@ -58,8 +62,8 @@ const SpeciesInput: React.FC<SpeciesInputProps> = ({ species }) => {
 						key={i}
 						label={item.name}
 						icon={iconMap[item.name] || AiOutlineQuestion}
-						selected={selected.includes(item.name)}
-						onClick={() => onClick(item.name)}
+						selected={selected.includes(item)}
+						onClick={() => onClick(item)}
 					/>
 				))}
 			</div>
