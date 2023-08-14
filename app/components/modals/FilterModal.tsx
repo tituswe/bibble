@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useState } from 'react';
 
-import useFilterModal from '@/app/hooks/useFilterModal';
+import useFilterModal from '@/app/kennel/hooks/useFilterModal';
 import { SafePet, TimeUnit } from '@/app/types';
 import {
 	Breed,
@@ -68,7 +68,6 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 	const [gender, setGender] = useState<Gender | ''>('');
 	const [origins, setOrigins] = useState<Array<Country>>([]);
 	const [vaccines, setVaccines] = useState<Array<Vaccine>>([]);
-	console.log(vaccines);
 	const [options, setOptions] = useState<Array<string>>([]);
 
 	const onSubmit = useCallback(async () => {

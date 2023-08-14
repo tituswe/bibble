@@ -26,11 +26,9 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={font.className}>
 				<Providers>
-					<div className="flex flex-col gap-4">
-						<Navbar currentUser={currentUser} />
-						<div className="h-full pt-20">{children}</div>
-						<Footer />
-					</div>
+					<Navbar currentUser={currentUser} />
+					{children}
+					<Footer />
 				</Providers>
 			</body>
 		</html>

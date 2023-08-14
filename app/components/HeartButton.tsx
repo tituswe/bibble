@@ -2,7 +2,7 @@
 
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-import useFavorite from '../hooks/useFavorite';
+import useFavorite from '../kennel/hooks/useFavorite';
 import { SafeUser } from '../types';
 
 interface HeartButtonProps {
@@ -11,7 +11,11 @@ interface HeartButtonProps {
 	showSubtext?: boolean;
 }
 
-const HeartButton: React.FC<HeartButtonProps> = ({ petId, currentUser, showSubtext }) => {
+const HeartButton: React.FC<HeartButtonProps> = ({
+	petId,
+	currentUser,
+	showSubtext,
+}) => {
 	const { hasFavorited, toggleFavorite } = useFavorite({ petId, currentUser });
 	return (
 		<>
@@ -25,20 +29,22 @@ const HeartButton: React.FC<HeartButtonProps> = ({ petId, currentUser, showSubte
 				cursor-opinter
 			"
 			>
-				{!showSubtext && <AiOutlineHeart
-					size={24}
-					className="
+				{!showSubtext && (
+					<AiOutlineHeart
+						size={24}
+						className="
 					fill-white
 					absolute
 					-top-[2px]
 					-right-[2px]
 				"
-				/>}
+					/>
+				)}
 				<AiFillHeart
 					size={20}
 					className={hasFavorited ? 'fill-rose-500' : 'fill-neutral-500/70'}
 				/>
-				{showSubtext && <p className='px-2'>Save</p>}
+				{showSubtext && <p className="px-2">Save</p>}
 			</div>
 		</>
 	);

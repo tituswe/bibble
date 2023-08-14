@@ -12,7 +12,7 @@ const LabelButton: React.FC<LabelButtonProps> = ({
 	icon: Icon,
 }) => {
 	return (
-		<div className="relative hidden md:block">
+		<li className="relative hidden md:block">
 			<div className="flex flex-row items-center gap-3">
 				<div
 					onClick={() => {}}
@@ -43,7 +43,7 @@ const LabelButton: React.FC<LabelButtonProps> = ({
 					{label}
 				</div>
 			</div>
-		</div>
+		</li>
 	);
 };
 

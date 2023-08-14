@@ -147,7 +147,6 @@ export default async function getPets(params: IPetsParams) {
 				options = [options];
 			}
 
-			console.log(options);
 			query.AND = options.map((item) => {
 				if (item.startsWith('is')) {
 					// check for Boolean fields

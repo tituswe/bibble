@@ -1,6 +1,6 @@
 'use client';
 
-import useFilterModal from '@/app/hooks/useFilterModal';
+import useFilterModal from '@/app/kennel/hooks/useFilterModal';
 import { useState } from 'react';
 import { BiSlider } from 'react-icons/bi';
 
@@ -9,7 +9,7 @@ const Search = () => {
 	const filterModal = useFilterModal();
 
 	return (
-		<div
+		<search
 			onClick={() => setIsOpen(!isOpen)}
 			className={`
         border-[1px] 
@@ -78,7 +78,7 @@ const Search = () => {
 					<BiSlider size={18} />
 				</div>
 			</div>
-		</div>
+		</search>
 	);
 };
 

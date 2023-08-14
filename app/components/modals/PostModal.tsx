@@ -7,10 +7,10 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { BiFemaleSign, BiMaleSign } from 'react-icons/bi';
 
-import usePostModal from '@/app/hooks/usePostModal';
+import usePostModal from '@/app/kennel/hooks/usePostModal';
 import Heading from '../Heading';
-import DateInput from '../inputs/DateInput';
 import BreedInput from '../inputs/BreedInput';
+import DateInput from '../inputs/DateInput';
 import GenderInput from '../inputs/GenderInput';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
@@ -190,7 +190,7 @@ const PostModal = () => {
 					title="Introduce us to your friend"
 					subtitle="What's their birthday?"
 				/>
-				<div className='scale-150 pb-4'>
+				<div className="scale-150 pb-4">
 					<DateInput
 						date={birthday}
 						onChange={(date: Date) => setCustomValue('birthday', date)}
