@@ -55,6 +55,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 	const otherOptions = [
 		{ field: 'isHdbApproved', label: 'HDB Approved' },
 		{ field: 'isPottyTrained', label: 'Potty Trained' },
+		{ field: 'avsLicense', label: 'AVS License' },
 	];
 
 	const [saleType, setSaleType] = useState<SaleType | ''>('');

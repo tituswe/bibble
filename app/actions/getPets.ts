@@ -147,9 +147,22 @@ export default async function getPets(params: IPetsParams) {
 				options = [options];
 			}
 
-			query.AND = options.map((item) => ({
-				[item]: true,
-			}));
+			console.log(options);
+			query.AND = options.map((item) => {
+				if (item.startsWith('is')) {
+					// check for Boolean fields
+					return {
+						[item]: true,
+					};
+				} else {
+					// check for Optional fields
+					return {
+						NOT: {
+							[item]: null,
+						},
+					};
+				}
+			});
 		}
 
 		const pets = await prisma.pet.findMany({
@@ -163,6 +176,7 @@ export default async function getPets(params: IPetsParams) {
 				origin: true,
 				lister: true,
 				vaccines: true,
+				avsLicense: true,
 			},
 		});
 
