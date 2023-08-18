@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 import { SafeUser } from '../../types';
 
-import useLoginModal from './useLoginModal';
+import useLoginModal from '../../hooks/useLoginModal';
 
 interface IUseFavorite {
 	petId: string;

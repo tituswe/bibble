@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Pages from './Pages';
+import Pages from './components/Pages';
 
-interface KennelPageProps {
+interface KennelClientProps {
 	children: React.ReactNode;
 }
 
-const KennelPage: React.FC<KennelPageProps> = ({ children }) => {
+const KennelClient: React.FC<KennelClientProps> = ({ children }) => {
 	const [scrollY, setScrollY] = useState(0);
 
 	const handleScroll = () => {
@@ -31,4 +31,4 @@ const KennelPage: React.FC<KennelPageProps> = ({ children }) => {
 	);
 };
 
-export default KennelPage;
+export default KennelClient;

@@ -1,6 +1,6 @@
 'use client';
 
-import useFilterModal from '@/app/kennel/hooks/useFilterModal';
+import useFilterModal from '@/app/hooks/useFilterModal';
 import { useState } from 'react';
 import { BiSlider } from 'react-icons/bi';
 

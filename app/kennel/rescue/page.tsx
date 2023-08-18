@@ -1,12 +1,12 @@
-import KennelPage from '@/app/components/KennelPage';
+import KennelClient from '@/app/KennelClient';
 
 import RescueClient from './RescueClient';
 
 const RescuePage = async () => {
 	return (
-		<KennelPage>
+		<KennelClient>
 			<RescueClient />
-		</KennelPage>
+		</KennelClient>
 	);
 };
 

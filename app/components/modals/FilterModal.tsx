@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 import { useCallback, useState } from 'react';
 
-import useFilterModal from '@/app/kennel/hooks/useFilterModal';
+import useFilterModal from '@/app/hooks/useFilterModal';
 import { SafePet, TimeUnit } from '@/app/types';
 import {
 	Breed,

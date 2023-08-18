@@ -8,8 +8,8 @@ import { toast } from 'react-hot-toast';
 import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 
-import useLoginModal from '@/app/kennel/hooks/useLoginModal';
-import useRegisterModal from '@/app/kennel/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 import handleToBeImplemented from '@/app/temp/handleToBeImplemented';
 
 import Button from '../Button';

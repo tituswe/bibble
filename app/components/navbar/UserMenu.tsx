@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { IconType } from 'react-icons';
 
-import useLoginModal from '@/app/kennel/hooks/useLoginModal';
+import useLoginModal from '@/app/hooks/useLoginModal';
 import usePostModal from '@/app/kennel/hooks/usePostModal';
 
 import { SafeUser } from '@/app/types';
