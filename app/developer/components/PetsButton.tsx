@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { createPetsData } from '../data';
 import Button from './Button';
-import { createPetsData } from './data';
 
 interface IPetsParams {
 	users: Array<any>;

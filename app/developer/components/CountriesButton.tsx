@@ -2,19 +2,19 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { countriesData } from '../data';
 import Button from './Button';
-import { speciesData } from './data';
 
-const BreedsButton = () => {
+const CountriesButton = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = () => {
 		setIsLoading(true);
 		axios
-			.post('/api/developer/species', speciesData)
+			.post('/api/developer/countries', countriesData)
 			.then(() => {
-				toast.success('Species posted successfully!');
+				toast.success('Countries posted successfully!');
 				router.refresh();
 			})
 			.catch(() => {
@@ -28,7 +28,7 @@ const BreedsButton = () => {
 	return (
 		<div>
 			<Button
-				label="Dump Species"
+				label="Dump Countries"
 				onClick={() => onSubmit()}
 				disabled={isLoading}
 			/>
@@ -36,4 +36,4 @@ const BreedsButton = () => {
 	);
 };
 
-export default BreedsButton;
+export default CountriesButton;

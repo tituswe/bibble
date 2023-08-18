@@ -2,12 +2,12 @@
 
 import { Breed, Country, Species, Vaccine } from '@prisma/client';
 import Container from '../components/Container';
-import AvsLicensesButton from '../components/developer/AvsLicensesButton';
-import BreedsButton from '../components/developer/BreedsButton';
-import CountriesButton from '../components/developer/CountriesButton';
-import PetsButton from '../components/developer/PetsButton';
-import SpeciesButton from '../components/developer/SpeciesButton';
-import VaccinesButton from '../components/developer/VaccinesButton';
+import AvsLicensesButton from './components/AvsLicensesButton';
+import BreedsButton from './components/BreedsButton';
+import CountriesButton from './components/CountriesButton';
+import PetsButton from './components/PetsButton';
+import SpeciesButton from './components/SpeciesButton';
+import VaccinesButton from './components/VaccinesButton';
 
 interface DeveloperClientProps {
 	users: Array<any>;
