@@ -1,4 +1,4 @@
-import { Breed, Country, Pet, Species } from '@prisma/client';
+import { Breed, Country, Pet, Species, Vaccine } from '@prisma/client';
 import {
 	getRandomBoolean,
 	getRandomDate,
@@ -8,6 +8,7 @@ import {
 	getRandomPrice,
 	getRandomSaleType,
 	getRandomShuffle,
+	getRandomSubset,
 } from './utils';
 
 const genders = ['MALE', 'FEMALE'];
@@ -160,6 +161,15 @@ export const countriesData: Omit<Country, 'id'>[] = [
 	{ name: 'New Zealand' },
 ];
 
+export const vaccinesData: Omit<Vaccine, 'id'>[] = [
+	{ name: 'Rabies' },
+	{ name: 'Covid-19' },
+	{ name: 'Distemper' },
+	{ name: 'Parovirus' },
+	{ name: 'Adenovirus (Canine Hepatitis)' },
+	{ name: 'Bordetella (Kennel Cough)' },
+];
+
 export const imagesData: string[] = [
 	'https://res.cloudinary.com/dcbphkd0o/image/upload/v1691233383/juam8bpb5ezi7ealzhdy.png',
 	'https://res.cloudinary.com/dcbphkd0o/image/upload/v1690820540/plmvf6ibs8a4yirrratv.jpg',
@@ -170,29 +180,30 @@ export const imagesData: string[] = [
 ];
 
 export const createPetsData = (
+	dog: Species,
 	breeds: Breed[],
 	countries: Country[],
-	users: Array<any>
+	users: Array<any>,
+	vaccineIds: Array<string>
 ): Omit<Pet, 'id'>[] => {
 	let data: Omit<Pet, 'id'>[] = [];
 
 	for (let i: number = 0; i < 24; i++) {
 		data.push({
 			name: null,
-			speciesId: '64d2703b484ade8a1bc55099',
+			speciesId: dog.id,
 			saleType: getRandomSaleType(),
 			gender: getRandomGender(),
 			breedId: getRandomId(breeds),
 			birthday: getRandomDate(),
 			originId: getRandomId(countries),
-			listerId: '64bbee4b6e42e77be7720e93',
+			listerId: getRandomId(users),
 			images: getRandomShuffle(imagesData),
 			price: getRandomPrice(),
 			postedAt: getRandomDate(),
 			isHealthTested: getRandomBoolean(),
 			isHdbApproved: getRandomBoolean(),
-			// need to do avsLicense
-			// need to do vaccines
+			vaccineIds: getRandomSubset(vaccineIds),
 			isMicrochipped: getRandomBoolean(),
 			isNeutered: getRandomBoolean(),
 			isHypoallergenic: getRandomBoolean(),

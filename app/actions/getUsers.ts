@@ -5,7 +5,7 @@ export default async function getUsers() {
 		const users = await prisma.user.findMany();
 
 		const safeUsers = users.map((user) => ({
-			...users,
+			...user,
 			createdAt: user.createdAt.toISOString(),
 			updatedAt: user.updatedAt.toISOString(),
 			emailVerified: user.emailVerified?.toISOString() || null,

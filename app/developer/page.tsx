@@ -3,6 +3,7 @@ import getCountries from '../actions/getCountries';
 import { IPetsParams } from '../actions/getPets';
 import getSpecies from '../actions/getSpecies';
 import getUsers from '../actions/getUsers';
+import getVaccines from '../actions/getVaccines';
 import DeveloperClient from './DeveloperClient';
 
 interface DeveloperPageProps {
@@ -14,12 +15,14 @@ const DeveloperPage = async ({ searchParams }: DeveloperPageProps) => {
 	const species = await getSpecies();
 	const breeds = await getBreeds();
 	const countries = await getCountries();
+	const vaccines = await getVaccines();
 	return (
 		<DeveloperClient
 			users={users}
 			species={species}
 			breeds={breeds}
 			countries={countries}
+			vaccines={vaccines}
 		/>
 	);
 };

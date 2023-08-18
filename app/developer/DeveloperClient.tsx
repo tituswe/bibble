@@ -1,6 +1,6 @@
 'use client';
 
-import { Breed, Country, Species } from '@prisma/client';
+import { Breed, Country, Species, Vaccine } from '@prisma/client';
 import Container from '../components/Container';
 import AvsLicensesButton from '../components/developer/AvsLicensesButton';
 import BreedsButton from '../components/developer/BreedsButton';
@@ -14,6 +14,7 @@ interface DeveloperClientProps {
 	species: Species[];
 	breeds: Breed[];
 	countries: Country[];
+	vaccines: Vaccine[];
 }
 
 const DeveloperClient: React.FC<DeveloperClientProps> = ({
@@ -21,6 +22,7 @@ const DeveloperClient: React.FC<DeveloperClientProps> = ({
 	species,
 	breeds,
 	countries,
+	vaccines,
 }) => {
 	return (
 		<Container>
@@ -40,13 +42,14 @@ const DeveloperClient: React.FC<DeveloperClientProps> = ({
 				<SpeciesButton />
 				<BreedsButton />
 				<CountriesButton />
+				<VaccinesButton />
 				<PetsButton
 					users={users}
 					species={species}
 					breeds={breeds}
 					countries={countries}
+					vaccines={vaccines}
 				/>
-				<VaccinesButton />
 				<AvsLicensesButton />
 			</div>
 		</Container>

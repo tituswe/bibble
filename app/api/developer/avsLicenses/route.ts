@@ -8,7 +8,8 @@ import {
 import prisma from '@/app/libs/prismadb';
 
 export async function POST(request: Request) {
-	const pets = await getPets({});
+	const allPets = await getPets({});
+	const pets = allPets.filter((item, i) => i % 2 === 0);
 
 	const body = pets.map((pet) => {
 		const issuedAt = getRandomDate(new Date(pet.birthday));

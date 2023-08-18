@@ -1,4 +1,4 @@
-import { Breed, Country, Species } from '@prisma/client';
+import { Breed, Country, Species, Vaccine } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -11,17 +11,25 @@ interface IPetsParams {
 	species: Species[];
 	breeds: Breed[];
 	countries: Country[];
+	vaccines: Vaccine[];
 }
 
 const PetsButton = (params: IPetsParams) => {
-	const { users, species, breeds, countries } = params;
+	const { users, species, breeds, countries, vaccines } = params;
+	const dog = species.find((item) => item.name === 'dog');
+	const vaccineIds = vaccines.map((item) => item.id);
+	console.log(vaccineIds);
+	console.log(users);
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = () => {
 		setIsLoading(true);
 		axios
-			.post('/api/developer/pets', createPetsData(breeds, countries, users))
+			.post(
+				'/api/developer/pets',
+				createPetsData(dog!, breeds, countries, users, vaccineIds)
+			)
 			.then(() => {
 				toast.success('Pets posted successfully!');
 				router.refresh();

@@ -127,10 +127,8 @@ export default async function getPets(params: IPetsParams) {
 				vaccineIds = [vaccineIds];
 			}
 
-			query.vaccines = {
-				some: {
-					id: { in: vaccineIds },
-				},
+			query.vaccineIds = {
+				hasEvery: vaccineIds,
 			};
 		}
 
@@ -166,7 +164,6 @@ export default async function getPets(params: IPetsParams) {
 				breed: true,
 				origin: true,
 				lister: true,
-				vaccines: true,
 				avsLicense: true,
 			},
 		});

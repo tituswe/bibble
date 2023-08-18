@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Button from './Button';
+import { vaccinesData } from './data';
 
 const VaccinesButton = () => {
 	const router = useRouter();
@@ -11,7 +12,7 @@ const VaccinesButton = () => {
 	const onSubmit = () => {
 		setIsLoading(true);
 		axios
-			.post('/api/developer/vaccines')
+			.post('/api/developer/vaccines', vaccinesData)
 			.then(() => {
 				toast.success('Vaccines posted successfully!');
 				router.refresh();

@@ -81,7 +81,7 @@ model Pet {
   isHealthTested Boolean
   isHdbApproved Boolean
   avsLicense AvsLicense?
-  vaccines Vaccine[]
+  vaccineIds String[] @db.ObjectId
   isNeutered Boolean
   isHypoallergenic Boolean
   isMicrochipped Boolean
@@ -126,9 +126,5 @@ model AvsLicense {
 
 model Vaccine {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
-  petId String @db.ObjectId
   name String
-  takenAt DateTime
-  expiresAt DateTime
 }
