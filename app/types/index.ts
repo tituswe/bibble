@@ -1,4 +1,12 @@
-import { Pet, User } from '@prisma/client';
+import {
+	AvsLicense,
+	Breed,
+	Country,
+	Pet,
+	Species,
+	User,
+	Vaccine,
+} from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
@@ -12,6 +20,12 @@ export type SafeUser = Omit<
 export type SafePet = Omit<Pet, 'birthday' | 'postedAt'> & {
 	birthday: string;
 	postedAt: string;
+	species: Species;
+	lister: SafeUser;
+	breed: Breed;
+	origin: Country;
+	vaccines: Array<Vaccine>;
+	avsLicense?: AvsLicense | null;
 };
 
 export type GeocodeResponse = {

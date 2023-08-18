@@ -84,14 +84,10 @@ export default async function getPets(params: IPetsParams) {
 				maxPrice = parseInt(maxPrice);
 			}
 
-			query.AND = [
-				{
-					price: { gte: minPrice },
-				},
-				{
-					price: { lte: maxPrice },
-				},
-			];
+			query.price = {
+				gte: minPrice,
+				lte: maxPrice,
+			};
 		}
 
 		if (minAge && maxAge && timeUnit) {
@@ -106,14 +102,10 @@ export default async function getPets(params: IPetsParams) {
 			const maxBirthdate = formatISO(getBirthdate(minAge, timeUnit));
 			const minBirthdate = formatISO(getBirthdate(maxAge, timeUnit));
 
-			query.AND = [
-				{
-					birthday: { gte: minBirthdate },
-				},
-				{
-					birthday: { lte: maxBirthdate },
-				},
-			];
+			query.birthday = {
+				gte: minBirthdate,
+				lte: maxBirthdate,
+			};
 		}
 
 		if (gender) {

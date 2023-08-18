@@ -10,16 +10,10 @@ import PetInfo from '@/app/components/pets/PetInfo';
 import Avatar from '@/app/components/Avatar';
 import GeoCard from '@/app/components/GeoCard';
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed as BreedSchema, Country, Species } from '@prisma/client';
 import { BiBadgeCheck } from 'react-icons/bi';
 
 interface PetClientProps {
-	pet: SafePet & {
-		lister: SafeUser;
-		origin: Country;
-		species: Species;
-		breed: BreedSchema;
-	};
+	pet: SafePet;
 	currentUser: SafeUser | null;
 }
 
