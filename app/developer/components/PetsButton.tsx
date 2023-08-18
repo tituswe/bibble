@@ -18,8 +18,6 @@ const PetsButton = (params: IPetsParams) => {
 	const { users, species, breeds, countries, vaccines } = params;
 	const dog = species.find((item) => item.name === 'dog');
 	const vaccineIds = vaccines.map((item) => item.id);
-	console.log(vaccineIds);
-	console.log(users);
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 

@@ -1,25 +1,15 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
+import { usePriceRange } from '@/app/hooks/usePriceRange';
 import { BiDollar } from 'react-icons/bi';
 import ReactSlider from 'react-slider';
 
-interface PriceInputProps {
-	MIN: number;
-	MAX: number;
-	minValue: number;
-	setMinValue: (e: number) => void;
-	maxValue: number;
-	setMaxValue: (e: number) => void;
-}
+const PriceInput = () => {
+	const { allPets, minPrice, setMinPrice, maxPrice, setMaxPrice } =
+		useFilterContext();
+	const { MIN_PRICE, MAX_PRICE } = usePriceRange(allPets);
 
-const PriceInput: React.FC<PriceInputProps> = ({
-	MIN,
-	MAX,
-	minValue,
-	setMinValue,
-	maxValue,
-	setMaxValue,
-}) => {
 	return (
 		<div
 			className="
@@ -52,13 +42,13 @@ const PriceInput: React.FC<PriceInputProps> = ({
 					bg-neutral-800
 					rounded-full
 				"
-				defaultValue={[MIN, MAX]}
-				value={[minValue, maxValue]}
+				defaultValue={[MIN_PRICE, MAX_PRICE]}
+				value={[minPrice, maxPrice]}
 				onChange={([min, max]) => {
-					setMinValue(min);
-					setMaxValue(max);
+					setMinPrice(min);
+					setMaxPrice(max);
 				}}
-				max={MAX}
+				max={MAX_PRICE}
 				step={100}
 				ariaLabel={['Lower thumb', 'Upper thumb']}
 				ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
@@ -99,11 +89,16 @@ const PriceInput: React.FC<PriceInputProps> = ({
 						<BiDollar />
 						<input
 							type="number"
-							value={minValue}
+							value={minPrice}
 							onChange={(e) => {
-								const newValue = parseInt(e.target.value);
+								const newPrice = parseInt(e.target.value);
 
-								setMinValue(newValue > MAX ? maxValue : newValue);
+								setMinPrice(newPrice > MAX_PRICE ? maxPrice : newPrice);
+							}}
+							onBlur={() => {
+								if (minPrice > maxPrice) {
+									setMinPrice(maxPrice);
+								}
 							}}
 							step="100"
 							min="0"
@@ -118,7 +113,7 @@ const PriceInput: React.FC<PriceInputProps> = ({
 				</div>
 				{/* LINE */}
 				<div className="border-[1px] w-full m-4"></div>
-				{/* MAXIMUM */}
+				{/* MAX_PRICEIMUM */}
 				<div
 					className="
 						flex
@@ -144,11 +139,16 @@ const PriceInput: React.FC<PriceInputProps> = ({
 						<BiDollar />
 						<input
 							type="number"
-							value={maxValue}
+							value={maxPrice}
 							onChange={(e) => {
-								const newValue = parseInt(e.target.value);
+								const newPrice = parseInt(e.target.value);
 
-								setMaxValue(newValue > MAX ? maxValue : newValue);
+								setMaxPrice(newPrice > MAX_PRICE ? maxPrice : newPrice);
+							}}
+							onBlur={() => {
+								if (maxPrice < minPrice) {
+									setMaxPrice(minPrice);
+								}
 							}}
 							step="100"
 							min="0"

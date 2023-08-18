@@ -1,32 +1,25 @@
 'use client';
 
+import { useAgeRange } from '@/app/hooks/useAgeRange';
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { TimeUnit } from '@/app/types';
+import { formatAge } from '@/app/utils/getAge';
 import { toCamelCase } from '@/app/utils/toCamelCase';
 import { useCallback, useState } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 
-interface AgeInputProps {
-	MIN: number;
-	MAX: number;
-	minValue: number;
-	setMinValue: (e: number) => void;
-	maxValue: number;
-	setMaxValue: (e: number) => void;
-	timeUnit: TimeUnit;
-	setTimeUnit: (e: TimeUnit) => void;
-}
-
-const AgeInput: React.FC<AgeInputProps> = ({
-	MIN,
-	MAX,
-	minValue,
-	setMinValue,
-	maxValue,
-	setMaxValue,
-	timeUnit,
-	setTimeUnit,
-}) => {
+const AgeInput = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const {
+		allPets,
+		minAge,
+		setMinAge,
+		maxAge,
+		setMaxAge,
+		timeUnit,
+		setTimeUnit,
+	} = useFilterContext();
+	const { MIN_AGE, MAX_AGE } = useAgeRange(allPets);
 
 	const toggleOpen = useCallback(() => {
 		setIsOpen(!isOpen);
@@ -94,11 +87,18 @@ const AgeInput: React.FC<AgeInputProps> = ({
 						>
 							<input
 								type="number"
-								value={minValue}
+								value={formatAge(minAge, timeUnit)}
 								onChange={(e) => {
 									const newValue = parseInt(e.target.value);
 
-									setMinValue(newValue > MAX ? maxValue : newValue);
+									setMinAge(
+										newValue > MAX_AGE || newValue > maxAge ? maxAge : newValue
+									);
+								}}
+								onBlur={() => {
+									if (minAge > maxAge) {
+										setMinAge(maxAge);
+									}
 								}}
 								min="0"
 								maxLength={3}
@@ -139,11 +139,18 @@ const AgeInput: React.FC<AgeInputProps> = ({
 						>
 							<input
 								type="number"
-								value={maxValue}
+								value={formatAge(maxAge, timeUnit)}
 								onChange={(e) => {
 									const newValue = parseInt(e.target.value);
 
-									setMaxValue(newValue > MAX ? maxValue : newValue);
+									setMaxAge(
+										newValue > MAX_AGE || newValue < minAge ? maxAge : newValue
+									);
+								}}
+								onBlur={() => {
+									if (maxAge < minAge) {
+										setMaxAge(minAge);
+									}
 								}}
 								min="0"
 								maxLength={3}

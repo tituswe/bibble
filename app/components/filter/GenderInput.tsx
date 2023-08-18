@@ -1,25 +1,23 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { Gender } from '@prisma/client';
 import { useCallback } from 'react';
 import { BiMaleSign } from 'react-icons/bi';
 import Box from '../Box';
 
-interface GenderInputProps {
-	selected: Gender | '';
-	setSelected: (e: Gender | '') => void;
-}
+const GenderInput = () => {
+	const { gender, setGender } = useFilterContext();
 
-const GenderInput: React.FC<GenderInputProps> = ({ selected, setSelected }) => {
 	const onClick = useCallback(
 		(e: Gender) => {
-			if (selected === e) {
-				setSelected('');
+			if (gender === e) {
+				setGender('');
 			} else {
-				setSelected(e);
+				setGender(e);
 			}
 		},
-		[selected, setSelected]
+		[gender, setGender]
 	);
 
 	return (
@@ -57,7 +55,7 @@ const GenderInput: React.FC<GenderInputProps> = ({ selected, setSelected }) => {
 						key={0}
 						label={'male'}
 						icon={BiMaleSign}
-						selected={selected === Gender.MALE}
+						selected={gender === Gender.MALE}
 						onClick={() => onClick(Gender.MALE)}
 					/>
 				</div>
@@ -80,7 +78,7 @@ const GenderInput: React.FC<GenderInputProps> = ({ selected, setSelected }) => {
 						key={1}
 						label={'female'}
 						icon={BiMaleSign}
-						selected={selected === Gender.FEMALE}
+						selected={gender === Gender.FEMALE}
 						onClick={() => onClick(Gender.FEMALE)}
 					/>
 				</div>

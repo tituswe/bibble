@@ -1,18 +1,21 @@
-import { TimeUnit } from '../types';
+export default function getBirthdate(
+	age: number,
+	format?: 'first' | 'last'
+): Date {
+	const currentDate = new Date();
+	const newDate = new Date(
+		currentDate.getFullYear(),
+		currentDate.getMonth() - age,
+		currentDate.getDate()
+	);
 
-export default function getBirthdate(age: number, timeUnit: TimeUnit): Date {
-	const today = new Date();
-
-	if (timeUnit === 'months') {
-		today.setMonth(today.getMonth() - age + 1);
-	} else if (timeUnit === 'years') {
-		today.setFullYear(today.getFullYear() - age + 1);
-	} else {
-		throw new Error('Invalid timeUnit');
+	if (format === 'first') {
+		newDate.setMonth(newDate.getMonth() - 1, 1);
 	}
 
-	today.setDate(1);
-	today.setHours(0, 0, 0, 0);
+	if (format === 'last') {
+		newDate.setMonth(newDate.getMonth() + 1, 0);
+	}
 
-	return today;
+	return newDate;
 }

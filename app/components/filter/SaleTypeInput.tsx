@@ -1,5 +1,6 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { toCamelCase } from '@/app/utils/toCamelCase';
 import { SaleType } from '@prisma/client';
 import { useCallback } from 'react';
@@ -69,20 +70,13 @@ const SaleTypeOption: React.FC<SaleTypeOptionProps> = ({
 	);
 };
 
-interface SaleTypeInputProps {
-	selected: SaleType | '';
-	setSelected: (e: SaleType | '') => void;
-}
-
-const SaleTypeInput: React.FC<SaleTypeInputProps> = ({
-	selected,
-	setSelected,
-}) => {
+const SaleTypeInput = () => {
+	const { saleType, setSaleType } = useFilterContext();
 	const onClick = useCallback(
 		(e: SaleType | '') => {
-			setSelected(e);
+			setSaleType(e);
 		},
-		[setSelected]
+		[setSaleType]
 	);
 
 	const saleTypes: SaleTypeOptionProps[] = [
@@ -124,7 +118,7 @@ const SaleTypeInput: React.FC<SaleTypeInputProps> = ({
 								? Position.RIGHT
 								: Position.MIDDLE
 						}
-						selected={selected === item.type}
+						selected={saleType === item.type}
 						onClick={() => onClick(item.type)}
 					/>
 				))}

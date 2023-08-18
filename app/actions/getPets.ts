@@ -7,7 +7,6 @@ import {
 	Species,
 	Vaccine,
 } from '@prisma/client';
-import { formatISO } from 'date-fns';
 import { TimeUnit } from '../types';
 import getBirthdate from '../utils/getBirthdate';
 
@@ -99,8 +98,8 @@ export default async function getPets(params: IPetsParams) {
 				maxAge = parseInt(maxAge);
 			}
 
-			const maxBirthdate = formatISO(getBirthdate(minAge, timeUnit));
-			const minBirthdate = formatISO(getBirthdate(maxAge, timeUnit));
+			const maxBirthdate = getBirthdate(minAge, 'last');
+			const minBirthdate = getBirthdate(maxAge, 'first');
 
 			query.birthday = {
 				gte: minBirthdate,

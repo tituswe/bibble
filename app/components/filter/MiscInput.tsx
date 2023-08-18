@@ -1,31 +1,23 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { useCallback } from 'react';
 import { BiHealth, BiListCheck } from 'react-icons/bi';
 import CheckBox from '../CheckBox';
 
-interface MiscInputProps {
-	selected: Array<string>;
-	setSelected: (e: Array<string>) => void;
-	medicalOptions: Array<{ field: string; label: string }>;
-	otherOptions: Array<{ field: string; label: string }>;
-}
+const MiscInput = () => {
+	const { medicalOptions, otherOptions, options, setOptions } =
+		useFilterContext();
 
-const MiscInput: React.FC<MiscInputProps> = ({
-	selected,
-	setSelected,
-	medicalOptions,
-	otherOptions,
-}) => {
 	const onCheck = useCallback(
 		(item: string) => {
-			if (selected.includes(item)) {
-				setSelected(selected.filter((e) => e !== item));
+			if (options.includes(item)) {
+				setOptions(options.filter((e) => e !== item));
 			} else {
-				setSelected([...selected, item]);
+				setOptions([...options, item]);
 			}
 		},
-		[selected, setSelected]
+		[options, setOptions]
 	);
 
 	return (
@@ -67,7 +59,7 @@ const MiscInput: React.FC<MiscInputProps> = ({
 							"
 						>
 							<CheckBox
-								isChecked={selected.includes(item.field)}
+								isChecked={options.includes(item.field)}
 								setIsChecked={() => onCheck(item.field)}
 							/>
 							<div className="font-light">{item.label}</div>
@@ -105,7 +97,7 @@ const MiscInput: React.FC<MiscInputProps> = ({
 							"
 						>
 							<CheckBox
-								isChecked={selected.includes(item.field)}
+								isChecked={options.includes(item.field)}
 								setIsChecked={() => onCheck(item.field)}
 							/>
 							<div className="font-light">{item.label}</div>

@@ -1,25 +1,17 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { Country } from '@prisma/client';
 import { useCallback, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 
-interface OriginInputProps {
-	selected: Array<Country>;
-	setSelected: (e: Array<Country>) => void;
-	origins: Country[];
-}
-
-const OriginInput: React.FC<OriginInputProps> = ({
-	selected,
-	setSelected,
-	origins,
-}) => {
+const OriginInput = () => {
 	const [value, setValue] = useState('');
+	const { allOrigins, origins, setOrigins } = useFilterContext();
 
-	const filteredOrigins = origins
-		.filter((item) => !selected.includes(item))
+	const filteredOrigins = allOrigins
+		.filter((item) => !origins.includes(item))
 		.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
 		.sort((a, b) => {
 			const indexOfA = a.name.toLowerCase().indexOf(value.toLowerCase());
@@ -34,20 +26,20 @@ const OriginInput: React.FC<OriginInputProps> = ({
 
 	const handleAdd = useCallback(
 		(item: Country) => {
-			if (selected.includes(item)) {
+			if (origins.includes(item)) {
 				return;
 			}
 
-			setSelected([...selected, item]);
+			setOrigins([...origins, item]);
 		},
-		[selected, setSelected]
+		[origins, setOrigins]
 	);
 
 	const handleRemove = useCallback(
 		(item: Country) => {
-			setSelected(selected.filter((e) => e !== item));
+			setOrigins(origins.filter((e) => e !== item));
 		},
-		[selected, setSelected]
+		[origins, setOrigins]
 	);
 
 	return (
@@ -76,11 +68,11 @@ const OriginInput: React.FC<OriginInputProps> = ({
 						onChange={(e) => setValue(e.target.value)}
 						value={value}
 						className="
-						peer
-						w-full
-						outline-none
-					"
-						list="origins"
+							peer
+							w-full
+							outline-none
+						"
+						list="allOrigins"
 					/>
 					<label
 						className={`
@@ -155,9 +147,9 @@ const OriginInput: React.FC<OriginInputProps> = ({
 					))}
 				</div>
 			)}
-			{selected.length > 0 ? (
+			{origins.length > 0 ? (
 				<div className="flex flex-wrap gap-4 p-4">
-					{selected.map((item, i) => (
+					{origins.map((item, i) => (
 						<div
 							key={i}
 							className="

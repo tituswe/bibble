@@ -1,30 +1,23 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { Vaccine } from '@prisma/client';
 import { useCallback } from 'react';
 import CheckBox from '../CheckBox';
 
-interface VaccineInputProps {
-	selected: Array<Vaccine>;
-	setSelected: (e: Array<Vaccine>) => void;
-	vaccines: Vaccine[];
-}
+const VaccineInput = () => {
+	const { allVaccines, vaccines, setVaccines } = useFilterContext();
 
-const VaccineInput: React.FC<VaccineInputProps> = ({
-	selected,
-	setSelected,
-	vaccines,
-}) => {
 	const onCheck = useCallback(
 		(item: Vaccine) => {
-			const selectedIds = selected.map((item) => item.id);
-			if (selectedIds.includes(item.id)) {
-				setSelected(selected.filter((e) => e.id !== item.id));
+			const vaccinesIds = vaccines.map((item) => item.id);
+			if (vaccinesIds.includes(item.id)) {
+				setVaccines(vaccines.filter((e) => e.id !== item.id));
 			} else {
-				setSelected([...selected, item]);
+				setVaccines([...vaccines, item]);
 			}
 		},
-		[selected, setSelected]
+		[vaccines, setVaccines]
 	);
 
 	return (
@@ -51,7 +44,7 @@ const VaccineInput: React.FC<VaccineInputProps> = ({
 						gap-6
 					"
 				>
-					{vaccines.map((item, i) => (
+					{allVaccines.map((item, i) => (
 						<div
 							key={i}
 							className="
@@ -62,7 +55,7 @@ const VaccineInput: React.FC<VaccineInputProps> = ({
 							"
 						>
 							<CheckBox
-								isChecked={selected.includes(item)}
+								isChecked={vaccines.includes(item)}
 								setIsChecked={() => onCheck(item)}
 							/>
 							<div className="font-light">{item.name}</div>

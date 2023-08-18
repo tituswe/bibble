@@ -1,5 +1,6 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { Species } from '@prisma/client';
 import { useCallback } from 'react';
 import { IconType } from 'react-icons';
@@ -9,17 +10,9 @@ import { GiFoxTail, GiRabbit, GiReptileTail } from 'react-icons/gi';
 import { PiBirdFill } from 'react-icons/pi';
 import Box from '../Box';
 
-interface SpeciesInputProps {
-	selected: Array<Species>;
-	setSelected: (e: Array<Species>) => void;
-	species: Species[];
-}
+const SpeciesInput = () => {
+	const { allSpecies, species, setSpecies } = useFilterContext();
 
-const SpeciesInput: React.FC<SpeciesInputProps> = ({
-	selected,
-	setSelected,
-	species,
-}) => {
 	const iconMap: Record<string, IconType> = {
 		dog: BiSolidDog,
 		cat: BiSolidCat,
@@ -31,13 +24,13 @@ const SpeciesInput: React.FC<SpeciesInputProps> = ({
 
 	const onClick = useCallback(
 		(item: Species) => {
-			if (selected.includes(item)) {
-				setSelected(selected.filter((e) => e !== item));
+			if (species.includes(item)) {
+				setSpecies(species.filter((e) => e !== item));
 			} else {
-				setSelected([...selected, item]);
+				setSpecies([...species, item]);
 			}
 		},
-		[selected, setSelected]
+		[species, setSpecies]
 	);
 
 	return (
@@ -57,12 +50,12 @@ const SpeciesInput: React.FC<SpeciesInputProps> = ({
 				justify-between
 			"
 			>
-				{species.map((item, i) => (
+				{allSpecies.map((item, i) => (
 					<Box
 						key={i}
 						label={item.name}
 						icon={iconMap[item.name] || AiOutlineQuestion}
-						selected={selected.includes(item)}
+						selected={species.includes(item)}
 						onClick={() => onClick(item)}
 					/>
 				))}

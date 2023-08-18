@@ -2,18 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import useFilterModal from '@/app/hooks/useFilterModal';
-import { SafePet, TimeUnit } from '@/app/types';
-import {
-	Breed,
-	Country,
-	Gender,
-	SaleType,
-	Species,
-	Vaccine,
-} from '@prisma/client';
 import AgeInput from '../filter/AgeInput';
 import BreedInput from '../filter/BreedInput';
 import GenderInput from '../filter/GenderInput';
@@ -25,50 +17,25 @@ import SpeciesInput from '../filter/SpeciesInput';
 import VaccineInput from '../filter/VaccineInput';
 import Modal from './Modal';
 
-interface FilterModalProps {
-	data: {
-		allPets: SafePet[];
-		allSpecies: Species[];
-		allBreeds: Breed[];
-		allOrigins: Country[];
-		allVaccines: Vaccine[];
-	};
-}
-
-const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
-	const { allSpecies, allBreeds, allOrigins, allVaccines } = data;
-
+const FilterModal = () => {
 	const router = useRouter();
 	const params = useSearchParams();
 	const filterModal = useFilterModal();
 
-	const MIN_PRICE = 0;
-	const MAX_PRICE = 10000;
-	const [timeUnit, setTimeUnit] = useState<TimeUnit>('months');
-	const MIN_AGE = 0;
-	const MAX_AGE = timeUnit === 'months' ? 12 : 24;
-	const medicalOptions = [
-		{ field: 'isHealthTested', label: 'Health Tested' },
-		{ field: 'isNeutered', label: ' Neutered' },
-		{ field: 'isHypoallergenic', label: 'Hypoallergenic' },
-	];
-	const otherOptions = [
-		{ field: 'isHdbApproved', label: 'HDB Approved' },
-		{ field: 'isPottyTrained', label: 'Potty Trained' },
-		{ field: 'avsLicense', label: 'AVS License' },
-	];
-
-	const [saleType, setSaleType] = useState<SaleType | ''>('');
-	const [species, setSpecies] = useState<Array<Species>>([]);
-	const [breeds, setBreeds] = useState<Array<Breed>>([]);
-	const [minPrice, setMinPrice] = useState<number>(MIN_PRICE);
-	const [maxPrice, setMaxPrice] = useState<number>(MAX_PRICE);
-	const [minAge, setMinAge] = useState<number>(MIN_AGE);
-	const [maxAge, setMaxAge] = useState<number>(MAX_AGE);
-	const [gender, setGender] = useState<Gender | ''>('');
-	const [origins, setOrigins] = useState<Array<Country>>([]);
-	const [vaccines, setVaccines] = useState<Array<Vaccine>>([]);
-	const [options, setOptions] = useState<Array<string>>([]);
+	const {
+		saleType,
+		species,
+		breeds,
+		minPrice,
+		maxPrice,
+		minAge,
+		maxAge,
+		gender,
+		origins,
+		vaccines,
+		options,
+		timeUnit,
+	} = useFilterContext();
 
 	const onSubmit = useCallback(async () => {
 		let currentQuery = {};
@@ -128,60 +95,23 @@ const FilterModal: React.FC<FilterModalProps> = ({ data }) => {
 
 	const bodyContent = (
 		<div className="flex flex-col gap-8">
-			<SaleTypeInput selected={saleType} setSelected={setSaleType} />
+			<SaleTypeInput />
 			<hr />
-			<SpeciesInput
-				selected={species}
-				setSelected={setSpecies}
-				species={allSpecies}
-			/>
+			<SpeciesInput />
 			<hr />
-			<BreedInput
-				selected={breeds}
-				setSelected={setBreeds}
-				breeds={allBreeds}
-			/>
+			<BreedInput />
 			<hr />
-			<PriceInput
-				MIN={MIN_PRICE}
-				MAX={MAX_PRICE}
-				minValue={minPrice}
-				setMinValue={setMinPrice}
-				maxValue={maxPrice}
-				setMaxValue={setMaxPrice}
-			/>
+			<PriceInput />
 			<hr />
-			<AgeInput
-				MIN={MIN_AGE}
-				MAX={MAX_AGE}
-				minValue={minAge}
-				setMinValue={setMinAge}
-				maxValue={maxAge}
-				setMaxValue={setMaxAge}
-				timeUnit={timeUnit}
-				setTimeUnit={setTimeUnit}
-			/>
+			<AgeInput />
 			<hr />
-			<OriginInput
-				selected={origins}
-				setSelected={setOrigins}
-				origins={allOrigins}
-			/>
+			<OriginInput />
 			<hr />
-			<GenderInput selected={gender} setSelected={setGender} />
+			<GenderInput />
 			<hr />
-			<VaccineInput
-				selected={vaccines}
-				setSelected={setVaccines}
-				vaccines={allVaccines}
-			/>
+			<VaccineInput />
 			<hr />
-			<MiscInput
-				selected={options}
-				setSelected={setOptions}
-				medicalOptions={medicalOptions}
-				otherOptions={otherOptions}
-			/>
+			<MiscInput />
 		</div>
 	);
 
