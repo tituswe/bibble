@@ -1,12 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { AiOutlineUser } from 'react-icons/ai';
 
 import AppointmentBox from '@/app/components/AppointmentBox';
 import Container from '@/app/components/Container';
-import { Breed, breeds } from '@/app/components/navbar/Breeds';
 import PetHead from '@/app/components/pets/PetHead';
 import PetInfo from '@/app/components/pets/PetInfo';
 
@@ -27,10 +24,6 @@ interface PetClientProps {
 }
 
 const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
-	const breed: Breed | undefined = useMemo(() => {
-		return breeds.find((item) => item.label === pet.breed.name);
-	}, [pet.breed.name]);
-
 	const getDateJoined = () => {
 		let dateJoined = new Date(pet.lister.createdAt);
 		let monthsDict = {

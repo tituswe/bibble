@@ -6,7 +6,6 @@ import { useCallback, useState } from 'react';
 import { IconType } from 'react-icons';
 
 import useLoginModal from '@/app/hooks/useLoginModal';
-import usePostModal from '@/app/kennel/hooks/usePostModal';
 
 import { SafeUser } from '@/app/types';
 import { BiBell, BiHeart } from 'react-icons/bi';
@@ -26,9 +25,8 @@ type NavButton = {
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
-	const loginModal = useLoginModal();
-	const postModal = usePostModal();
 	const router = useRouter();
+	const loginModal = useLoginModal();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const navButtons: NavButton[] = [
@@ -56,14 +54,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 			setIsOpen((value) => !value);
 		}
 	}, [loginModal, currentUser]);
-
-	const onPost = useCallback(() => {
-		if (!currentUser) {
-			return loginModal.onOpen();
-		}
-
-		postModal.onOpen();
-	}, [currentUser, loginModal, postModal]);
 
 	return (
 		<div className="relative">
@@ -141,7 +131,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
-							<MenuItem onClick={postModal.onOpen} label="Post a pet" />
 							<hr />
 							<MenuItem
 								onClick={() => router.push('/postings')}
