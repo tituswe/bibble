@@ -23,7 +23,7 @@ const KennelClient: React.FC<KennelClientProps> = ({ children }) => {
 
 	return (
 		<div>
-			<div className="flex justify-center py-2 sticky top-6 z-40">
+			<div className="flex justify-center pt-2 pb-4 sticky top-6 z-40">
 				<Pages scrollY={scrollY} />
 			</div>
 			<div>{children}</div>

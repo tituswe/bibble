@@ -1,12 +1,4 @@
-import {
-	AvsLicense,
-	Breed,
-	Country,
-	Pet,
-	Species,
-	User,
-	Vaccine,
-} from '@prisma/client';
+import { AvsLicense, Breed, Country, Pet, Species, User } from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
@@ -24,7 +16,6 @@ export type SafePet = Omit<Pet, 'birthday' | 'postedAt'> & {
 	lister: SafeUser;
 	breed: Breed;
 	origin: Country;
-	vaccines: Array<Vaccine>;
 	avsLicense?: AvsLicense | null;
 };
 
