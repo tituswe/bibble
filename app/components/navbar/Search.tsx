@@ -9,7 +9,7 @@ const Search = () => {
 	const filterModal = useFilterModal();
 
 	return (
-		<div
+		<search
 			onClick={() => setIsOpen(!isOpen)}
 			className={`
         border-[1px] 
@@ -78,7 +78,7 @@ const Search = () => {
 					<BiSlider size={18} />
 				</div>
 			</div>
-		</div>
+		</search>
 	);
 };
 

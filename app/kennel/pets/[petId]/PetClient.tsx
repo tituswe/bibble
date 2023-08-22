@@ -1,36 +1,23 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { AiOutlineUser } from 'react-icons/ai';
 
 import AppointmentBox from '@/app/components/AppointmentBox';
 import Container from '@/app/components/Container';
-import { Breed, breeds } from '@/app/components/navbar/Breeds';
 import PetHead from '@/app/components/pets/PetHead';
 import PetInfo from '@/app/components/pets/PetInfo';
 
 import Avatar from '@/app/components/Avatar';
 import GeoCard from '@/app/components/GeoCard';
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed as BreedSchema, Country, Species } from '@prisma/client';
 import { BiBadgeCheck } from 'react-icons/bi';
 
 interface PetClientProps {
-	pet: SafePet & {
-		lister: SafeUser;
-		origin: Country;
-		species: Species;
-		breed: BreedSchema;
-	};
+	pet: SafePet;
 	currentUser: SafeUser | null;
 }
 
 const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
-	const breed: Breed | undefined = useMemo(() => {
-		return breeds.find((item) => item.label === pet.breed.name);
-	}, [pet.breed.name]);
-
 	const getDateJoined = () => {
 		let dateJoined = new Date(pet.lister.createdAt);
 		let monthsDict = {

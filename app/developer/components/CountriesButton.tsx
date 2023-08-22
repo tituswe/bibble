@@ -2,18 +2,19 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { countriesData } from '../data';
 import Button from './Button';
 
-const VaccinesButton = () => {
+const CountriesButton = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = () => {
 		setIsLoading(true);
 		axios
-			.post('/api/developer/vaccines')
+			.post('/api/developer/countries', countriesData)
 			.then(() => {
-				toast.success('Vaccines posted successfully!');
+				toast.success('Countries posted successfully!');
 				router.refresh();
 			})
 			.catch(() => {
@@ -27,7 +28,7 @@ const VaccinesButton = () => {
 	return (
 		<div>
 			<Button
-				label="Dump Vaccines"
+				label="Dump Countries"
 				onClick={() => onSubmit()}
 				disabled={isLoading}
 			/>
@@ -35,4 +36,4 @@ const VaccinesButton = () => {
 	);
 };
 
-export default VaccinesButton;
+export default CountriesButton;

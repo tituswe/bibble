@@ -13,10 +13,10 @@ const Footer = () => {
 	}, [isOpen]);
 
 	return (
-		<div
+		<footer
 			onClick={toggleOpen}
 			className={`
-				sticky
+				fixed
         bottom-0
         w-full
         bg-white
@@ -62,7 +62,7 @@ const Footer = () => {
 					</LinkText>
 				</div>
 			</div>
-		</div>
+		</footer>
 	);
 };
 

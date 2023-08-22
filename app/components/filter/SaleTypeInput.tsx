@@ -1,7 +1,9 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { toCamelCase } from '@/app/utils/toCamelCase';
-import { useCallback, useState } from 'react';
+import { SaleType } from '@prisma/client';
+import { useCallback } from 'react';
 import { IconType } from 'react-icons';
 import {
 	AiOutlineCloud,
@@ -18,8 +20,9 @@ enum Position {
 interface SaleTypeOptionProps {
 	label: string;
 	icon: IconType;
-	position: Position;
+	type: SaleType | '';
 	description: string;
+	position?: Position;
 	selected?: boolean;
 	onClick?: (e: any) => void;
 }
@@ -68,25 +71,30 @@ const SaleTypeOption: React.FC<SaleTypeOptionProps> = ({
 };
 
 const SaleTypeInput = () => {
-	const [selected, setSelected] = useState('any');
+	const { saleType, setSaleType } = useFilterContext();
+	const onClick = useCallback(
+		(e: SaleType | '') => {
+			setSaleType(e);
+		},
+		[setSaleType]
+	);
 
-	const onClick = useCallback((label: string) => {
-		setSelected(label);
-	}, []);
-
-	const saleTypes = [
+	const saleTypes: SaleTypeOptionProps[] = [
 		{
 			label: 'any',
+			type: '',
 			icon: AiOutlineCloud,
 			description: 'Any type',
 		},
 		{
 			label: 'sale',
+			type: SaleType.PURCHASE,
 			icon: AiOutlineShop,
 			description: 'From a verified seller',
 		},
 		{
 			label: 'rescue',
+			type: SaleType.ADOPT,
 			icon: AiOutlineMedicineBox,
 			description: 'From an adoption home',
 		},
@@ -100,6 +108,7 @@ const SaleTypeInput = () => {
 					<SaleTypeOption
 						key={i}
 						label={item.label}
+						type={item.type}
 						icon={item.icon}
 						description={item.description}
 						position={
@@ -109,8 +118,8 @@ const SaleTypeInput = () => {
 								? Position.RIGHT
 								: Position.MIDDLE
 						}
-						selected={selected === item.label}
-						onClick={() => onClick(item.label)}
+						selected={saleType === item.type}
+						onClick={() => onClick(item.type)}
 					/>
 				))}
 			</div>

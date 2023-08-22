@@ -6,7 +6,7 @@ interface HomeProps {
 }
 
 const Home = async ({ searchParams }: HomeProps) => {
-	redirect('/kennel/featured');
+	redirect('/kennel/');
 };
 
 export default Home;

@@ -2,19 +2,19 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { vaccinesData } from '../data';
 import Button from './Button';
-import { speciesData } from './data';
 
-const BreedsButton = () => {
+const VaccinesButton = () => {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onSubmit = () => {
 		setIsLoading(true);
 		axios
-			.post('/api/developer/species', speciesData)
+			.post('/api/developer/vaccines', vaccinesData)
 			.then(() => {
-				toast.success('Species posted successfully!');
+				toast.success('Vaccines posted successfully!');
 				router.refresh();
 			})
 			.catch(() => {
@@ -28,7 +28,7 @@ const BreedsButton = () => {
 	return (
 		<div>
 			<Button
-				label="Dump Species"
+				label="Dump Vaccines"
 				onClick={() => onSubmit()}
 				disabled={isLoading}
 			/>
@@ -36,4 +36,4 @@ const BreedsButton = () => {
 	);
 };
 
-export default BreedsButton;
+export default VaccinesButton;

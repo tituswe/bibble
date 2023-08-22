@@ -1,11 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useFilterContext } from '@/app/hooks/useFilterContext';
+import { usePriceRange } from '@/app/hooks/usePriceRange';
 import { BiDollar } from 'react-icons/bi';
+import ReactSlider from 'react-slider';
 
 const PriceInput = () => {
-	const [minValue, setMinValue] = useState(0);
-	const [maxValue, setMaxValue] = useState(0);
+	const { allPets, minPrice, setMinPrice, maxPrice, setMaxPrice } =
+		useFilterContext();
+	const { MIN_PRICE, MAX_PRICE } = usePriceRange(allPets);
 
 	return (
 		<div
@@ -17,13 +20,39 @@ const PriceInput = () => {
 		>
 			<div className="font-semibold text-2xl">Price range</div>
 			{/* PRICE TOGGLE */}
-			<div className="flex flex-row w-full justify-center items-center">
-				<div className="flex flex-row w-full justify-between">
-					<div className="p-4 rounded-full bg-white border-[1px] z-10"></div>
-					<div className="p-4 rounded-full bg-white border-[1px] z-10"></div>
-				</div>
-				<div className="absolute w-5/6 items-center h-[2px] bg-neutral-800"></div>
-			</div>
+			<ReactSlider
+				className="flex items-center m-4"
+				thumbClassName="
+					h-8 
+					w-8  
+					text-clip 
+					bg-white 
+					text-white 
+					text-xs
+					rounded-full 
+					border-[2px]
+					border-sky-500
+					hover:bg-neutral-200
+					hover:shadow-2xl
+					hover:text-neutral-200
+					cursor-grab
+				"
+				trackClassName="
+					h-1 
+					bg-neutral-800
+					rounded-full
+				"
+				defaultValue={[MIN_PRICE, MAX_PRICE]}
+				value={[minPrice, maxPrice]}
+				onChange={([min, max]) => {
+					setMinPrice(min);
+					setMaxPrice(max);
+				}}
+				max={MAX_PRICE}
+				step={100}
+				ariaLabel={['Lower thumb', 'Upper thumb']}
+				ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
+			/>
 			{/* PRICE INPUTS */}
 			<div
 				className="
@@ -46,7 +75,9 @@ const PriceInput = () => {
 						rounded-xl
 					"
 				>
-					<div className="text-light text-neutral-500 text-xs">Minimum</div>
+					<div className="text-light text-neutral-500 text-xs">
+						Minimum Price
+					</div>
 					<div
 						className="
 							flex
@@ -58,14 +89,23 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={minValue}
-							onChange={(e) => setMinValue(parseInt(e.target.value))}
+							value={minPrice}
+							onChange={(e) => {
+								const newPrice = parseInt(e.target.value);
+
+								setMinPrice(newPrice > MAX_PRICE ? maxPrice : newPrice);
+							}}
+							onBlur={() => {
+								if (minPrice > maxPrice) {
+									setMinPrice(maxPrice);
+								}
+							}}
 							step="100"
 							min="0"
 							className="
 								outline-none
-								[appearance:textfield] 
-								[&::-webkit-outer-spin-button]:appearance-none 
+								[appearance:textfield]
+								[&::-webkit-outer-spin-button]:appearance-none
 								[&::-webkit-inner-spin-button]:appearance-none
 							"
 						/>
@@ -73,7 +113,7 @@ const PriceInput = () => {
 				</div>
 				{/* LINE */}
 				<div className="border-[1px] w-full m-4"></div>
-				{/* MAXIMUM */}
+				{/* MAX_PRICEIMUM */}
 				<div
 					className="
 						flex
@@ -85,7 +125,9 @@ const PriceInput = () => {
 						rounded-xl
 					"
 				>
-					<div className="text-light text-neutral-500 text-xs">Maximum</div>
+					<div className="text-light text-neutral-500 text-xs">
+						Maximum Price
+					</div>
 					<div
 						className="
 							flex
@@ -97,14 +139,23 @@ const PriceInput = () => {
 						<BiDollar />
 						<input
 							type="number"
-							value={maxValue}
-							onChange={(e) => setMaxValue(parseInt(e.target.value))}
+							value={maxPrice}
+							onChange={(e) => {
+								const newPrice = parseInt(e.target.value);
+
+								setMaxPrice(newPrice > MAX_PRICE ? maxPrice : newPrice);
+							}}
+							onBlur={() => {
+								if (maxPrice < minPrice) {
+									setMaxPrice(minPrice);
+								}
+							}}
 							step="100"
 							min="0"
 							className="
 								outline-none
-								[appearance:textfield] 
-								[&::-webkit-outer-spin-button]:appearance-none 
+								[appearance:textfield]
+								[&::-webkit-outer-spin-button]:appearance-none
 								[&::-webkit-inner-spin-button]:appearance-none
 							"
 						/>

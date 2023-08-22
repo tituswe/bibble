@@ -1,20 +1,17 @@
 'use client';
 
+import { useFilterContext } from '@/app/hooks/useFilterContext';
 import { Breed } from '@prisma/client';
 import { useCallback, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 
-interface BreedInputProps {
-	breeds: Breed[];
-}
-
-const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
+const BreedInput = () => {
 	const [value, setValue] = useState('');
-	const [selected, setSelected] = useState<Array<Breed>>([]);
+	const { allBreeds, breeds, setBreeds } = useFilterContext();
 
-	const filteredBreeds = breeds
-		.filter((item) => !selected.includes(item))
+	const filteredBreeds = allBreeds
+		.filter((item) => !breeds.includes(item))
 		.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
 		.sort((a, b) => {
 			const indexOfA = a.name.toLowerCase().indexOf(value.toLowerCase());
@@ -29,20 +26,20 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 
 	const handleAdd = useCallback(
 		(item: Breed) => {
-			if (selected.includes(item)) {
+			if (breeds.includes(item)) {
 				return;
 			}
 
-			setSelected([...selected, item]);
+			setBreeds([...breeds, item]);
 		},
-		[selected]
+		[breeds, setBreeds]
 	);
 
 	const handleRemove = useCallback(
 		(item: Breed) => {
-			setSelected(selected.filter((e) => e !== item));
+			setBreeds(breeds.filter((e) => e !== item));
 		},
-		[selected]
+		[breeds, setBreeds]
 	);
 
 	return (
@@ -150,9 +147,9 @@ const BreedInput: React.FC<BreedInputProps> = ({ breeds }) => {
 					))}
 				</div>
 			)}
-			{selected.length > 0 ? (
+			{breeds.length > 0 ? (
 				<div className="flex flex-wrap gap-4 p-4">
-					{selected.map((item, i) => (
+					{breeds.map((item, i) => (
 						<div
 							key={i}
 							className="
