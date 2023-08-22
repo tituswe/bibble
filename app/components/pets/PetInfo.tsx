@@ -48,7 +48,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 		<>
 			<div className="col-span-4 flex flex-col gap-6">
 				{/* Listing Information Header */}
-				<div className="flex flex-col gap-4">
+				<div className="flex flex-col gap-2">
 					<div className="text-xl font-semibold flex flex-row justify-between gap-2">
 						<div className="flex place-items-center">
 							<p className="pr-1">

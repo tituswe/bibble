@@ -7,8 +7,9 @@ import useReserveVisitationModal from "@/app/hooks/useReserveVisitationModal";
 import { Calendar } from "react-date-range";
 
 import DateInput from "../inputs/DateInput";
+import QuantityInput from "../inputs/QuantityInput";
 import Modal from "./Modal";
-import Dropdown from "../Dropdown";
+import TimeslotSelect from "../TimeslotSelect";
 
 // MOCK API CALL TO FETCH TIMESLOTS
 const getTimeslots = async (date: Date) => {
@@ -23,20 +24,29 @@ const getTimeslots = async (date: Date) => {
 const ReserveVisitationModal = () => {
     const reserveVisitationModal = useReserveVisitationModal();
     
-    const [appointmentDate, setAppointmentDate] = useState<Date>(new Date(Date.now()));
-    const [appointmentTime, setAppointmentTime] = useState<Date | null>();
+    const [appointmentDate, setAppointmentDate] = useState<Date>(reserveVisitationModal.date);
+    const [appointmentTime, setAppointmentTime] = useState<Date | null>(reserveVisitationModal.time);
     const [timeslots, setTimeslots] = useState<{ 'time': Date, 'available': boolean }[] | null>();
-    const [numberOfVisitors, setNumberOfVisitors] = useState<number>(1);
+    const [numberOfVisitors, setNumberOfVisitors] = useState<number | null>(reserveVisitationModal.numberOfVisitors);
 
-    const onSubmit = () => {
-        console.log('submit');
+    const handleSubmit = () => {
+        reserveVisitationModal.date = appointmentDate;
+        reserveVisitationModal.time = appointmentTime;
+        reserveVisitationModal.numberOfVisitors = numberOfVisitors;
+        reserveVisitationModal.onClose();
     };
+
+    const handleClose = () => {
+        reserveVisitationModal.date = appointmentDate;
+        reserveVisitationModal.time = appointmentTime;
+        reserveVisitationModal.numberOfVisitors = numberOfVisitors;
+        reserveVisitationModal.onClose();
+    }
 
     useEffect(() => {
         const fetchTimeslots = async () => {
             await getTimeslots(appointmentDate).then((timeslots) => {
                 setTimeslots(timeslots);
-                console.log(timeslots);
             })
         }
 
@@ -60,23 +70,11 @@ const ReserveVisitationModal = () => {
             <div>
                 {timeslots ? (
                     <>
-                    <p className='text-xl font-semibold'>
+                    <label className='text-xl font-semibold'>
                         At what time?
-                    </p>
-                    <div className='flex flex-col gap-2'>
-                        {timeslots.map((timeslot, index) => {
-                            return (
-                                <div key={index}>
-                                    {timeslot.available ?
-                                        <p>
-                                            {timeslot.time.toLocaleString('en-GB', { timeZone: 'SST' })} 
-                                        </p> : <p className='line-through'>
-                                            {timeslot.time.toLocaleString('en-GB', { timeZone: 'SST' })} 
-                                        </p>
-                                    }
-                                </div>
-                            )
-                        })}         
+                    </label>
+                    <div className='pt-2'>
+                        <TimeslotSelect label={'Select Timeslot'} timeslots={timeslots} selectedTimeslot={appointmentTime} setSelectedTimeslot={setAppointmentTime}/>
                     </div>
                     </>
                 ) : (
@@ -89,10 +87,13 @@ const ReserveVisitationModal = () => {
             <hr />
 
             <div>
-                <p className='text-xl font-semibold overflow-hidden'>
+                <label className='text-xl font-semibold overflow-hidden'>
                     Who's coming with?
-                </p>
+                </label>
 
+                <div className='pt-2'>
+                    <QuantityInput label={'Select Number'} items={[1, 2, 3, 4, 5]} selectedItem={numberOfVisitors} setSelected={setNumberOfVisitors}/>
+                </div>
             </div>
             
         </div>
@@ -101,8 +102,8 @@ const ReserveVisitationModal = () => {
     return (
         <Modal
 			isOpen={reserveVisitationModal.isOpen}
-			onClose={reserveVisitationModal.onClose}
-			onSubmit={onSubmit}
+			onClose={handleClose}
+			onSubmit={handleSubmit}
 			title="Reserve Visitation"
 			actionLabel="Reserve"
 			body={bodyContent}

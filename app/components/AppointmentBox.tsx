@@ -17,10 +17,6 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
     const { price } = pet;
 
     const reserveVisitationModal = useReserveVisitationModal();
-    
-    const [appointmentDate, setAppointmentDate] = useState(new Date(Date.now()));
-    const [appointmentTime, setAppointmentTime] = useState(new Date(Date.now()));
-    const [numberOfVisitors, setNumberOfVisitors] = useState(1);
 
     const handleReserveVisitation = () => {
         // TODO: Implement reserve visitation
@@ -28,6 +24,16 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
 
     const handleContactLister = () => {
         // TODO: Implement contact lister
+    }
+
+    const displayTime = (date: Date) => {
+        let hours: number = date.getHours();
+        let minutes: number = date.getMinutes();
+        return `${hours} : ${minutes} hrs`
+    }
+
+    const displayNumberOfPeople = (number: number) => {
+        return number > 1 ? `${number} persons` : 'Just myself!'
     }
 
 	return (
@@ -51,11 +57,11 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
             
             <div className="w-5/6 rounded-3xl border border-neutral-200">
                 <div className="flex">
-                    <div className="relative w-1/2 border-r p-3 pl-5">
+                    <div className="w-1/2 border-r p-3 pl-5">
                         <p className="text-lg font-semibold">Date</p>
                         <button className="underline underline-offset-2 font-light hover:text-sky-500 transition"
                         onClick={reserveVisitationModal.onOpen}>
-                            {appointmentDate.getDate()}/{appointmentDate.getMonth()}/{appointmentDate.getFullYear()}
+                            {reserveVisitationModal.date.getDate()}/{reserveVisitationModal.date.getMonth()}/{reserveVisitationModal.date.getFullYear()}
                         </button>
                     </div>
                     
@@ -63,7 +69,8 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
                         <p className="text-lg font-semibold">Time</p>
                         <button className="underline underline-offset-2 font-light hover:text-sky-500 transition" 
                         onClick={reserveVisitationModal.onOpen}>
-                            {appointmentTime.getHours()} : {appointmentTime.getMinutes()} hrs
+                            {/* {reserveVisitationModal.time?.getHours()} : {reserveVisitationModal.time?.getMinutes()} hrs */}
+                            {reserveVisitationModal.time ? displayTime(reserveVisitationModal.time) : 'Select Timeslot'}
                         </button>
 
                     </div>
@@ -72,11 +79,11 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
                 <hr className='border-r'/>
                 
                 <div className="flex justify-between">
-                    <div className="relative w-1/2 p-3 pl-5">
+                    <div className="w-2/3 p-3 pl-5">
                         <p className="text-lg font-semibold">Number of Visitors</p>
                         <button className="underline underline-offset-2 font-light hover:text-sky-500 transition"
                         onClick={reserveVisitationModal.onOpen}>
-                            {numberOfVisitors} persons
+                            {reserveVisitationModal.numberOfVisitors ? displayNumberOfPeople(reserveVisitationModal.numberOfVisitors) : 'Select Number'}
                         </button>
                     </div>
                     <button className='p-3 pr-5 self-center' onClick={reserveVisitationModal.onOpen}>
