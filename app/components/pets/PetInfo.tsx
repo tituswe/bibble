@@ -90,7 +90,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 					<div className="flex items-center gap-4">
 						<BiCalendar size={18} className="fill-neutral-700" />
 						{birthDate.toLocaleDateString('en-GB', { timeZone: 'SST' })} (
-						{getAgeLabel({ data: pet })})
+						{getAgeLabel({ data: pet })} Old)
 					</div>
 				</div>
 
