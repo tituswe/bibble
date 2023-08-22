@@ -43,6 +43,11 @@ const ReserveVisitationModal = () => {
         reserveVisitationModal.onClose();
     }
 
+    const handleSetAppointmentDate = (date: Date) => {
+        setAppointmentDate(date);
+        setAppointmentTime(null);
+    }
+
     useEffect(() => {
         const fetchTimeslots = async () => {
             await getTimeslots(appointmentDate).then((timeslots) => {
@@ -61,7 +66,7 @@ const ReserveVisitationModal = () => {
                 </label>
 
                 <div className='flex scale-125 p-4 justify-center'>
-                    <DateInput date={appointmentDate} onChange={setAppointmentDate}/>
+                    <DateInput date={appointmentDate} onChange={handleSetAppointmentDate}/>
                 </div>
             </div>
 
