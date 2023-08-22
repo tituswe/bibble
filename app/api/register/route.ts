@@ -14,6 +14,12 @@ export async function POST(request: Request) {
 			email,
 			name,
 			hashedPassword,
+			profile: {
+				create: {
+					bio: '',
+					verified: false,
+				},
+			},
 		},
 	});
 

@@ -210,6 +210,7 @@ export const createPetsData = (
 			hairCoat: getRandomHairCoat(),
 			isPottyTrained: getRandomBoolean(),
 			locationValue: '', // need to do locationValue
+			description: 'Lorem ipsum blabla this is a description',
 		});
 	}
 
