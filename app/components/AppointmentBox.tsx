@@ -28,7 +28,7 @@ const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
 
     const displayTime = (date: Date) => {
         let hours: number = date.getHours();
-        let minutes: number = date.getMinutes();
+        let minutes: string = date.getMinutes().toString().padStart(2, '0');
         return `${hours} : ${minutes} hrs`
     }
 

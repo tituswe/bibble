@@ -52,12 +52,12 @@ const GeoCard: React.FC<GeoCardProps> = ({ location }) => {
             </div>
 
             {/* Map */}
-            <div className='h-80 content-center'>
+            <div className='h-3/4 content-center'>
                 <Map coordinates={data ? data.coordinates : { lat: -25.344, lng: 131.031 }}/>
             </div>
         </div>
     ) : (
-        <div className='flex h-64 bg-neutral-200 shadow-xl rounded-2xl items-center'>
+        <div className='flex h-96 bg-neutral-200 shadow-xl rounded-2xl items-center'>
             <AiOutlineLoading size={60} className='basis-full fill-sky-500 animate-spin' />
         </div>
     );
