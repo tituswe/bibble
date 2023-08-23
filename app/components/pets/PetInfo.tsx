@@ -11,6 +11,7 @@ import {
 	AiOutlineMedicineBox,
 	AiOutlineQuestionCircle,
 } from 'react-icons/ai';
+
 import {
 	BiBadgeCheck,
 	BiBone,
@@ -43,23 +44,9 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 		);
 	};
 
-	// const getAgeToString = () => {
-	// 	let today = new Date(Date.now());
-	// 	let age = today.getFullYear() - birthDate.getFullYear();
-	// 	let m = today.getMonth() - birthDate.getMonth();
-	// 	age = age + m / 12;
-	// 	if (age < 1) {
-	// 		return `${age * 12} months`;
-	// 	} else {
-	// 		let y = Math.floor(age);
-	// 		let remainingMonths = Math.round((age - y) * 12)
-	// 		return remainingMonths == 0 ? `${y} years` : `${y} years ${remainingMonths} months`
-	// 	}
-	// }
-
 	return (
 		<>
-			<div className="col-span-4 flex flex-col gap-4">
+			<div className="col-span-4 flex flex-col gap-6">
 				{/* Listing Information Header */}
 				<div className="flex flex-col gap-2">
 					<div className="text-xl font-semibold flex flex-row justify-between gap-2">
@@ -80,10 +67,9 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 				</div>
 
 				{/* Basic Information */}
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-1">
-						<AiOutlineQuestionCircle size={23} className="fill-neutral-300" />{' '}
-						<hr className="grow" />
+				<div className='flex flex-col gap-6'>
+					<div className='flex items-center gap-1'>
+						<AiOutlineQuestionCircle size={23} className='fill-neutral-300'/> <hr className='grow'/>
 					</div>
 
 					<div className="flex items-center gap-4">
@@ -104,72 +90,64 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 					<div className="flex items-center gap-4">
 						<BiCalendar size={18} className="fill-neutral-700" />
 						{birthDate.toLocaleDateString('en-GB', { timeZone: 'SST' })} (
-						{getAgeLabel({ data: pet })})
+						{getAgeLabel({ data: pet })} Old)
 					</div>
 				</div>
 
 				{/* Description */}
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-1">
-						<AiOutlineInfoCircle size={23} className="fill-neutral-300" />{' '}
-						<hr className="grow" />
+				<div className='flex flex-col gap-6'>
+					<div className='flex items-center gap-1'>
+						<AiOutlineInfoCircle size={23} className='fill-neutral-300'/> <hr className='grow'/>
 					</div>
 
-					<div className="flex h-60 overflow-auto items-start">
-						TODO: ADD DESCRIPTION FIELD TO DB Lorem ipsum dolor sit amet,
-						consectetur adipiscing elit. Praesent et varius mauris, vitae
-						gravida erat. Suspendisse quis purus eu purus convallis mattis ac
-						vel massa. Pellentesque hendrerit mattis pharetra. Aliquam sodales a
-						metus eu porttitor. Donec iaculis rhoncus tristique. Ut laoreet
-						blandit euismod. Donec sed cursus enim. Etiam laoreet eget eros a
-						imperdiet. In eget venenatis mi, in sollicitudin neque. Aenean
-						suscipit sodales nulla facilisis ultrices. Integer venenatis dolor
-						at erat ullamcorper, quis bibendum urna feugiat. Proin varius ipsum
-						in eros tincidunt, et condimentum eros rhoncus. Nunc egestas
-						eleifend fermentum. Maecenas et eleifend ligula, sagittis tincidunt
-						ligula. Phasellus ut interdum augue. Nullam pellentesque tortor quis
-						urna feugiat, eget lacinia purus consequat. Sed tempus enim libero,
-						ultricies hendrerit neque pharetra ut. Sed eu pretium odio. Nulla
-						fringilla lacus a orci ullamcorper maximus. Vivamus vehicula lacinia
-						placerat. Integer egestas nisi in tincidunt venenatis. Aenean
-						vehicula malesuada egestas. Sed fermentum mauris ac mauris interdum
-						iaculis. Nulla at tempor nibh. Vestibulum et leo ligula. Nam in mi
-						sed velit aliquam laoreet quis consectetur lacus. Suspendisse at
-						quam quam. Aenean rhoncus ante quis lobortis vulputate. Morbi nec ex
-						mi. Aenean in ipsum porta diam rhoncus lacinia et vitae justo. Nunc
-						in risus mauris. Fusce egestas lectus dolor, vel posuere nunc semper
-						in. In turpis purus, placerat sed est sit amet, iaculis pretium
-						magna. Fusce non porttitor augue. Aliquam accumsan elit nec neque
-						vestibulum hendrerit. Proin cursus nisi nulla, ut finibus turpis
-						imperdiet vitae. Proin ac turpis in felis interdum scelerisque eget
-						vitae metus. Nullam ac augue dapibus, iaculis arcu sit amet,
-						facilisis eros. Vestibulum ante ipsum primis in faucibus orci luctus
-						et ultrices posuere cubilia curae; Integer maximus tortor risus, at
-						egestas ligula dignissim quis. Phasellus egestas justo vel dictum
-						sollicitudin. Vestibulum tempor nisl ac felis rutrum, eget congue
-						sapien consequat. Vivamus rutrum sed nibh ac pellentesque.
-						Vestibulum commodo nisl quis tortor venenatis, at finibus ipsum
-						ultricies. Morbi ligula quam, hendrerit ut feugiat nec, pretium non
-						nisl. Donec et quam tortor. Maecenas bibendum, turpis nec imperdiet
-						blandit, nisl ante dignissim metus, ut egestas ex purus quis quam.
-						Morbi eget leo augue. Aliquam rutrum est a nibh ultrices, ac
-						eleifend augue mattis. Suspendisse potenti. Proin faucibus porttitor
-						dictum. Suspendisse potenti. In ut erat non ex pellentesque
-						pharetra. Cras gravida ipsum velit, non semper neque lacinia et. In
-						blandit fermentum urna. Nulla ut ex lacus. Class aptent taciti
-						sociosqu ad litora torquent per conubia nostra, per inceptos
-						himenaeos. Proin molestie posuere orci id condimentum. Aliquam
-						aliquet ligula eu blandit tincidunt. Aliquam et cursus orci. Quisque
-						in congue nibh. Cras at lectus consequat, facilisis lectus a,
-						facilisis odio.
+					<div className='flex flex-col items-start gap-4'>
+						<p className='font-semibold text-xl'>
+							TODO: Add description field to DB
+						</p>
+						<p className='line-clamp-5 tracking-wide leading-relaxed'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et varius mauris, vitae gravida erat. 
+							Suspendisse quis purus eu purus convallis mattis ac vel massa. Pellentesque hendrerit mattis pharetra. 
+							Aliquam sodales a metus eu porttitor. Donec iaculis rhoncus tristique. Ut laoreet blandit euismod. Donec 
+							sed cursus enim. Etiam laoreet eget eros a imperdiet. In eget venenatis mi, in sollicitudin neque.
+							
+							Aenean suscipit sodales nulla facilisis ultrices. Integer venenatis dolor at erat ullamcorper, quis bibendum 
+							urna feugiat. Proin varius ipsum in eros tincidunt, et condimentum eros rhoncus. Nunc egestas eleifend fermentum. 
+							Maecenas et eleifend ligula, sagittis tincidunt ligula. Phasellus ut interdum augue. Nullam pellentesque tortor 
+							quis urna feugiat, eget lacinia purus consequat. Sed tempus enim libero, ultricies hendrerit neque pharetra ut. 
+							Sed eu pretium odio. Nulla fringilla lacus a orci ullamcorper maximus. Vivamus vehicula lacinia placerat. Integer 
+							egestas nisi in tincidunt venenatis.
+							
+							Aenean vehicula malesuada egestas. Sed fermentum mauris ac mauris interdum iaculis. Nulla at tempor nibh. Vestibulum 
+							et leo ligula. Nam in mi sed velit aliquam laoreet quis consectetur lacus. Suspendisse at quam quam. Aenean rhoncus 
+							ante quis lobortis vulputate. Morbi nec ex mi. Aenean in ipsum porta diam rhoncus lacinia et vitae justo. Nunc in risus 
+							mauris. Fusce egestas lectus dolor, vel posuere nunc semper in. In turpis purus, placerat sed est sit amet, iaculis 
+							pretium magna. Fusce non porttitor augue.
+							
+							Aliquam accumsan elit nec neque vestibulum hendrerit. Proin cursus nisi nulla, ut finibus turpis imperdiet vitae. Proin 
+							ac turpis in felis interdum scelerisque eget vitae metus. Nullam ac augue dapibus, iaculis arcu sit amet, facilisis eros. 
+							Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus tortor risus, at 
+							egestas ligula dignissim quis. Phasellus egestas justo vel dictum sollicitudin. Vestibulum tempor nisl ac felis rutrum, eget 
+							congue sapien consequat. Vivamus rutrum sed nibh ac pellentesque. Vestibulum commodo nisl quis tortor venenatis, at finibus 
+							ipsum ultricies. Morbi ligula quam, hendrerit ut feugiat nec, pretium non nisl. Donec et quam tortor. Maecenas bibendum, 
+							turpis nec imperdiet blandit, nisl ante dignissim metus, ut egestas ex purus quis quam. Morbi eget leo augue.
+							
+							Aliquam rutrum est a nibh ultrices, ac eleifend augue mattis. Suspendisse potenti. Proin faucibus porttitor dictum. Suspendisse 
+							potenti. In ut erat non ex pellentesque pharetra. Cras gravida ipsum velit, non semper neque lacinia et. In blandit fermentum urna. 
+							Nulla ut ex lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin molestie 
+							posuere orci id condimentum. Aliquam aliquet ligula eu blandit tincidunt. Aliquam et cursus orci. Quisque in congue nibh. Cras 
+							at lectus consequat, facilisis lectus a, facilisis odio.
+						</p>
+
+						<button className='font-semibold underline' onClick={() => {}}>
+							Read More... (TODO: Implement Description Modal)
+						</button>
 					</div>
 				</div>
 
 				{/* Medical Information */}
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-1">
-						<AiOutlineMedicineBox size={23} className="fill-neutral-300" />{' '}
-						<hr className="grow" />
+				<div className='flex flex-col gap-6'>
+					<div className='flex items-center gap-1'>
+						<AiOutlineMedicineBox size={23} className='fill-neutral-300'/> <hr className='grow'/>
 					</div>
 
 					<div className="flex items-center gap-4">
@@ -201,10 +179,9 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 				</div>
 
 				{/* Legal Information */}
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-1">
-						<AiOutlineAudit size={23} className="fill-neutral-300" />{' '}
-						<hr className="grow" />
+				<div className='flex flex-col gap-6'>
+					<div className='flex items-center gap-1'>
+						<AiOutlineAudit size={23} className='fill-neutral-300'/> <hr className='grow'/>
 					</div>
 
 					<div className="flex items-center gap-4">

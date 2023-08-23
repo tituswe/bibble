@@ -12,7 +12,7 @@ interface DateInputProps {
 
 const DateInput: React.FC<DateInputProps> = ({ date, onChange }) => {
 	return (
-		<div className="flex justify-center items-center">
+		<div className='object-none aspect-square h-80' >
 			<Calendar date={date} onChange={onChange} />
 		</div>
 	);
