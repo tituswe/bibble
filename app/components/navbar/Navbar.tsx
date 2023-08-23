@@ -1,7 +1,6 @@
 'use client';
 
 import { SafeUser } from '@/app/types';
-import { useRouter } from 'next/navigation';
 import { BiNetworkChart } from 'react-icons/bi';
 import { LuPartyPopper } from 'react-icons/lu';
 import Container from '../Container';
@@ -15,8 +14,6 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
-	const router = useRouter();
-
 	const services = [
 		{
 			label: 'Analytics',
@@ -29,11 +26,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 	];
 
 	return (
-		<div className="fixed top-0 w-full bg-white z-50">
-			<div className="py-4 shadow-md">
-				<Container>
-					<div
-						className="
+		<nav
+			className="
+				fixed 
+				py-4 
+				shadow-md 
+				top-0 
+				w-full 
+				bg-white 
+				z-50
+			"
+		>
+			<Container>
+				<div
+					className="
 							flex
 							flex-row
 							items-center
@@ -42,23 +48,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 							gap-4
 							md:gap-8
 						"
-					>
-						<Logo />
-						<Search />
-						<div className="flex flex-row items-center gap-4">
-							{services.map((service, i) => (
-								<LabelButton
-									key={i}
-									label={service.label}
-									icon={service.icon}
-								/>
-							))}
-							<UserMenu currentUser={currentUser} />
-						</div>
-					</div>
-				</Container>
-			</div>
-		</div>
+				>
+					<Logo />
+					<Search />
+					<ol className="flex flex-row items-center gap-4">
+						{services.map((service, i) => (
+							<LabelButton key={i} label={service.label} icon={service.icon} />
+						))}
+						<UserMenu currentUser={currentUser} />
+					</ol>
+				</div>
+			</Container>
+		</nav>
 	);
 };
 

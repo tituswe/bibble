@@ -72,3 +72,15 @@ export function getRandomPrice(): number {
 export function getRandomBoolean(): boolean {
 	return Math.random() < 0.5;
 }
+
+export function getRandomSubset<T>(array: T[]): T[] {
+	const subsetSize = Math.floor(Math.random() * (array.length + 1)); // Random subset size
+	const shuffledArray = array.slice(); // Create a copy of the array
+
+	for (let i = shuffledArray.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Shuffle the array
+	}
+
+	return shuffledArray.slice(0, subsetSize); // Return the random subset
+}

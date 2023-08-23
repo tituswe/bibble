@@ -1,6 +1,6 @@
 'use client';
 
-import getAgeLabel from '@/app/utils/getAgeLabel';
+import getAgeLabel from '@/app/utils/getAge';
 
 import { SafePet, SafeUser } from '@/app/types';
 import { Breed, Country, Gender, Species } from '@prisma/client';

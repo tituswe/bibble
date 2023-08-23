@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { breedsData } from '../data';
 import Button from './Button';
-import { breedsData } from './data';
 
 const BreedsButton = () => {
 	const router = useRouter();

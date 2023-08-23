@@ -1,7 +1,24 @@
-import { SafePet } from '../types';
+import { SafePet, TimeUnit } from '../types';
 
 interface IParams {
 	data: SafePet;
+}
+
+export function getAgeInMonths(pet: SafePet): number {
+	const today = new Date();
+	const birthDate = new Date(pet.birthday);
+	let ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12;
+	ageInMonths += today.getMonth() - birthDate.getMonth();
+
+	if (today.getDate() < birthDate.getDate()) {
+		ageInMonths--;
+	}
+
+	return ageInMonths;
+}
+
+export function formatAge(age: number, timeUnit: TimeUnit): number {
+	return timeUnit === 'months' ? age : Math.floor(age / 12);
 }
 
 export default function getAgeLabel(params: IParams): string {

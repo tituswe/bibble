@@ -1,47 +1,52 @@
 'use client';
 
-import axios from "axios";
+import axios from 'axios';
 
-import { BiCurrentLocation } from "react-icons/bi";
-import Map from "./Map";
-import { GeocodeResponse } from "../types";
-import { useEffect, useState } from "react";
-import { AiOutlineLoading } from "react-icons/ai";
+import { useEffect, useState } from 'react';
+import { AiOutlineLoading } from 'react-icons/ai';
+import { BiCurrentLocation } from 'react-icons/bi';
+import { GeocodeResponse } from '../types';
+import Map from './Map';
 
 interface GeoCardProps {
-    location: string
+	location: string;
 }
 
 const GeoCard: React.FC<GeoCardProps> = ({ location }) => {
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-    const [data, setData] = useState<{address: string, coordinates: { lat: number, lng: number }} | null>(null);
-    
-    useEffect(() => {
-        const getCoordinates = async () => {
-            try {
-                let request_url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-                const data = await axios.get(request_url).then((response) => {
-                    const data: GeocodeResponse = response.data;
-                    return {
-                        address: data.results[0].formatted_address,
-                        coordinates: {
-                            lat: data.results[0].geometry.location.lat,
-                            lng: data.results[0].geometry.location.lng
-                        }
-                    };
-                });
-                return data;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getCoordinates().then((data) => {
-            setData(data ? data : null);
-            setIsLoaded(true);
-        })
-    }, [])
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+	const [data, setData] = useState<{
+		address: string;
+		coordinates: { lat: number; lng: number };
+	} | null>(null);
 
-    return isLoaded ? (
+	useEffect(() => {
+		const getCoordinates = async () => {
+			try {
+			  let request_url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+					location
+				)}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+				const data = await axios.get(request_url).then((response) => {
+					const data: GeocodeResponse = response.data;
+					return {
+						address: data.results[0].formatted_address,
+						coordinates: {
+							lat: data.results[0].geometry.location.lat,
+							lng: data.results[0].geometry.location.lng,
+						},
+					};
+				});
+				return data;
+			} catch (error) {
+				throw new Error('Something went wrong with GeoCard');
+			}
+		};
+		getCoordinates().then((data) => {
+			setData(data ? data : null);
+			setIsLoaded(true);
+		});
+	}, [location]);
+
+	return isLoaded ? (
         <div className='h-96 bg-neutral-200 shadow-xl rounded-2xl'>
             {/* Header */}
             <div className='flex flex-rows m-4 justify-between items-center'>
@@ -61,6 +66,6 @@ const GeoCard: React.FC<GeoCardProps> = ({ location }) => {
             <AiOutlineLoading size={60} className='basis-full fill-sky-500 animate-spin' />
         </div>
     );
-}
+};
 
 export default GeoCard;

@@ -10,18 +10,32 @@ export default async function getFavoritePets() {
 			return [];
 		}
 
-		const favorites = await prisma.pet.findMany({
+		const pets = await prisma.pet.findMany({
 			where: {
 				id: {
 					in: [...(currentUser.favoriteIds || [])],
 				},
 			},
+			include: {
+				species: true,
+				breed: true,
+				origin: true,
+				lister: true,
+				vaccines: true,
+				avsLicense: true,
+			},
 		});
 
-		const safeFavorites = favorites.map((favorite) => ({
-			...favorite,
-			postedAt: favorite.postedAt.toISOString(),
-			birthday: favorite.birthday.toISOString(),
+		const safeFavorites = pets.map((pet) => ({
+			...pet,
+			postedAt: pet.postedAt.toISOString(),
+			birthday: pet.birthday.toISOString(),
+			lister: {
+				...pet.lister,
+				createdAt: pet.lister.createdAt.toISOString(),
+				updatedAt: pet.lister.updatedAt.toISOString(),
+				emailVerified: pet.lister.emailVerified?.toISOString() || null,
+			},
 		}));
 
 		return safeFavorites;

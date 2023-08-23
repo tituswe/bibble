@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
 
 import getPets from '@/app/actions/getPets';
-import {
-	getRandomDate,
-	getRandomLicenseNumber,
-} from '@/app/components/developer/utils';
+import { getRandomDate, getRandomLicenseNumber } from '@/app/developer/utils';
 import prisma from '@/app/libs/prismadb';
 
 export async function POST(request: Request) {
-	const pets = await getPets({});
+	const allPets = await getPets({});
+	const pets = allPets.filter((item, i) => i % 2 === 0);
 
 	const body = pets.map((pet) => {
 		const issuedAt = getRandomDate(new Date(pet.birthday));

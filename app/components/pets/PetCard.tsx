@@ -1,7 +1,7 @@
 'use client';
 
 import { SafePet, SafeUser } from '@/app/types';
-import getAgeLabel from '@/app/utils/getAgeLabel';
+import getAgeLabel from '@/app/utils/getAge';
 import { Breed, Country, Gender, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -131,7 +131,16 @@ const PetCard: React.FC<PetCardProps> = ({
 						</div>
 					</div>
 					<div className="flex flex-col items-center gap-3 py-4">
-						<div className="font-semibold text-md overflow-clip h-[24px]">
+						<div
+							className="
+								font-semibold 
+								text-md 
+								whitespace-nowrap 
+								text-ellipsis 
+								overflow-hidden 
+								h-[24px]
+							"
+						>
 							{data.breed.name}
 						</div>
 
@@ -173,11 +182,14 @@ const PetCard: React.FC<PetCardProps> = ({
 							text-sm 
 							py-4 
 							gap-1
+							whitespace-nowrap
 						"
 					>
 						<div className="flex flex-row items-center gap-1">
 							<Avatar small src={data.lister?.image} />
-							<div className="pl-1">{data.lister?.name}</div>
+							<div className="pl-1 overflow-hidden text-ellipsis">
+								{data.lister?.name}
+							</div>
 							<LuVerified className="text-sky-500" />
 						</div>
 						<div className="font-light text-neutral-500">$ {data.price}</div>

@@ -3,9 +3,9 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 
-import { SafeUser } from '../types';
+import { SafeUser } from '../../types';
 
-import useLoginModal from './useLoginModal';
+import useLoginModal from '../../hooks/useLoginModal';
 
 interface IUseFavorite {
 	petId: string;

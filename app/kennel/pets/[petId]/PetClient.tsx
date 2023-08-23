@@ -16,6 +16,7 @@ interface PetClientProps {
 		species: Species;
 		breed: Breed;
 	});
+
 	currentUser: SafeUser | null;
 }
 

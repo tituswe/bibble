@@ -1,7 +1,7 @@
+import KennelClient from '@/app/KennelClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getPets, { IPetsParams } from '@/app/actions/getPets';
 import EmptyState from '@/app/components/EmptyState';
-import KennelPage from '@/app/components/KennelPage';
 import ExploreClient from './ExploreClient';
 
 interface ExplorePageProps {
@@ -17,9 +17,9 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
 	}
 
 	return (
-		<KennelPage>
+		<KennelClient>
 			<ExploreClient currentUser={currentUser} pets={pets} />
-		</KennelPage>
+		</KennelClient>
 	);
 };
 
