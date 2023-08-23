@@ -175,12 +175,12 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 					}))}
 
 					<div className="flex items-center gap-4">
-						{false ? (
+						{pet.isMicrochipped ? (
 							<BiCheck size={18} className="fill-neutral-700" />
 						) : (
 							<BiX size={18} className="fill-neutral-700" />
 						)}
-						Mircrochipped (MISSING FIELD IN DB)
+						Mircrochipped
 					</div>
 
 					<div className="flex items-center gap-4">
