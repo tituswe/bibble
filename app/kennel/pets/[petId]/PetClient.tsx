@@ -28,7 +28,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser, vaccines }) => 
 				<div className="flex flex-col gap-4">
 					<PetHead id={pet.id} pet={pet} currentUser={currentUser} />
 					
-					<div className="grid grid-cols-2 gap-8 mt-6">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
 						<div>
 							<PetInfo pet={pet} vaccines={vaccines}/>
 						</div>
