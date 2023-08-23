@@ -32,7 +32,7 @@ const ListerInfo: React.FC<ListerInfoProps> = ({ lister }) => {
 			'Nov': 11,
 			'Dec': 12
 			};
-		var month = 'MONTH';
+		let month = 'MONTH';
 		Object.entries(monthsDict).forEach((entry) => {
 			let monthName = entry[0];
 			let monthIndex = entry[1];
@@ -75,7 +75,7 @@ const ListerInfo: React.FC<ListerInfoProps> = ({ lister }) => {
                     {/* Lister Description */}
                     <div className=''>
                         <p>
-                            TODO: Add Bio field to DB for user
+                            {lister.profile.bio}
                         </p>
                     </div>
 
