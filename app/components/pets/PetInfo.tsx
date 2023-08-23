@@ -5,6 +5,8 @@ import getAgeLabel from '@/app/utils/getAge';
 import { SafePet, SafeUser } from '@/app/types';
 import { Breed, Country, Gender, Species, Vaccine } from '@prisma/client';
 
+import useViewMoreModal from '@/app/hooks/useViewMoreModal';
+
 import {
 	AiOutlineAudit,
 	AiOutlineInfoCircle,
@@ -36,6 +38,7 @@ interface PetInfoProps {
 }
 
 const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
+	const viewMoreModal = useViewMoreModal();
 	const listDate = new Date(pet.postedAt);
 	const birthDate = new Date(pet.birthday);
 
@@ -48,6 +51,12 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 
 	const getVaccineName = (id: string) => {
 		return vaccines.filter(vaccine => vaccine.id === id).map(vaccine => vaccine.name);
+	}
+
+	const handleOpenViewMoreModal = () => {
+		viewMoreModal.contentBody = pet.description;
+		viewMoreModal.contentHeader = 'More about me'
+		viewMoreModal.onOpen();
 	}
 
 	return (
@@ -113,8 +122,8 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 							{pet.description}
 						</p>
 
-						<button className='font-semibold underline' onClick={() => {}}>
-							Read More... (TODO: Implement Description Modal)
+						<button className='font-semibold underline' onClick={handleOpenViewMoreModal}>
+							Read More...
 						</button>
 					</div>
 				</div>
