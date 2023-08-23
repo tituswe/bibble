@@ -3,7 +3,7 @@
 import getAgeLabel from '@/app/utils/getAge';
 
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed, Country, Gender, Species } from '@prisma/client';
+import { Breed, Country, Gender, Species, Vaccine } from '@prisma/client';
 
 import {
 	AiOutlineAudit,
@@ -20,6 +20,7 @@ import {
 	BiFemaleSign,
 	BiMaleSign,
 	BiX,
+	BiInjection
 } from 'react-icons/bi';
 
 import Avatar from '../Avatar';
@@ -31,9 +32,10 @@ interface PetInfoProps {
 		species: Species;
 		breed: Breed;
 	};
+	vaccines: Array<Vaccine>
 }
 
-const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
+const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 	const listDate = new Date(pet.postedAt);
 	const birthDate = new Date(pet.birthday);
 
@@ -43,6 +45,10 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 				(1000 * 60 * 60 * 24)
 		);
 	};
+
+	const getVaccineName = (id: string) => {
+		return vaccines.filter(vaccine => vaccine.id === id).map(vaccine => vaccine.name);
+	}
 
 	return (
 		<>
@@ -151,13 +157,22 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 					</div>
 
 					<div className="flex items-center gap-4">
-						{false ? (
+						{pet.vaccineIds.length > 0 ? (
 							<BiCheck size={18} className="fill-neutral-700" />
 						) : (
 							<BiX size={18} className="fill-neutral-700" />
 						)}
-						Vaccinated (MISSING FIELD IN DB)
+						Vaccinated
 					</div>
+
+					{(pet.vaccineIds.map((id, index) => {
+						return (
+							<div className='ml-8 flex flex-cols gap-2 items-center' key={index}>
+								<BiInjection size={18} className="fill-neutral-700" />
+								{getVaccineName(id)}
+							</div>
+						)
+					}))}
 
 					<div className="flex items-center gap-4">
 						{false ? (

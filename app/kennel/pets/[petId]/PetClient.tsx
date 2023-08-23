@@ -1,7 +1,7 @@
 'use client';
 
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed, Country, Species } from '@prisma/client';
+import { Breed, Country, Species, Vaccine } from '@prisma/client';
 
 import AppointmentBox from '@/app/components/AppointmentBox';
 import Container from '@/app/components/Container';
@@ -16,11 +16,11 @@ interface PetClientProps {
 		species: Species;
 		breed: Breed;
 	});
-
 	currentUser: SafeUser | null;
+	vaccines: Array<Vaccine>;
 }
 
-const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
+const PetClient: React.FC<PetClientProps> = ({ pet, currentUser, vaccines }) => {
 
 	return (
 		<Container>
@@ -30,7 +30,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser }) => {
 					
 					<div className="grid grid-cols-2 gap-8 mt-6">
 						<div>
-							<PetInfo pet={pet} />
+							<PetInfo pet={pet} vaccines={vaccines}/>
 						</div>
 						<div>
 							<AppointmentBox pet={pet}/>
