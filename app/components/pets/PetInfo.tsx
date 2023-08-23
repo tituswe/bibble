@@ -60,8 +60,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 							<p className="pr-1">
 								Posted by {pet.lister.name ? pet.lister.name : 'NO LISTER NAME'}
 							</p>
-							{/* TODO: Add check for verified account */}
-							<BiBadgeCheck size={20} className="fill-sky-500" />
+							{pet.lister.profile.verified && (<BiBadgeCheck size={20} className="fill-sky-500" />)}
 						</div>
 						<Avatar src={pet.lister.image} />
 					</div>

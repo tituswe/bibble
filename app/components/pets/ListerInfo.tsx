@@ -64,8 +64,7 @@ const ListerInfo: React.FC<ListerInfoProps> = ({ lister }) => {
                                 <p className='text-2xl font-bold'>
                                     {lister.name ? lister.name : 'NO LISTER NAME'}
                                 </p>
-                                {/* TODO: Add check for verified account */}
-                                <BiBadgeCheck size={22} className='fill-sky-500'/>
+                                {lister.profile.verified && (<BiBadgeCheck size={20} className="fill-sky-500" />)}
                             </div>
 
                             <p>Joined in {getDateJoined()}</p>
