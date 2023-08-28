@@ -24,7 +24,7 @@ export async function DELETE(
 	const pet = await prisma?.pet.deleteMany({
 		where: {
 			id: petId,
-			userId: currentUser.id,
+			listerId: currentUser.id,
 		},
 	});
 
