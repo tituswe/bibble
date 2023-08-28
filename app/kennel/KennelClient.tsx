@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Pages from './components/Pages';
+import Pages from '../components/Pages';
 
 interface KennelClientProps {
 	children: React.ReactNode;
