@@ -3,7 +3,9 @@
 import getAgeLabel from '@/app/utils/getAge';
 
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed, Country, Gender, Species } from '@prisma/client';
+import { Breed, Country, Gender, Species, Vaccine } from '@prisma/client';
+
+import useViewMoreModal from '@/app/hooks/useViewMoreModal';
 
 import {
 	AiOutlineAudit,
@@ -20,6 +22,7 @@ import {
 	BiFemaleSign,
 	BiMaleSign,
 	BiX,
+	BiInjection
 } from 'react-icons/bi';
 
 import Avatar from '../Avatar';
@@ -31,9 +34,11 @@ interface PetInfoProps {
 		species: Species;
 		breed: Breed;
 	};
+	vaccines: Array<Vaccine>
 }
 
-const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
+const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
+	const viewMoreModal = useViewMoreModal();
 	const listDate = new Date(pet.postedAt);
 	const birthDate = new Date(pet.birthday);
 
@@ -43,6 +48,16 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 				(1000 * 60 * 60 * 24)
 		);
 	};
+
+	const getVaccineName = (id: string) => {
+		return vaccines.filter(vaccine => vaccine.id === id).map(vaccine => vaccine.name);
+	}
+
+	const handleOpenViewMoreModal = () => {
+		viewMoreModal.contentBody = pet.description;
+		viewMoreModal.contentHeader = 'More about me'
+		viewMoreModal.onOpen();
+	}
 
 	return (
 		<>
@@ -54,8 +69,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 							<p className="pr-1">
 								Posted by {pet.lister.name ? pet.lister.name : 'NO LISTER NAME'}
 							</p>
-							{/* TODO: Add check for verified account */}
-							<BiBadgeCheck size={20} className="fill-sky-500" />
+							{pet.lister.profile.verified && (<BiBadgeCheck size={20} className="fill-sky-500" />)}
 						</div>
 						<Avatar src={pet.lister.image} />
 					</div>
@@ -102,44 +116,14 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 
 					<div className='flex flex-col items-start gap-4'>
 						<p className='font-semibold text-xl'>
-							TODO: Add description field to DB
+							More about me
 						</p>
-						<p className='line-clamp-5 tracking-wide leading-relaxed'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et varius mauris, vitae gravida erat. 
-							Suspendisse quis purus eu purus convallis mattis ac vel massa. Pellentesque hendrerit mattis pharetra. 
-							Aliquam sodales a metus eu porttitor. Donec iaculis rhoncus tristique. Ut laoreet blandit euismod. Donec 
-							sed cursus enim. Etiam laoreet eget eros a imperdiet. In eget venenatis mi, in sollicitudin neque.
-							
-							Aenean suscipit sodales nulla facilisis ultrices. Integer venenatis dolor at erat ullamcorper, quis bibendum 
-							urna feugiat. Proin varius ipsum in eros tincidunt, et condimentum eros rhoncus. Nunc egestas eleifend fermentum. 
-							Maecenas et eleifend ligula, sagittis tincidunt ligula. Phasellus ut interdum augue. Nullam pellentesque tortor 
-							quis urna feugiat, eget lacinia purus consequat. Sed tempus enim libero, ultricies hendrerit neque pharetra ut. 
-							Sed eu pretium odio. Nulla fringilla lacus a orci ullamcorper maximus. Vivamus vehicula lacinia placerat. Integer 
-							egestas nisi in tincidunt venenatis.
-							
-							Aenean vehicula malesuada egestas. Sed fermentum mauris ac mauris interdum iaculis. Nulla at tempor nibh. Vestibulum 
-							et leo ligula. Nam in mi sed velit aliquam laoreet quis consectetur lacus. Suspendisse at quam quam. Aenean rhoncus 
-							ante quis lobortis vulputate. Morbi nec ex mi. Aenean in ipsum porta diam rhoncus lacinia et vitae justo. Nunc in risus 
-							mauris. Fusce egestas lectus dolor, vel posuere nunc semper in. In turpis purus, placerat sed est sit amet, iaculis 
-							pretium magna. Fusce non porttitor augue.
-							
-							Aliquam accumsan elit nec neque vestibulum hendrerit. Proin cursus nisi nulla, ut finibus turpis imperdiet vitae. Proin 
-							ac turpis in felis interdum scelerisque eget vitae metus. Nullam ac augue dapibus, iaculis arcu sit amet, facilisis eros. 
-							Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus tortor risus, at 
-							egestas ligula dignissim quis. Phasellus egestas justo vel dictum sollicitudin. Vestibulum tempor nisl ac felis rutrum, eget 
-							congue sapien consequat. Vivamus rutrum sed nibh ac pellentesque. Vestibulum commodo nisl quis tortor venenatis, at finibus 
-							ipsum ultricies. Morbi ligula quam, hendrerit ut feugiat nec, pretium non nisl. Donec et quam tortor. Maecenas bibendum, 
-							turpis nec imperdiet blandit, nisl ante dignissim metus, ut egestas ex purus quis quam. Morbi eget leo augue.
-							
-							Aliquam rutrum est a nibh ultrices, ac eleifend augue mattis. Suspendisse potenti. Proin faucibus porttitor dictum. Suspendisse 
-							potenti. In ut erat non ex pellentesque pharetra. Cras gravida ipsum velit, non semper neque lacinia et. In blandit fermentum urna. 
-							Nulla ut ex lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin molestie 
-							posuere orci id condimentum. Aliquam aliquet ligula eu blandit tincidunt. Aliquam et cursus orci. Quisque in congue nibh. Cras 
-							at lectus consequat, facilisis lectus a, facilisis odio.
+						<p className='line-clamp-6 tracking-wide leading-relaxed'>
+							{pet.description}
 						</p>
 
-						<button className='font-semibold underline' onClick={() => {}}>
-							Read More... (TODO: Implement Description Modal)
+						<button className='font-semibold underline' onClick={handleOpenViewMoreModal}>
+							Read More...
 						</button>
 					</div>
 				</div>
@@ -151,21 +135,30 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet }) => {
 					</div>
 
 					<div className="flex items-center gap-4">
-						{false ? (
+						{pet.vaccineIds.length > 0 ? (
 							<BiCheck size={18} className="fill-neutral-700" />
 						) : (
 							<BiX size={18} className="fill-neutral-700" />
 						)}
-						Vaccinated (MISSING FIELD IN DB)
+						Vaccinated
 					</div>
 
+					{(pet.vaccineIds.map((id, index) => {
+						return (
+							<div className='ml-8 flex flex-cols gap-2 items-center' key={index}>
+								<BiInjection size={18} className="fill-neutral-700" />
+								{getVaccineName(id)}
+							</div>
+						)
+					}))}
+
 					<div className="flex items-center gap-4">
-						{false ? (
+						{pet.isMicrochipped ? (
 							<BiCheck size={18} className="fill-neutral-700" />
 						) : (
 							<BiX size={18} className="fill-neutral-700" />
 						)}
-						Mircrochipped (MISSING FIELD IN DB)
+						Mircrochipped
 					</div>
 
 					<div className="flex items-center gap-4">

@@ -16,8 +16,11 @@ export default async function getPetById(params: IParams) {
 				species: true,
 				breed: true,
 				origin: true,
-				lister: true,
-				vaccines: true,
+				lister: {
+					include: {
+						profile: true
+					}
+				},
 				avsLicense: true,
 			},
 		});

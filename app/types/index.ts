@@ -1,9 +1,10 @@
-import { AvsLicense, Breed, Country, Pet, Species, User } from '@prisma/client';
+import { AvsLicense, Breed, Country, Pet, Profile, Species, User } from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
 	'createdAt' | 'updatedAt' | 'emailVerified'
 > & {
+	profile: Profile;
 	createdAt: string;
 	updatedAt: string;
 	emailVerified: string | null;
