@@ -1,4 +1,4 @@
-import KennelClient from '@/app/KennelClient';
+import KennelClient from '@/app/kennel/KennelClient';
 
 import RescueClient from './RescueClient';
 
