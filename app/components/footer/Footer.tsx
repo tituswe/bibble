@@ -45,9 +45,13 @@ const Footer = () => {
         "
 				>
 					<LinkText>© 2023 Bibble & Co.</LinkText>
-					<LinkText>Privacy</LinkText>
-					<LinkText>Terms & Conditions</LinkText>
-					<LinkText>Contact Us</LinkText>
+					<div className="hidden lg:block">
+						<div className="flex flex-row">
+							<LinkText>Privacy</LinkText>
+							<LinkText>Terms & Conditions</LinkText>
+							<LinkText>Contact Us</LinkText>
+						</div>
+					</div>
 				</div>
 				<div
 					className="

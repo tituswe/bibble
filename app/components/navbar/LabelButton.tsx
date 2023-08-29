@@ -3,26 +3,32 @@ import { IconType } from 'react-icons';
 interface LabelButtonProps {
 	disabled?: boolean;
 	label: string;
-	icon: IconType;
+	icon?: IconType;
+	onClick?: () => void;
 }
 
 const LabelButton: React.FC<LabelButtonProps> = ({
 	disabled,
 	label,
 	icon: Icon,
+	onClick,
 }) => {
 	return (
-		<li className="relative hidden md:block">
+		<li
+			className={`
+			relative 
+			${Icon && 'hidden'}
+			md:block
+		`}
+		>
 			<div className="flex flex-row items-center gap-3">
 				<div
-					onClick={() => {}}
+					onClick={onClick}
 					className={`
             p-4
-            md:py-1
-            md:pr-3
-            md:pl-4
-            text-sm
-            font-semibold
+						${Icon && 'md:py-1 md:pr-3 md:pl-4'}
+            ${Icon && 'font-semibold'}
+						text-sm
             flex
             flex-row
             items-center
@@ -37,9 +43,11 @@ const LabelButton: React.FC<LabelButtonProps> = ({
             whitespace-nowrap
           `}
 				>
-					<div className="py-1.5">
-						<Icon size={18} />
-					</div>
+					{Icon && (
+						<div className="py-1.5">
+							<Icon size={18} />
+						</div>
+					)}
 					{label}
 				</div>
 			</div>

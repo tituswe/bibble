@@ -1,3 +1,4 @@
 export const toCamelCase = (str: string) => {
-	return str.charAt(0).toUpperCase() + str.slice(1);
+	const newStr = str.toLowerCase();
+	return newStr.charAt(0).toUpperCase() + newStr.slice(1);
 };
