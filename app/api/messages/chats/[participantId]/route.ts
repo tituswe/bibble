@@ -5,7 +5,7 @@ import prisma from '@/app/libs/prismadb';
 import { Prisma } from '@prisma/client';
 
 interface IParams {
-    participantIds: Array<string>;
+    participantId: string;
 }
 
 export async function POST(request: Request, { params }: { params: IParams }) {
@@ -14,8 +14,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 	if (!currentUser) {
 		return NextResponse.error();
 	}
-
-    const { participantIds } = params;
+    const participantIds = [currentUser.id, params.participantId];
 
     try {
         const chat = await prisma.chat.create({
@@ -52,14 +51,14 @@ export const chatPopulated = Prisma.validator<Prisma.ChatInclude>()({
     participants: {
         include: participantPopulated,
     },
-    latestMessage: {
-        include: {
-            sender: {
-                select: {
-                    id: true,
-                    name: true,
-                }
-            }
-        }
-    }
+    // latestMessage: {
+    //     include: {
+    //         sender: {
+    //             select: {
+    //                 id: true,
+    //                 name: true,
+    //             }
+    //         }
+    //     }
+    // }
 })

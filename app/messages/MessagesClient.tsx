@@ -1,40 +1,54 @@
 'use client';
 
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+import { SafeUser } from '../types';
+import { Chat, ChatParticipant, Message } from '@prisma/client';
+
 import { BiFilter, BiX } from 'react-icons/bi';
+
 import Avatar from '../components/Avatar';
-import { useState } from 'react';
 
-interface MessagesClientProps {}
+import getCurrentUser from '../actions/getCurrentUser';
+import getUserChats from '../actions/getUserChats';
+import { fetchData } from 'next-auth/client/_utils';
 
-const MessagesClient: React.FC<MessagesClientProps> = ({}) => {
-	const chats = [
-		{
-			receiver: {
-				name: 'Pet Scociety',
-			},
-			messages: [
-				{
-					message: 'THIS IS A MESSAGE',
-					timestamp: new Date(Date.now()),
-				}
-			]
-		}, {
-			receiver: {
-				name: 'Team Saturday',
-			},
-			messages: [
-				{
-					message: 'THIS IS A MESSAGE',
-					timestamp: new Date(Date.now()),
-				}
-			]
-		}
-	];
+interface MessagesClientProps {
+	currentUser: SafeUser;
+	chats: Array<Chat & { participants: Array<ChatParticipant & { user: SafeUser }> }>;
+};
 
-	const [selectedChat, setSelectedChat] = useState<{ receiver : { name: String }, messages: { message: String, timestamp: Date }[]} | null>(null);
+const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) => {
+	// const chats = [
+	// 	{
+	// 		receiver: {
+	// 			name: 'Pet Scociety',
+	// 		},
+	// 		messages: [
+	// 			{
+	// 				message: 'THIS IS A MESSAGE',
+	// 				timestamp: new Date(Date.now()),
+	// 			}
+	// 		]
+	// 	}, {
+	// 		receiver: {
+	// 			name: 'Team Saturday',
+	// 		},
+	// 		messages: [
+	// 			{
+	// 				message: 'THIS IS A MESSAGE',
+	// 				timestamp: new Date(Date.now()),
+	// 			}
+	// 		]
+	// 	}
+	// ];
+
+	const [selectedChat, setSelectedChat] = useState<Chat & { participants: Array<ChatParticipant & { user: SafeUser }> } | null>(null);
 	const [showDetails, setShowDetails] = useState<Boolean>(true);
 
+	const getChatCounterPartyName = (chat: Chat & { participants: Array<ChatParticipant & { user: SafeUser }> }) => {
+		return chat.participants.filter(p => p.userId !== currentUser.id).map(p => p.user.name)
+	}
 	const toggleShowDetails = () => {
 		setShowDetails(!showDetails);
 	}
@@ -53,16 +67,15 @@ const MessagesClient: React.FC<MessagesClientProps> = ({}) => {
 
 				{/* Chats */}
 				{chats.map((chat) => {
-					const message = chat.messages[0];
 					return (
 						<>
 						<div className='flex flex-row p-6 items-center rounded-2xl transition cursor-pointer hover:bg-neutral-100' onClick={() => setSelectedChat(chat)}>
 							<Avatar src={null} large/>
 
 							<div className='flex flex-col ml-4 gap-2'>
-								<h2 className='font-semibold text-base'>{chat.receiver.name}</h2>
-								<p className='font-light text-sm'>{message?.message}</p>
-								<p className='font-light text-xs'>{message?.timestamp.toLocaleTimeString()}</p>
+								<h2 className='font-semibold text-base'>{getChatCounterPartyName(chat)}</h2>
+								<p className='font-light text-sm'>{'TODO: LATEST MESSAGE'}</p>
+								<p className='font-light text-xs'>{new Date(Date.now()).toLocaleTimeString()}</p>
 							</div>
 						</div>
 
@@ -78,7 +91,7 @@ const MessagesClient: React.FC<MessagesClientProps> = ({}) => {
 				<header className='flex flex-row justify-between p-6 border-b border-neutral-100'>
 					{selectedChat ? (
 						<>
-						<h1 className='font-bold text-lg self-center'>{selectedChat.receiver.name}</h1>
+						<h1 className='font-bold text-lg self-center'>{getChatCounterPartyName(selectedChat)}</h1>
 						<button className='p-2 h-10 rounded-xl flex items-center justify-center border-2 transition cursor-pointer hover:bg-neutral-100 hover:shadow-sm' onClick={toggleShowDetails}>
 							{showDetails ? (
 								<label className='text-sm cursor-pointer '>Hide Details</label>

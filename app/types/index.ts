@@ -1,10 +1,11 @@
-import { AvsLicense, Breed, Country, Pet, Profile, Species, User } from '@prisma/client';
+import { AvsLicense, Breed, Chat, ChatParticipant, Country, Pet, Profile, Species, User } from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
 	'createdAt' | 'updatedAt' | 'emailVerified'
 > & {
 	profile: Profile;
+	chats: Array<ChatParticipant & { chat: Chat & { participants: Array<ChatParticipant>} }>;
 	createdAt: string;
 	updatedAt: string;
 	emailVerified: string | null;

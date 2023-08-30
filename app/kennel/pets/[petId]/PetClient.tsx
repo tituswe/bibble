@@ -33,7 +33,7 @@ const PetClient: React.FC<PetClientProps> = ({ pet, currentUser, vaccines }) => 
 							<PetInfo pet={pet} vaccines={vaccines}/>
 						</div>
 						<div className='lg:col-span-2'>
-							<AppointmentBox pet={pet}/>
+							<AppointmentBox pet={pet} currentUser={currentUser}/>
 						</div>
 					</div>
 

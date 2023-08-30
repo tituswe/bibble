@@ -147,8 +147,8 @@ model Chat {
   updatedAt DateTime @updatedAt
   participants ChatParticipant[]
   messages Message[]
-  latestMessageId String @unique @db.ObjectId
-  latestMessage Message? @relation(name: "latestChatMessage", fields: [latestMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // latestMessageId String @unique @db.ObjectId
+  // latestMessage Message? @relation(name: "latestChatMessage", fields: [latestMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model ChatParticipant {
@@ -170,5 +170,6 @@ model Message {
   chatId String @db.ObjectId
   sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
   senderId String @db.ObjectId
-  isLatestIn Chat? @relation(name: "latestChatMessage")
+  message String
+  // isLatestIn Chat? @relation(name: "latestChatMessage")
 }

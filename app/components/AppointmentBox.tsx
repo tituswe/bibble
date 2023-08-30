@@ -1,25 +1,29 @@
 'use client';
 
 import { useState } from "react";
+
 import useReserveVisitationModal from "../hooks/useReserveVisitationModal";
 
 import { BiChevronDownCircle } from 'react-icons/bi';
 
-import { SafePet } from '@/app/types';
+import { SafePet, SafeUser } from '@/app/types';
 
 import Button from "./Button";
+import useCreateChat from "../messages/hooks/useCreateChat";
 
 interface AppointmentBoxProps {
     pet: SafePet;
+    currentUser: SafeUser | null;
 }
 
-const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet }) => {
-    const { price } = pet;
-
+const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet, currentUser }) => {
+    const { listerId, price } = pet;
+    const {hasCreatedChat, createChat} = useCreateChat({ currentUser, participantId: listerId });
     const reserveVisitationModal = useReserveVisitationModal();
 
     const handleReserveVisitation = () => {
         // TODO: Implement reserve visitation
+        createChat();
     }
 
     const handleContactLister = () => {
