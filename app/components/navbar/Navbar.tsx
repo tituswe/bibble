@@ -12,7 +12,6 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 	const pathname = usePathname();
 	const page = pathname?.split('/')[1];
-	console.log(page);
 	let navbar = null;
 
 	switch (page) {

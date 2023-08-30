@@ -3,5 +3,5 @@ export default function BusinessLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return <section className="px-20 py-40">{children}</section>;
+	return <section className="px-10 py-32">{children}</section>;
 }

@@ -16,7 +16,6 @@ interface IPetsParams {
 
 const PetsButton = (params: IPetsParams) => {
 	const { users, species, breeds, countries, vaccines } = params;
-	console.log(vaccines);
 	const dog = species.find((item) => item.name === 'dog');
 	const vaccineIds = vaccines.map((item) => item.id);
 	const router = useRouter();
