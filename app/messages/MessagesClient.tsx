@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { SafeUser } from '../types';
 import { Chat, ChatParticipant, Message } from '@prisma/client';
@@ -9,40 +9,12 @@ import { BiFilter, BiX } from 'react-icons/bi';
 
 import Avatar from '../components/Avatar';
 
-import getCurrentUser from '../actions/getCurrentUser';
-import getUserChats from '../actions/getUserChats';
-import { fetchData } from 'next-auth/client/_utils';
-
 interface MessagesClientProps {
 	currentUser: SafeUser;
 	chats: Array<Chat & { participants: Array<ChatParticipant & { user: SafeUser }> }>;
 };
 
 const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) => {
-	// const chats = [
-	// 	{
-	// 		receiver: {
-	// 			name: 'Pet Scociety',
-	// 		},
-	// 		messages: [
-	// 			{
-	// 				message: 'THIS IS A MESSAGE',
-	// 				timestamp: new Date(Date.now()),
-	// 			}
-	// 		]
-	// 	}, {
-	// 		receiver: {
-	// 			name: 'Team Saturday',
-	// 		},
-	// 		messages: [
-	// 			{
-	// 				message: 'THIS IS A MESSAGE',
-	// 				timestamp: new Date(Date.now()),
-	// 			}
-	// 		]
-	// 	}
-	// ];
-
 	const [selectedChat, setSelectedChat] = useState<Chat & { participants: Array<ChatParticipant & { user: SafeUser }> } | null>(null);
 	const [showDetails, setShowDetails] = useState<Boolean>(true);
 
@@ -92,7 +64,7 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 					{selectedChat ? (
 						<>
 						<h1 className='font-bold text-lg self-center'>{getChatCounterPartyName(selectedChat)}</h1>
-						<button className='p-2 h-10 rounded-xl flex items-center justify-center border-2 transition cursor-pointer hover:bg-neutral-100 hover:shadow-sm' onClick={toggleShowDetails}>
+						<button className='py-2 px-4 h-10 rounded-xl flex items-center justify-center border-2 transition cursor-pointer hover:bg-neutral-100 hover:shadow-sm' onClick={toggleShowDetails}>
 							{showDetails ? (
 								<label className='text-sm cursor-pointer '>Hide Details</label>
 							) : ( 
