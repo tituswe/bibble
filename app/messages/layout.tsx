@@ -3,5 +3,5 @@ export default function MessagesLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return <section className="py-20">{children}</section>;
+	return <section className="pt-20 pb-12 h-full">{children}</section>;
 }

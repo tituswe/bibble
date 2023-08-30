@@ -4,17 +4,15 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import prisma from '@/app/libs/prismadb';
 import { Prisma } from '@prisma/client';
 
-interface IParams {
-    participantId: string;
-}
+export async function POST(request: Request) {
+    const body = await request.json();
+	const { currentUserId, participantId } = body;
 
-export async function POST(request: Request, { params }: { params: IParams }) {
-	const currentUser = await getCurrentUser();
+    const participantIds = [currentUserId, participantId];
 
-	if (!currentUser) {
+    if (!currentUserId) {
 		return NextResponse.error();
 	}
-    const participantIds = [currentUser.id, params.participantId];
 
     try {
         const chat = await prisma.chat.create({
@@ -23,7 +21,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
                     createMany: {
                         data: participantIds.map(id => ({
                             userId: id,
-                            hasSeenLatestMessage: id === currentUser.id
+                            hasSeenLatestMessage: id === currentUserId
                         }))
                     }
                 }

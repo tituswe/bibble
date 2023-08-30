@@ -28,11 +28,15 @@ const useCreateChat = ({ currentUser, participantId }: IUseCreateChat) => {
         }
 
         try {
-            let request = () => axios.post(`/api/messages/chats/${participantId}`);
+            let request = () => axios.post(`/api/messages/chats`, {
+                currentUserId: currentUser.id,
+                participantId: participantId,
+            });
 
             await request().then((response) => {
                 router.push('/messages');
             });
+            router.refresh();
         } catch (error) {
             toast.error('Error at chat creation');
             console.log(error);
