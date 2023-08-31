@@ -16,7 +16,13 @@ export default async function getCurrentUser() {
 		}
 
 		const currentUser = await prisma.user.findUnique({
-			where: { email: session.user.email as string },
+			where: { 
+				email: session.user.email as string 
+			},
+			include: {
+				profile: true,
+				chats: true,
+			}
 		});
 
 		if (!currentUser) {
@@ -28,6 +34,8 @@ export default async function getCurrentUser() {
 			createdAt: currentUser.createdAt.toISOString(),
 			updatedAt: currentUser.updatedAt.toISOString(),
 			emailVerified: currentUser.emailVerified?.toISOString() || null,
+			profile: currentUser.profile,
+			chats: currentUser.chats,
 		};
 	} catch (error: any) {
 		return null;

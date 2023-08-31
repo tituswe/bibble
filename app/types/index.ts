@@ -4,11 +4,11 @@ export type SafeUser = Omit<
 	User,
 	'createdAt' | 'updatedAt' | 'emailVerified'
 > & {
-	profile: Profile;
-	chats: Array<ChatParticipant & { chat: Chat & { participants: Array<ChatParticipant>} }>;
 	createdAt: string;
 	updatedAt: string;
 	emailVerified: string | null;
+	profile: Profile | null;
+	chats: Array<ChatParticipant> | null;
 };
 
 export type SafePet = Omit<Pet, 'birthday' | 'postedAt'> & {

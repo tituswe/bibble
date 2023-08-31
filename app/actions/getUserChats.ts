@@ -12,7 +12,7 @@ export default async function getUserChats(params: IChatParams) {
 			throw new Error('Not authorised');
 		}
 
-		const chats = await prisma.chatParticipant.findMany({
+		const chatParticipants = await prisma.chatParticipant.findMany({
             where: {
 				userId: currentUserId
             },
@@ -30,7 +30,7 @@ export default async function getUserChats(params: IChatParams) {
 			}
         });
 
-		return chats.map(c => c.chat);
+		return chatParticipants.map(c => c.chat);
 	} catch (error: any) {
 		throw new Error(error);
 	}

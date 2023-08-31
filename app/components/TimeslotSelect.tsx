@@ -18,6 +18,11 @@ const TimeslotSelect: React.FC<TimeslotSelectProps> = ({ label, timeslots, selec
         setShowTimeslots(!showTimeslots);
     }
 
+    const handleSelectTimeslot = (timeslot: { time: Date, available: boolean }) => {
+        setSelectedTimeslot(timeslot.time);
+        toggleTimeslotSelect();
+    }
+
 
     return (
         <div className='w-1/2 min-h-8 border rounded-xl'>
@@ -42,7 +47,7 @@ const TimeslotSelect: React.FC<TimeslotSelectProps> = ({ label, timeslots, selec
                             <hr />
                             <ul className='p-2' key={index}>
                                 {timeslot.available ?
-                                    <li className='hover:text-sky-500 transition' onClick={() => setSelectedTimeslot(timeslot.time)}>
+                                    <li className='hover:text-sky-500 transition' onClick={() => handleSelectTimeslot(timeslot)}>
                                         {timeslot.time.toTimeString().replace(" GMT+0800 (Singapore Standard Time)", "")} 
                                     </li> : <li className='line-through text-red-500 decoration-red-500'>
                                         {timeslot.time.toTimeString().replace(" GMT+0800 (Singapore Standard Time)", "")} 

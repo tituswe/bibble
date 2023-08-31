@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 
-import getCurrentUser from '@/app/actions/getCurrentUser';
 import prisma from '@/app/libs/prismadb';
 import { Prisma } from '@prisma/client';
 
 export async function POST(request: Request) {
     const body = await request.json();
-	const { currentUserId, participantId } = body;
+
+	const { currentUserId, participantId, message } = body;
 
     const participantIds = [currentUserId, participantId];
 
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 	}
 
     try {
-        const chat = await prisma.chat.create({
+        const responseChat = await prisma.chat.create({
             data: {
                 participants: {
                     createMany: {
@@ -26,37 +26,35 @@ export async function POST(request: Request) {
                     }
                 }
             },
-            include: chatPopulated,
-        });
+            include: {
+                participants: {
+                    include: {
+                        user: true
+                    },
+                },
+            }
+        // }).then( async (chat) => {
+        //     const chatId = chat.id;
+        //     await prisma.message.create({
+        //         data: {
+        //             chatId: chatId,
+        //             senderId: currentUserId,
+        //             message: message,
+        //         }
+        //     });
+        })
 
-        return NextResponse.json(chat);
+        const responseMessage = await prisma.message.create({
+            data: {
+                chatId: responseChat.id,
+                senderId: currentUserId,
+                message: message,
+            }
+        })
+
+        return NextResponse.json({ chat: responseChat, message: responseMessage });
     } catch (error) {
         console.log('createChat error', error);
         return NextResponse.error();
     }
 }
-
-export const participantPopulated = Prisma.validator<Prisma.ChatParticipantInclude>()({
-    user: {
-        select: {
-            id: true,
-            name: true,
-        }
-    }
-})
-
-export const chatPopulated = Prisma.validator<Prisma.ChatInclude>()({
-    participants: {
-        include: participantPopulated,
-    },
-    // latestMessage: {
-    //     include: {
-    //         sender: {
-    //             select: {
-    //                 id: true,
-    //                 name: true,
-    //             }
-    //         }
-    //     }
-    // }
-})

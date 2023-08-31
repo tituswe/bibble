@@ -17,13 +17,17 @@ interface AppointmentBoxProps {
 }
 
 const AppointmentBox: React.FC<AppointmentBoxProps> = ({ pet, currentUser }) => {
-    const { listerId, price } = pet;
-    const {hasCreatedChat, createChat} = useCreateChat({ currentUser, participantId: listerId });
+    const { listerId, lister, price } = pet;
+    const {hasCreatedChat, createChat} = useCreateChat({ currentUser: currentUser, lister: lister, listing: pet });
+    
     const reserveVisitationModal = useReserveVisitationModal();
 
     const handleReserveVisitation = () => {
-        // TODO: Implement reserve visitation
-        createChat();
+        if (!reserveVisitationModal.time || !reserveVisitationModal.date || !reserveVisitationModal.numberOfVisitors) {
+            alert('All fields for the reservation must be filled!');
+        } else {
+            createChat(reserveVisitationModal.date, reserveVisitationModal.time, reserveVisitationModal.numberOfVisitors);
+        }
     }
 
     const handleContactLister = () => {
