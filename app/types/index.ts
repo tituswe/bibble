@@ -19,6 +19,7 @@ export type SafePet = Omit<Pet, 'birthday' | 'postedAt'> & {
 	breed: Breed;
 	origin: Country;
 	avsLicense?: AvsLicense | null;
+	chats: Chat[];
 };
 
 export type GeocodeResponse = {

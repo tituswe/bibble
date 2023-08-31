@@ -32,6 +32,7 @@ const useCreateChat = ({ currentUser, lister, listing }: IUseCreateChat) => {
             let request = () => axios.post(`/api/messages/chats`, {
                 currentUserId: currentUser.id,
                 participantId: lister.id,
+                listingId: listing.id,
                 message: message.toString(),
             });
 

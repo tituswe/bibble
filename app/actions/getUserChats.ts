@@ -19,6 +19,14 @@ export default async function getUserChats(params: IChatParams) {
 			include: {
 				chat: {
 					include: {
+						listing: {
+							include: {
+								avsLicense: true,
+								breed: true,
+								origin: true,
+								species: true
+							}
+						},
 						participants: {
 							include: {
 								user: true

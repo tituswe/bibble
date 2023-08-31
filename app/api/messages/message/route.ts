@@ -1,17 +1,22 @@
 import { NextResponse } from 'next/server';
 
-import getCurrentUser from '@/app/actions/getCurrentUser';
 import prisma from '@/app/libs/prismadb';
 
-interface IParams {
-}
+export async function POST(request: Request) {
+	const body = await request.json();
+	const { chatId, senderId, message } = body;
 
-export async function POST(request: Request, { params }: { params: IParams }) {
-	const currentUser = await getCurrentUser();
-
-	if (!currentUser) {
+	if (!senderId) {
 		return NextResponse.error();
 	}
 
-	return NextResponse.json(null);
+	const responseMessage = await prisma.message.create({
+		data: {
+			chatId: chatId,
+			senderId: senderId,
+			message: message,
+		}
+	})
+
+	return NextResponse.json(responseMessage);
 }

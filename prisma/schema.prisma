@@ -100,6 +100,7 @@ model Pet {
   isPottyTrained Boolean
   locationValue String
   description String
+  chats Chat[]
 }
 
 model Species {
@@ -147,6 +148,8 @@ model Chat {
   updatedAt DateTime @updatedAt
   participants ChatParticipant[]
   messages Message[]
+  listingId String @db.ObjectId
+  listing Pet @relation(fields: [listingId], references: [id], onDelete: Cascade)
   // latestMessageId String @unique @db.ObjectId
   // latestMessage Message? @relation(name: "latestChatMessage", fields: [latestMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

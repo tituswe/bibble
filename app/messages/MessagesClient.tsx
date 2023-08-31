@@ -1,33 +1,57 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { SafeUser } from '../types';
-import { Chat, ChatParticipant, Message, User } from '@prisma/client';
+import { AvsLicense, Breed, Chat, ChatParticipant, Country, Message, Pet, Species, User } from '@prisma/client';
 
 import { BiFilter, BiX, BiDotsHorizontalRounded, BiSend } from 'react-icons/bi';
 
 import Avatar from '../components/Avatar';
+import axios from 'axios';
 
 interface MessagesClientProps {
 	currentUser: SafeUser | null;
 	chats: Array<Chat & { 
+		listing: Pet & { origin: Country, species: Species, breed: Breed, avsLicense: AvsLicense | null },
 		participants: Array<ChatParticipant & { user: User }>,
 		messages: Array<Message & { sender: User }>
 		}>;
 };
 
 const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) => {
-	const [selectedChat, setSelectedChat] = useState<Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message & { sender: User }> } | null>(chats[chats.length-1]);
+	const [selectedChat, setSelectedChat] = useState<MessagesClientProps["chats"][0] | null>(chats[chats.length-1]);
 	
-	const [showDetails, setShowDetails] = useState<Boolean>(true);
+	const [showDetails, setShowDetails] = useState<boolean>(true);
 
-	const getChatCounterPartyName = (chat: Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message & { sender: User }> }) => {
+	const [messageToSend, setMessageToSend] = useState<string>('');
+
+	const getChatCounterPartyName = (chat: MessagesClientProps["chats"][0]) => {
 		return chat.participants.filter(p => p.userId !== currentUser?.id).map(p => p.user.name)
 	}
 
 	const toggleShowDetails = () => {
 		setShowDetails(!showDetails);
+	}
+
+	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setMessageToSend(event.target.value);
+	}
+	
+	const handleSendMessage = async (chatId: string) => {
+		try {
+			console.log(messageToSend);
+			await axios.post('api/messages/message', {
+				chatId: chatId,
+				senderId: currentUser?.id,
+				message: messageToSend,
+			}).then((response) => {
+				console.log("Response", response);
+				setMessageToSend('');
+			})
+		} catch (error) {
+			throw Error('Could not send message')
+		}
 	}
 	
 	// const messages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -36,7 +60,7 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 	return (
 		<div className='flex flex-row justify-center items-start h-full'>
 			{/* Left column - MESSAGES */}
-			<div className='flex flex-col h-full w-1/6'>
+			<div className='flex flex-col h-full w-2/12'>
 				{/* Header */}
 				<header className='flex flex-row justify-between p-6 border-b border-neutral-100'>
 					<h1 className='font-bold text-lg self-center'>Messages</h1>
@@ -68,7 +92,7 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 			</div>
 
 			{/* Middle column - CHAT */}
-			<div className={`flex flex-col h-full ${showDetails ? 'w-2/3 ' : 'w-5/6'} border-l border-r border-neutral-100 `}>
+			<div className={`flex flex-col h-full ${showDetails ? 'w-7/12 ' : 'w-10/12'} border-l border-r border-neutral-100 `}>
 				{/* Header */}
 				<header className='flex flex-row justify-between p-6 border-b border-neutral-100'>
 					{selectedChat ? (
@@ -98,9 +122,9 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 						{/* Messages */}
 						<div className='flex flex-col-reverse gap-4 place-items-center overflow-scroll w-full'>
 							{/* Chat Bubble */}
-							{selectedChat.messages.map((message, i) => {
+							{selectedChat.messages.reverse().map((message, i) => {
 								return (
-									<span key={i} className='flex flex-row w-3/4 rounded-xl p-4 hover:bg-neutral-100'>
+									<span key={i} className='flex flex-row w-3/4 rounded-xl p-4 transition hover:bg-neutral-100'>
 										<div className='aspect-square'>
 												<Avatar src={message.sender.image}/>
 										</div>
@@ -126,8 +150,8 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 
 						{/* Input */}
 						<div className='flex flex-row gap-2 w-full px-12 mb-4'>
-							<input className='text-sm rounded-full border py-2 px-4 flex flex-grow' placeholder='Type your message here'></input>
-							<button className='rounded-full border py-2 px-4 transition text-white bg-sky-500 hover:scale-110 hover:bg-sky-600 hover:shadow-md'>
+							<input className='text-sm rounded-full border py-2 px-4 flex flex-grow' placeholder='Type your message here' onChange={(e) => handleInputChange(e)} value={messageToSend}/>
+							<button type='submit' className='rounded-full border py-2 px-4 transition text-white bg-sky-500 hover:scale-110 hover:bg-sky-600 hover:shadow-md' onClick={() => handleSendMessage(selectedChat.id)}>
 								<BiSend size={24} />
 							</button>
 						</div>
@@ -140,8 +164,8 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 			</div>
 
 			{/* Right column - DETAILS */}
-			{showDetails ? (
-				<div className='flex flex-col h-full w-1/6'>
+			{showDetails && (
+				<div className='flex flex-col h-full w-3/12'>
 					{/* Header */}
 					<header className='flex flex-row justify-between p-6 border-b border-neutral-100'>
 						<h1 className='font-bold text-lg self-center'>Details</h1>
@@ -151,12 +175,16 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 					</header>
 
 					{/* Details */}
-					<main className='flex flex-col w-full h-full place-content-center'>
-						<h1 className='flex justify-center font-light text-3xl text-neutral-300'>no chat</h1>
-					</main>
+					{selectedChat ? (
+						<main className='flex flex-col w-full h-full'>
+							<h1 className='flex font-light justify-center'>{selectedChat.listing.breed.name}</h1>
+						</main>
+					) : (
+						<main className='flex flex-col w-full h-full place-content-center'>
+							<h1 className='flex justify-center font-light text-3xl text-neutral-300'>no chat</h1>
+						</main>
+					)}
 				</div>
-			) : (
-				<></>
 			)}
 		</div>
 	);

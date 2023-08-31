@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 export async function POST(request: Request) {
     const body = await request.json();
 
-	const { currentUserId, participantId, message } = body;
+	const { currentUserId, participantId, listingId, message } = body;
 
     const participantIds = [currentUserId, participantId];
 
@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     try {
         const responseChat = await prisma.chat.create({
             data: {
+                listingId: listingId,
                 participants: {
                     createMany: {
                         data: participantIds.map(id => ({
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
                             hasSeenLatestMessage: id === currentUserId
                         }))
                     }
-                }
+                },
             },
             include: {
                 participants: {
@@ -33,15 +34,6 @@ export async function POST(request: Request) {
                     },
                 },
             }
-        // }).then( async (chat) => {
-        //     const chatId = chat.id;
-        //     await prisma.message.create({
-        //         data: {
-        //             chatId: chatId,
-        //             senderId: currentUserId,
-        //             message: message,
-        //         }
-        //     });
         })
 
         const responseMessage = await prisma.message.create({
