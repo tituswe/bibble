@@ -24,7 +24,11 @@ export default async function getUserChats(params: IChatParams) {
 								user: true
 							}
 						},
-						messages: true
+						messages: {
+							include: {
+								sender: true
+							}
+						}
 					}
 				}
 			}

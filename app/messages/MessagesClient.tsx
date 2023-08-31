@@ -13,16 +13,16 @@ interface MessagesClientProps {
 	currentUser: SafeUser | null;
 	chats: Array<Chat & { 
 		participants: Array<ChatParticipant & { user: User }>,
-		messages: Array<Message>
+		messages: Array<Message & { sender: User }>
 		}>;
 };
 
 const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) => {
-	const [selectedChat, setSelectedChat] = useState<Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message> } | null>(null);
+	const [selectedChat, setSelectedChat] = useState<Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message & { sender: User }> } | null>(chats[chats.length-1]);
 	
 	const [showDetails, setShowDetails] = useState<Boolean>(true);
 
-	const getChatCounterPartyName = (chat: Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message> }) => {
+	const getChatCounterPartyName = (chat: Chat & { participants: Array<ChatParticipant & { user: User }>, messages: Array<Message & { sender: User }> }) => {
 		return chat.participants.filter(p => p.userId !== currentUser?.id).map(p => p.user.name)
 	}
 
@@ -102,32 +102,12 @@ const MessagesClient: React.FC<MessagesClientProps> = ({ currentUser, chats }) =
 								return (
 									<span key={i} className='flex flex-row w-3/4 rounded-xl p-4 hover:bg-neutral-100'>
 										<div className='aspect-square'>
-												<Avatar src={currentUser?.image}/>
+												<Avatar src={message.sender.image}/>
 										</div>
 
-										{/* <div className='aspect-square'>
-												<Avatar src={message.sender.image}/>
-										</div> */}
-
 										<span className='flex flex-col flex-grow ml-4 mr-2 w-3/4'>
-											{/* <header className='flex flex-col'>
-												<h1 className='font-semibold text-lg'>{currentUser?.name} {message}</h1>
-												<h2 className='font-extralight text-xs'>1:03 PM</h2>
-											</header>
-											
-											<p className='mt-2 font-normal text-base'>
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. V
-											itae auctor eu augue ut. Amet risus nullam eget felis eget nunc lobortis mattis aliquam. Diam maecenas sed enim ut sem. Tellu
-											s at urna condimentum mattis pellentesque id nibh tortor id. Suspendisse sed nisi lacus sed viverra tellus in hac. Cras ornar
-											e arcu dui vivamus arcu felis. Proin nibh nisl condimentum id. Eu facilisis sed odio morbi quis. Duis at tellus at urna condim
-											entum mattis pellentesque. Nulla malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Pretium vulputate sapi
-											en nec sagittis aliquam. Lacinia at quis risus sed. Tortor consequat id porta nibh venenatis cras sed felis. Faucibus in ornar
-											e quam viverra orci sagittis eu volutpat. Auctor elit sed vulputate mi sit. Semper feugiat nibh sed pulvinar proin gravida hen
-											drerit.
-											</p> */}
-
 											<header className='flex flex-col'>
-												<h1 className='font-semibold text-lg'>{message.senderId}</h1>
+												<h1 className='font-semibold text-lg'>{message.sender.name}</h1>
 												<h2 className='font-extralight text-xs'>{message.createdAt.toLocaleTimeString()}</h2>
 											</header>
 
