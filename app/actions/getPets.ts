@@ -11,7 +11,7 @@ import { TimeUnit } from '../types';
 import getBirthdate from '../utils/getBirthdate';
 
 export interface IPetsParams {
-	userId?: string;
+	listerId?: string;
 	saleType?: SaleType;
 	speciesIds?: Array<Pick<Species, 'id'>>;
 	breedIds?: Array<Pick<Breed, 'id'>>;
@@ -29,7 +29,7 @@ export interface IPetsParams {
 export default async function getPets(params: IPetsParams) {
 	try {
 		let {
-			userId,
+			listerId,
 			saleType,
 			speciesIds,
 			breedIds,
@@ -46,8 +46,8 @@ export default async function getPets(params: IPetsParams) {
 
 		let query: any = {};
 
-		if (userId) {
-			query.userId = userId;
+		if (listerId) {
+			query.listerId = listerId;
 		}
 
 		if (saleType) {

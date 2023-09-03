@@ -27,12 +27,12 @@ const BusinessNavbar: React.FC<BusinessNavbarProps> = ({ currentUser }) => {
 			onClick: () => router.push('/business/calendar'),
 		},
 		{
-			label: 'Analytics',
-			onClick: () => router.push('/business/analytics'),
-		},
-		{
 			label: 'Listings',
 			onClick: () => router.push('/business/listings'),
+		},
+		{
+			label: 'Analytics',
+			onClick: () => router.push('/business/analytics'),
 		},
 	];
 
