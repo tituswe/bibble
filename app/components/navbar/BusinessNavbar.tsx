@@ -40,26 +40,26 @@ const BusinessNavbar: React.FC<BusinessNavbarProps> = ({ currentUser }) => {
 		<Container>
 			<div
 				className="
-							flex
-							flex-col
-							md:flex-row
-							items-center
-							justify-between
-							w-full
-							gap-4
-							md:gap-8
-						"
+					flex
+					flex-row
+					items-center
+					justify-between
+					w-full
+					gap-8
+				"
 			>
 				<Logo />
-				<ol className="flex flex-row">
-					{services.map((service, i) => (
-						<LabelButton
-							key={i}
-							label={service.label}
-							onClick={service.onClick}
-						/>
-					))}
-				</ol>
+				<div className="hidden md:block">
+					<ol className="flex flex-row">
+						{services.map((service, i) => (
+							<LabelButton
+								key={i}
+								label={service.label}
+								onClick={service.onClick}
+							/>
+						))}
+					</ol>
+				</div>
 				<div className="flex flex-row items-center gap-4">
 					<Button icon={FaPaw} onClick={() => router.push('/kennel')} />
 					<UserMenu currentUser={currentUser} />

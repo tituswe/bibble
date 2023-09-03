@@ -1,5 +1,7 @@
+import useLoginModal from '@/app/hooks/useLoginModal';
 import { SafeUser } from '@/app/types';
 import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 import { BiNetworkChart } from 'react-icons/bi';
 import Container from '../Container';
 import LabelButton from './LabelButton';
@@ -13,13 +15,15 @@ interface KennelNavbarProps {
 
 const KennelNavbar: React.FC<KennelNavbarProps> = ({ currentUser }) => {
 	const router = useRouter();
-	const services = [
-		{
-			label: 'Switch to Business',
-			icon: BiNetworkChart,
-			onClick: () => router.push('/business'),
-		},
-	];
+	const loginModal = useLoginModal();
+
+	const navigateToBusiness = useCallback(() => {
+		if (!currentUser) {
+			loginModal.onOpen();
+		} else {
+			router.push('/business');
+		}
+	}, [loginModal, router, currentUser]);
 
 	return (
 		<Container>
@@ -37,14 +41,11 @@ const KennelNavbar: React.FC<KennelNavbarProps> = ({ currentUser }) => {
 				<Logo />
 				<Search />
 				<ol className="flex flex-row items-center gap-4">
-					{services.map((service, i) => (
-						<LabelButton
-							key={i}
-							label={service.label}
-							icon={service.icon}
-							onClick={service.onClick}
-						/>
-					))}
+					<LabelButton
+						label={'Switch to Business'}
+						icon={BiNetworkChart}
+						onClick={navigateToBusiness}
+					/>
 					<UserMenu currentUser={currentUser} />
 				</ol>
 			</div>
