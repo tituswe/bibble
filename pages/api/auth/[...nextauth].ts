@@ -60,6 +60,27 @@ export const authOptions: AuthOptions = {
 		strategy: 'jwt',
 	},
 	secret: process.env.NEXTAUTH_SECRET,
+	callbacks: {
+		async signIn({ user }) {
+			const existingProfile = await prisma.profile.findFirst({
+				where: {
+					userId: user.id,
+				},
+			});
+
+			if (!existingProfile) {
+				const profile = await prisma.profile.create({
+					data: {
+						userId: user.id,
+						bio: '',
+						verified: false,
+					},
+				});
+			}
+
+			return true;
+		},
+	},
 };
 
 export default NextAuth(authOptions);

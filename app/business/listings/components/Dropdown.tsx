@@ -9,10 +9,13 @@ interface DropdownProps {
 
 const Dropdown: React.FC<DropdownProps> = ({ label }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const dropdownRef = useRef(null);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const handleClickOutside = (event: MouseEvent) => {
-		if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+		if (
+			dropdownRef.current &&
+			!dropdownRef.current.contains(event.target as Node)
+		) {
 			setIsOpen(false);
 		}
 	};
@@ -55,11 +58,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label }) => {
           border 
           border-rose-500 
           mt-4
-          w-56 
-          rounded-md 
+          w-56
+          rounded-2xl
           shadow-2xl"
 				>
-					<div className="rounded-md bg-white">
+					<div className="rounded-2xl bg-white">
 						<a href="#" className="block px-4 py-2">
 							LIST ITEM
 						</a>
@@ -74,61 +77,6 @@ const Dropdown: React.FC<DropdownProps> = ({ label }) => {
 			)}
 		</div>
 	);
-
-	// return (
-	// 	<div
-	// 		className="
-	//       flex
-	//       justify-end
-	//       border
-	//       border-lime-500
-	//     "
-	// 	>
-	// 		<div
-	// 			onClick={() => setIsOpen(!isOpen)}
-	// 			className="
-	//       hidden
-	//       lg:flex
-	//       flex-row
-	//       items-center
-	//       gap-2
-	//       border-[1px]
-	//       rounded-full
-	//       pl-4
-	//       pr-3
-	//       py-1
-	//       text-sm
-	//       cursor-pointer
-	//       hover:bg-neutral-100
-	// 		"
-	// 		>
-	// 			{label}
-	// 			<BiChevronDown size={20} />
-	// 		</div>
-	// 		{isOpen && (
-	// 			<div
-	// 				className="
-	//           absolute
-	//           border
-	//           border-rose-500
-	//         "
-	// 			>
-	// 				<div
-	// 					className="
-	//             flex
-	//             flex-col
-	//           "
-	// 				>
-	// 					<label>LIST ITEM</label>
-	// 					<label>LIST ITEM</label>
-	// 					<label>LIST ITEM</label>
-	// 					<label>LIST ITEM</label>
-	// 					<label>LIST ITEM</label>
-	// 				</div>
-	// 			</div>
-	// 		)}
-	// 	</div>
-	// );
 };
 
 export default Dropdown;
