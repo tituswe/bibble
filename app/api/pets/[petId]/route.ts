@@ -1,5 +1,7 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
+import prisma from '@/app/libs/prismadb';
+
 
 interface IParams {
 	petId?: string;
@@ -21,10 +23,10 @@ export async function DELETE(
 		throw new Error('Invalid ID');
 	}
 
-	const pet = await prisma?.pet.deleteMany({
+	const pet = await prisma.pet.deleteMany({
 		where: {
 			id: petId,
-			userId: currentUser.id,
+			listerId: currentUser.id,
 		},
 	});
 

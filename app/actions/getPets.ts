@@ -9,7 +9,7 @@ import {
 } from '@prisma/client';
 import { TimeUnit } from '../types';
 import getBirthdate from '../utils/getBirthdate';
-import { convertToSafePet } from './convertToDateSafe';
+import { convertToSafeUser } from './convertToDateSafe';
 
 export interface IPetsParams {
 	userId?: string;
@@ -158,10 +158,23 @@ export default async function getPets(params: IPetsParams) {
 			where: query,
 			orderBy: {
 				postedAt: 'desc',
+			},
+			include: {
+				breed: true,
+				lister: true,
+				origin: true,
+				species: true,
 			}
 		});
 
-		return pets.map((pet) => convertToSafePet(pet));
+		return pets.map((pet) => {
+			return {
+				...pet,
+				birthday: pet.birthday.toISOString(),
+				postedAt: pet.postedAt.toISOString(),
+				lister: convertToSafeUser(pet.lister),
+			}
+		});
 	} catch (error: any) {
 		throw new Error(error);
 	}
