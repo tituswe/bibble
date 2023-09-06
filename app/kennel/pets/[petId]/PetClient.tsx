@@ -1,7 +1,7 @@
 'use client';
 
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed, Country, Species, Vaccine } from '@prisma/client';
+import { Breed, Country, Profile, Species, Vaccine } from '@prisma/client';
 
 import AppointmentBox from '@/app/components/AppointmentBox';
 import Container from '@/app/components/Container';
@@ -11,7 +11,9 @@ import PetInfo from '@/app/components/pets/PetInfo';
 
 interface PetClientProps {
 	pet: (SafePet & {
-		lister: SafeUser;
+		lister: SafeUser & {
+			profile: Profile | null,
+		};
 		origin: Country;
 		species: Species;
 		breed: Breed;

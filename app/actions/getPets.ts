@@ -9,6 +9,7 @@ import {
 } from '@prisma/client';
 import { TimeUnit } from '../types';
 import getBirthdate from '../utils/getBirthdate';
+import { convertToSafePet } from './convertToDateSafe';
 
 export interface IPetsParams {
 	userId?: string;
@@ -157,29 +158,10 @@ export default async function getPets(params: IPetsParams) {
 			where: query,
 			orderBy: {
 				postedAt: 'desc',
-			},
-			include: {
-				species: true,
-				breed: true,
-				origin: true,
-				lister: true,
-				avsLicense: true,
-			},
+			}
 		});
 
-		const safePets = pets.map((pet) => ({
-			...pet,
-			birthday: pet.birthday.toISOString(),
-			postedAt: pet.postedAt.toISOString(),
-			lister: {
-				...pet.lister,
-				createdAt: pet.lister.createdAt.toISOString(),
-				updatedAt: pet.lister.updatedAt.toISOString(),
-				emailVerified: pet.lister.emailVerified?.toISOString() || null,
-			},
-		}));
-
-		return safePets;
+		return pets.map((pet) => convertToSafePet(pet));
 	} catch (error: any) {
 		throw new Error(error);
 	}

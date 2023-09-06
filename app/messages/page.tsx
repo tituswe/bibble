@@ -1,12 +1,12 @@
+import getChatsByUserId from '../actions/getChatsByUserId';
 import getCurrentUser from '../actions/getCurrentUser';
-import getUserChats from '../actions/getUserChats';
 import MessagesClient from './MessagesClient';
 
 const MessagesPage = async () => {
 	const currentUser = await getCurrentUser();
-	const userChats = await getUserChats({ currentUserId: currentUser ? currentUser.id : null});
+	const chats = await getChatsByUserId({ userId: currentUser?.id });
 
-	return <MessagesClient currentUser={currentUser} chats={userChats}/>;
+	return currentUser ? <MessagesClient currentUser={currentUser} chats={chats} /> : <div>not logged in</div>;
 };
 
 export default MessagesPage;

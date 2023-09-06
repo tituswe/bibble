@@ -21,7 +21,6 @@ export default async function getFavoritePets() {
 				breed: true,
 				origin: true,
 				lister: true,
-				vaccines: true,
 				avsLicense: true,
 			},
 		});

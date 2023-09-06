@@ -3,7 +3,7 @@
 import getAgeLabel from '@/app/utils/getAge';
 
 import { SafePet, SafeUser } from '@/app/types';
-import { Breed, Country, Gender, Species, Vaccine } from '@prisma/client';
+import { Breed, Country, Gender, Profile, Species, Vaccine } from '@prisma/client';
 
 import useViewMoreModal from '@/app/hooks/useViewMoreModal';
 
@@ -29,7 +29,9 @@ import Avatar from '../Avatar';
 
 interface PetInfoProps {
 	pet: SafePet & {
-		lister: SafeUser;
+		lister: SafeUser & {
+			profile: Profile | null,
+		};
 		origin: Country;
 		species: Species;
 		breed: Breed;
@@ -69,7 +71,7 @@ const PetInfo: React.FC<PetInfoProps> = ({ pet, vaccines }) => {
 							<p className="pr-1">
 								Posted by {pet.lister.name ? pet.lister.name : 'NO LISTER NAME'}
 							</p>
-							{pet.lister.profile.verified && (<BiBadgeCheck size={20} className="fill-sky-500" />)}
+							{pet.lister.profile?.verified && (<BiBadgeCheck size={20} className="fill-sky-500" />)}
 						</div>
 						<Avatar src={pet.lister.image} />
 					</div>
