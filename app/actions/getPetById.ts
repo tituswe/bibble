@@ -38,6 +38,7 @@ export default async function getPetById(params: IParams) {
 				createdAt: pet.lister.createdAt.toISOString(),
 				updatedAt: pet.lister.updatedAt.toISOString(),
 				emailVerified: pet.lister.emailVerified?.toISOString() || null,
+				profile: pet.lister.profile,
 			},
 		};
 	} catch (error: any) {

@@ -1,10 +1,9 @@
-import { AvsLicense, Breed, Country, Pet, Profile, Species, User } from '@prisma/client';
+import { Account, AvsLicense, Breed, Chat, ChatParticipant, Country, Message, Pet, Profile, Species, User } from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
 	'createdAt' | 'updatedAt' | 'emailVerified'
 > & {
-	profile: Profile;
 	createdAt: string;
 	updatedAt: string;
 	emailVerified: string | null;
@@ -13,12 +12,22 @@ export type SafeUser = Omit<
 export type SafePet = Omit<Pet, 'birthday' | 'postedAt'> & {
 	birthday: string;
 	postedAt: string;
-	species: Species;
-	lister: SafeUser;
-	breed: Breed;
-	origin: Country;
-	avsLicense?: AvsLicense | null;
 };
+
+export type SafeMessage = Omit<Message, 'createdAt' | 'updatedAt'> & {
+	createdAt: string;
+	updatedAt: string;
+}
+
+export type SafeChat = Omit<Chat, 'createdAt' | 'updatedAt'> & {
+	createdAt: string;
+	updatedAt: string;
+}
+
+export type SafeChatParticipant = Omit<ChatParticipant, 'createdAt' | 'updatedAt'> & {
+	createdAt: string;
+	updatedAt: string;
+}
 
 export type GeocodeResponse = {
 	results: [

@@ -110,7 +110,7 @@ const ReserveVisitationModal = () => {
 			onClose={handleClose}
 			onSubmit={handleSubmit}
 			title="Reserve Visitation"
-			actionLabel="Reserve"
+			actionLabel="Done"
 			body={bodyContent}
 		/>
     )
