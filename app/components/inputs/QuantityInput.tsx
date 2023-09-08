@@ -17,6 +17,11 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ label, items, selectedIte
         setShowDropdown(!showDropdown);
     }
 
+    const handleSetSelected = (item: number) => {
+        setSelected(item);
+        toggleDropdown();
+    }
+
     return (
         <div className='w-1/2 min-h-8 border rounded-xl'>
             <div className='flex p-3 justify-between' onClick={toggleDropdown}>
@@ -44,7 +49,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ label, items, selectedIte
                             <>
                             <hr />
                             <ul className='p-2' key={index}>
-                                <li className='hover:text-sky-500 transition' onClick={() => setSelected(item)}>
+                                <li className='hover:text-sky-500 transition' onClick={() => handleSetSelected(item)}>
                                     {item} 
                                 </li>
                             </ul>

@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth/next';
 
 import prisma from '@/app/libs/prismadb';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { convertToSafeUser } from './convertToDateSafe';
 
 export async function getSession() {
 	return await getServerSession(authOptions);
@@ -16,20 +17,16 @@ export default async function getCurrentUser() {
 		}
 
 		const currentUser = await prisma.user.findUnique({
-			where: { email: session.user.email as string },
-			include: { profile: true },
+			where: { 
+				email: session.user.email as string 
+			}
 		});
 
 		if (!currentUser) {
 			return null;
 		}
 
-		return {
-			...currentUser,
-			createdAt: currentUser.createdAt.toISOString(),
-			updatedAt: currentUser.updatedAt.toISOString(),
-			emailVerified: currentUser.emailVerified?.toISOString() || null,
-		};
+		return convertToSafeUser(currentUser);
 	} catch (error: any) {
 		return null;
 	}
