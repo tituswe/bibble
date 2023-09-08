@@ -1,51 +1,96 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
-import { IconType } from 'react-icons';
+import { usePathname, useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
 
 import useLoginModal from '@/app/hooks/useLoginModal';
 
+import { useDropdown } from '@/app/hooks/useDropdown';
 import { SafeUser } from '@/app/types';
-import { BiBell, BiHeart } from 'react-icons/bi';
-import { LuSettings } from 'react-icons/lu';
 import Avatar from '../Avatar';
-import Button from './Button';
 import MenuItem from './MenuItem';
 
 interface UserMenuProps {
 	currentUser?: SafeUser | null;
 }
 
-type NavButton = {
+type MenuItemType = {
+	label: string;
 	onClick: () => void;
-	icon: IconType;
-	disabled?: boolean;
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	const router = useRouter();
+	const pathname = usePathname();
+	const page = pathname?.split('/')[1];
 	const loginModal = useLoginModal();
-	const [isOpen, setIsOpen] = useState(false);
+	const { isOpen, setIsOpen, dropdownRef, handleClickOutside } = useDropdown();
 
-	const navButtons: NavButton[] = [
+	const kennelItems: Array<MenuItemType | null> = [
 		{
+			label: 'Bibble Business',
+			onClick: () => router.push('/business'),
+		},
+		null,
+		{
+			label: 'Favorites',
 			onClick: () => router.push('/favorites'),
-			icon: BiHeart,
-			// disabled: true,
 		},
 		{
+			label: 'Messages',
 			onClick: () => router.push('/messages'),
-			icon: BiBell,
-			// disabled: true,
 		},
 		{
+			label: 'Settings',
 			onClick: () => router.push('/settings'),
-			icon: LuSettings,
-			// disabled: true,
+		},
+		null,
+	];
+
+	const businessItems: Array<MenuItemType | null> = [
+		{
+			label: 'Bibble Kennel',
+			onClick: () => router.push('/kennel'),
+		},
+		null,
+		{
+			label: 'Dashboard',
+			onClick: () => router.push('/dashboard'),
+		},
+		{
+			label: 'Messages',
+			onClick: () => router.push('/messages'),
+		},
+		{
+			label: 'Settings',
+			onClick: () => router.push('/settings'),
+		},
+		null,
+	];
+
+	let menuItems: Array<MenuItemType | null> = [
+		{
+			label: 'Help Center',
+			onClick: () => router.push('/help'),
+		},
+		{
+			label: 'Log out',
+			onClick: () => signOut(),
 		},
 	];
+
+	switch (page) {
+		case 'kennel': {
+			menuItems = [...kennelItems, ...menuItems];
+			break;
+		}
+		case 'business': {
+			menuItems = [...businessItems, ...menuItems];
+			break;
+		}
+		default:
+	}
 
 	const toggleOpen = useCallback(() => {
 		if (!currentUser) {
@@ -53,19 +98,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 		} else {
 			setIsOpen((value) => !value);
 		}
-	}, [loginModal, currentUser]);
+	}, [loginModal, setIsOpen, currentUser]);
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [handleClickOutside]);
 
 	return (
-		<div className="relative">
+		<div className="relative" ref={dropdownRef}>
 			<div className="flex flex-row items-center gap-3">
-				{navButtons.map((button, i) => (
-					<Button
-						key={i}
-						onClick={button.onClick}
-						icon={button.icon}
-						disabled={button.disabled}
-					/>
-				))}
 				<div
 					onClick={toggleOpen}
 					className="
@@ -115,7 +159,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 					)}
 				</div>
 			</div>
-
 			{isOpen && currentUser && (
 				<div
 					className="
@@ -131,14 +174,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 				>
 					<div className="flex flex-col cursor-pointer">
 						<>
-							<hr />
-							<MenuItem
-								onClick={() => router.push('/postings')}
-								label="My postings"
-							/>
-							<hr />
-							<MenuItem onClick={() => {}} label="Help Center" />
-							<MenuItem onClick={() => signOut()} label="Logout" />
+							{menuItems.map((item, i) =>
+								item ? (
+									<MenuItem key={i} label={item.label} onClick={item.onClick} />
+								) : (
+									<hr key={i} />
+								)
+							)}
 						</>
 					</div>
 				</div>

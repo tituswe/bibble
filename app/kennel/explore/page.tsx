@@ -2,6 +2,7 @@ import KennelClient from '@/app/kennel/KennelClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getPets, { IPetsParams } from '@/app/actions/getPets';
 import EmptyState from '@/app/components/EmptyState';
+import KennelClient from '@/app/kennel/KennelClient';
 import ExploreClient from './ExploreClient';
 
 interface ExplorePageProps {

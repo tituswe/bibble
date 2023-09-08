@@ -2,17 +2,12 @@
 
 import { SafePet, SafeUser } from '@/app/types';
 import getAgeLabel from '@/app/utils/getAge';
-import { Breed, Country, Gender, Species } from '@prisma/client';
+import { toCamelCase } from '@/app/utils/toCamelCase';
+import { Breed, Country, Species } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import {
-	BiFemaleSign,
-	BiGlobe,
-	BiHourglass,
-	BiMaleSign,
-	BiRuler,
-} from 'react-icons/bi';
+import { BiFemaleSign, BiGlobe, BiHourglass, BiMaleSign } from 'react-icons/bi';
 import { LuVerified } from 'react-icons/lu';
 import Avatar from '../Avatar';
 import Button from '../Button';
@@ -102,34 +97,6 @@ const PetCard: React.FC<PetCardProps> = ({
 						rounded-3xl
 					"
 				>
-					<div
-						className="
-							flex 
-							flex-row 
-							justify-end 
-							h-0 
-							w-full
-							translate-x-6
-							-translate-y-1
-						"
-					>
-						<div
-							className="
-								flex 
-								items-center 
-								justify-center 
-								bg-white 
-								rounded-full 
-								p-2
-							"
-						>
-							{data.gender == Gender.MALE ? (
-								<BiMaleSign className="text-sky-500" />
-							) : (
-								<BiFemaleSign className="text-rose-500" />
-							)}
-						</div>
-					</div>
 					<div className="flex flex-col items-center gap-3 py-4">
 						<div
 							className="
@@ -167,8 +134,8 @@ const PetCard: React.FC<PetCardProps> = ({
 								{age} Old
 							</div>
 							<div className="flex flex-row items-center gap-2">
-								<BiRuler />
-								TO IMPLEMENT
+								{data.gender === 'MALE' ? <BiMaleSign /> : <BiFemaleSign />}
+								{toCamelCase(data.gender)}
 							</div>
 						</div>
 					</div>

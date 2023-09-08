@@ -1,4 +1,16 @@
-import { Account, AvsLicense, Breed, Chat, ChatParticipant, Country, Message, Pet, Profile, Species, User } from '@prisma/client';
+import {
+  Account,
+	AvsLicense,
+	Breed,
+  Chat,
+  ChatParticipant,
+	Country,
+  Message,
+	Pet,
+	Profile,
+	Species,
+	User,
+} from '@prisma/client';
 
 export type SafeUser = Omit<
 	User,
