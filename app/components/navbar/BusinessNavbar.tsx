@@ -16,11 +16,11 @@ const BusinessNavbar: React.FC<BusinessNavbarProps> = ({ currentUser }) => {
 	const services = [
 		{
 			label: 'Dashboard',
-			onClick: () => router.push('/business/dashboard'),
+			onClick: () => router.push('/business'),
 		},
 		{
 			label: 'Messages',
-			onClick: () => router.push('/business/messages'),
+			onClick: () => router.push('/messages'),
 		},
 		{
 			label: 'Calendar',

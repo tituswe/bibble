@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useDropdown } from '@/app/hooks/useDropdown';
+import { useEffect } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 
 interface DropdownProps {
@@ -8,31 +9,22 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const dropdownRef = useRef<HTMLDivElement>(null);
-
-	const handleClickOutside = (event: MouseEvent) => {
-		if (
-			dropdownRef.current &&
-			!dropdownRef.current.contains(event.target as Node)
-		) {
-			setIsOpen(false);
-		}
-	};
+	const { isOpen, setIsOpen, dropdownRef, handleClickOutside } = useDropdown();
 
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);
+	}, [handleClickOutside]);
 
 	return (
 		<div className="relative inline-block" ref={dropdownRef}>
 			<button
 				onClick={() => setIsOpen(!isOpen)}
 				className={`
-          flex
+          hidden
+          lg:flex
           flex-row
           gap-2
           items-center

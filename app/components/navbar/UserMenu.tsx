@@ -2,10 +2,11 @@
 
 import { signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import useLoginModal from '@/app/hooks/useLoginModal';
 
+import { useDropdown } from '@/app/hooks/useDropdown';
 import { SafeUser } from '@/app/types';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
@@ -24,7 +25,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 	const pathname = usePathname();
 	const page = pathname?.split('/')[1];
 	const loginModal = useLoginModal();
-	const [isOpen, setIsOpen] = useState(false);
+	const { isOpen, setIsOpen, dropdownRef, handleClickOutside } = useDropdown();
 
 	const kennelItems: Array<MenuItemType | null> = [
 		{
@@ -97,10 +98,17 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 		} else {
 			setIsOpen((value) => !value);
 		}
-	}, [loginModal, currentUser]);
+	}, [loginModal, setIsOpen, currentUser]);
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [handleClickOutside]);
 
 	return (
-		<div className="relative">
+		<div className="relative" ref={dropdownRef}>
 			<div className="flex flex-row items-center gap-3">
 				<div
 					onClick={toggleOpen}
